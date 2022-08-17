@@ -1,0 +1,54 @@
+body,
+html {
+   margin: 0;
+   overscroll-behavior: contain;
+}
+
+@mixin set-size($height, $width: $height, $box-sizing: border-box) {
+   height: $height;
+   width: $width;
+   box-sizing: $box-sizing;
+}
+
+@mixin set-spacing($padding: 0, $margin: 0) {
+   padding: $padding;
+   margin: $margin;
+}
+
+@mixin flex-column {
+   display: flex;
+   flex-direction: column;
+}
+
+@mixin flex-center {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+@mixin flex-center-column {
+   @include flex-center;
+   flex-direction: column;
+}
+
+@mixin flex-center-vert {
+   display: flex;
+   align-items: center;
+}
+
+@mixin flex-center-horiz {
+   display: flex;
+   justify-content: center;
+}
+
+@mixin vertical-center {
+   position: relative;
+   top: 50%;
+   transform: translateY(-50%);
+}
+
+@mixin cover-background {
+   background-repeat: no-repeat;
+   background-size: cover;
+   background-position: center;
+}
