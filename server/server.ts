@@ -1,9 +1,12 @@
 require('dotenv').config();
 import path from 'path';
 import express from 'express';
-const port = 8080;
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import { router as baseEndpointRoute } from './routes/base-endpoint.route';
+import db from './database/db';
+
+const port = 8080;
 
 const app = express();
 //MIDDLEWARE
@@ -16,16 +19,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //ROUTES
-app.get('/api', (req, res) => {
-   res.status(200).json({
-      status: 'success',
-      data: {
-         name: 'template',
-         version: '1.0.0',
-      },
-   });
-});
+app.use('/api', baseEndpointRoute);
 
+//for all other routes not found, send index.html file
 app.get('/*', (req, res) => {
    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
