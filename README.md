@@ -74,6 +74,7 @@ npm run cypress
 
 ```bash
 npm run test
+```
 
 ## Resources
 
@@ -83,4 +84,3 @@ npm run test
 -  [Prettier](https://prettier.io/)
 -  [Cypress](https://www.cypress.io/)
 -  [Jest](https://jestjs.io/docs/getting-started)
-```
