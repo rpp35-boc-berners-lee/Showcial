@@ -4,6 +4,7 @@ import express from 'express';
 const port = 8080;
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import router from './api/routes/tmdb_api';
 
 const app = express();
 //MIDDLEWARE
@@ -14,6 +15,9 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
+
+// API ROUTE
+app.use('/tmdb', router);
 
 //ROUTES
 app.get('/api', (req, res) => {
