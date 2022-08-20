@@ -1,0 +1,8 @@
+@use '../../index.scss' as *;
+
+.card-img-container {
+   @include set-size(100%);
+   img {
+      object-fit: cover;
+   }
+}
