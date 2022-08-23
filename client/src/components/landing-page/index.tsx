@@ -4,6 +4,7 @@ import { Features } from './feature-list/Features';
 import { Typography, Grid, Stack } from '@mui/material';
 import LandingPageImage from './images/Subscribe.svg';
 import { TrendingVideos } from './trending-videos/TrendingVideos';
+
 const LandingPage = () => {
    return (
       <>
