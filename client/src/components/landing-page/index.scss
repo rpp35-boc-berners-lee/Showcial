@@ -1,8 +1,7 @@
 @use '../../index.scss' as *;
 
-.card-img-container {
-   @include set-size(100%);
+.landing-page {
    img {
-      object-fit: cover;
+      max-height: 50vh;
    }
 }
