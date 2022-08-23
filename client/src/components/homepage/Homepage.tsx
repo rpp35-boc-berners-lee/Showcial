@@ -62,19 +62,23 @@ export function Homepage() {
   const [topTV, setTopTV] = useState({});
   const [trendingTV, setTrendingTV] = useState({});
   const [topMovie, setTopMovie] = useState({});
-  const [trendingMvoie, setTrendingMovie] = useState({});
+  const [trendingMovie, setTrendingMovie] = useState({});
   const [watchList, setWatchList] = useState({});
 
   useEffect(() => {
     fetchData();
-  })
+  }, [])
 
   async function fetchData () {
-    let { data } = await axios.get<TVResponse>('http://localhost:8080/tmdb/tv/top_rated');
-    setTopTV(data);
-    let { data } = await axios.get<TVResponse>('http://localhost:8080/tmdb/tv/popular');
+    let tv_top = await axios.get<TVResponse>('http://localhost:8080/tmdb/tv/top_rated');
+    console.log()
+    setTopTV(tv_top.data);
+    let tv_trending = await axios.get<TVResponse>('http://localhost:8080/tmdb/tv/popular');
+    setTrendingTV(tv_trending.data);
     let movie_top = await axios.get<MovieResponse>('http://localhost:8080/tmdb/movie/top_rated');
+    setTopMovie(movie_top.data);
     let movie_trending = await axios.get<MovieResponse>('http://localhost:8080/tmdb/movie/popular');
+    setTrendingMovie(movie_trending.data);
   }
 
   return (
