@@ -7,6 +7,12 @@ type Params = {
   movie_id: number;
 };
 
+// CONFIGURATION
+router.get('/configuration', async (req: Request, res: Response) => {
+  let params = req.params as unknown as Params;
+  res.send(await tmdb.getConfig());
+})
+
 // TVs
 router.get('/tv/:tv_id', async (req: Request, res: Response) => {
   let params = req.params as unknown as Params;
