@@ -10,43 +10,57 @@ const config = {
   }
 }
 
-let getTV = (tv_id: number) => {
-  return axios.get(`https://api.themoviedb.org/3/tv/${tv_id}`, config)
+let getTV = async (tv_id: number) => {
+  return await axios.get(`https://api.themoviedb.org/3/tv/${tv_id}`, config)
     .then(results => {
       return results.data;
     });
 }
 
-let getPopularTVs = () => {
-  return axios.get('https://api.themoviedb.org/3/tv/popular', config)
+let getTopTVs = async () => {
+  return await axios.get('https://api.themoviedb.org/3/tv/top_rated', config)
     .then(results => {
       return results.data;
     });
 }
 
-let getTVWatchProviders = (tv_id: number) => {
-  return axios.get(`https://api.themoviedb.org/3/tv/${tv_id}/watch/providers`)
+let getPopularTVs = async () => {
+  return await axios.get('https://api.themoviedb.org/3/tv/popular', config)
     .then(results => {
       return results.data;
     });
 }
 
-let getMovie = (movie_id: number) => {
-  return axios.get(`https://api.themoviedb.org/3//movie/${movie_id}`, config)
+let getTVWatchProviders = async (tv_id: number) => {
+  return await axios.get(`https://api.themoviedb.org/3/tv/${tv_id}/watch/providers`)
     .then(results => {
       return results.data;
     });
 }
 
-let getPopularMovies = () => {
-  return axios.get('https://api.themoviedb.org/3/movie/popular', config)
+let getMovie = async (movie_id: number) => {
+  return await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}`, config)
     .then(results => {
       return results.data;
     });
 }
 
-let getMovieWatchProviders = (movie_id: number) => {
-  return axios.get(`https://api.themoviedb.org/3//movie/${movie_id}/watch/providers`)
+let getTopMovies = async () => {
+  return await axios.get('https://api.themoviedb.org/3/movie/top_rated', config)
+    .then(results => {
+      return results.data;
+    });
+}
+
+let getPopularMovies = async () => {
+  return await axios.get('https://api.themoviedb.org/3/movie/popular', config)
+    .then(results => {
+      return results.data;
+    });
+}
+
+let getMovieWatchProviders = async (movie_id: number) => {
+  return await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/watch/providers`)
     .then(results => {
       return results.data;
     });
@@ -54,9 +68,11 @@ let getMovieWatchProviders = (movie_id: number) => {
 
 export default {
   getTV,
+  getTopTVs,
   getPopularTVs,
   getTVWatchProviders,
   getMovie,
+  getTopMovies,
   getPopularMovies,
   getMovieWatchProviders
 };
