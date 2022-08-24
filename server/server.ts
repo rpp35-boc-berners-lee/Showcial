@@ -3,6 +3,7 @@ import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
+import api_router from './api/routes/tmdb_api';
 import { router as baseEndpointRoute } from './routes/base-endpoint.route';
 import db from './database/db';
 
@@ -17,6 +18,9 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
+
+// API ROUTE
+app.use('/tmdb', api_router);
 
 //ROUTES
 app.use('/api', baseEndpointRoute);
