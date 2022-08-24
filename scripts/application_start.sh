@@ -13,6 +13,7 @@ export NVM_DIR="$HOME/.nvm"
 
 #install node modules
 npm install
-
+echo "after npm install"
 #start our node app in the background
 npm run dev > app.out.log 2> app.err.log < /dev/null &
+echo "started the server?"
