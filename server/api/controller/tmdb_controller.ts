@@ -10,6 +10,13 @@ const config = {
   }
 }
 
+let getConfig = async () => {
+  return await axios.get(`https://api.themoviedb.org/3/configuration`, config)
+    .then(results => {
+      return results.data;
+    });
+}
+
 let getTV = async (tv_id: number) => {
   return await axios.get(`https://api.themoviedb.org/3/tv/${tv_id}`, config)
     .then(results => {
@@ -74,5 +81,6 @@ export default {
   getMovie,
   getTopMovies,
   getPopularMovies,
-  getMovieWatchProviders
+  getMovieWatchProviders,
+  getConfig
 };

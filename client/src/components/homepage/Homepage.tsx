@@ -1,7 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Homepage.scss';
-import { any } from 'cypress/types/bluebird';
+import { YourWatchList } from './homepage_components/YourWatchList'
+
+interface ConfigAPI {
+  images: ConfigImages;
+  change_keys: string[];
+}
+
+interface ConfigImages {
+  base_url: string;
+  secure_base_url: string;
+  backdrop_sizes: string[];
+  logo_sizes: string[];
+  poster_sizes: string[];
+  profile_sizes: string[];
+  still_sizes: string[];
+}
+
+type ConfigResponse = {
+  data: ConfigAPI[];
+}
 
 interface TVAPI {
   page: number;
@@ -59,6 +78,7 @@ type MovieResponse = {
 }
 
 export function Homepage() {
+  const [config, setConfig] = useState({});
   const [topTV, setTopTV] = useState({});
   const [trendingTV, setTrendingTV] = useState({});
   const [topMovie, setTopMovie] = useState({});
@@ -70,8 +90,9 @@ export function Homepage() {
   }, [])
 
   async function fetchData () {
+    let config = await axios.get<ConfigResponse>('http://localhost:8080/tmdb/configuration');
+    setConfig(config.data);
     let tv_top = await axios.get<TVResponse>('http://localhost:8080/tmdb/tv/top_rated');
-    console.log()
     setTopTV(tv_top.data);
     let tv_trending = await axios.get<TVResponse>('http://localhost:8080/tmdb/tv/popular');
     setTrendingTV(tv_trending.data);
@@ -84,6 +105,7 @@ export function Homepage() {
   return (
       <>
         <p>Hello World</p>
+        <YourWatchList watchList={watchList} config={config}/>
       </>
   );
 }
