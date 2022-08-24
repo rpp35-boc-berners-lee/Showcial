@@ -28,4 +28,4 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: webpack --config webpack.dev.js
-    - run: npm jest
+    - run: npm run jest
