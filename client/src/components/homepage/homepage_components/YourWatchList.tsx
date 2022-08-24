@@ -13,10 +13,6 @@ type Video = {
   name: string;
 }
 
-type Config = {
-  backdrop_sizes: string;
-}
-
 export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
    return (
       <>
