@@ -6,7 +6,7 @@ router.get('/', (req: Request, res: Response) => {
       status: 'success',
       data: {
          name: 'template',
-         version: '1.0.0',
+         version: '1.0.1',
       },
    });
 });
