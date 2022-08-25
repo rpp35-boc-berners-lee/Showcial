@@ -9,6 +9,7 @@ export default function Signin () {
   const verifyLogin = () => {
     //checks to see if user is valid
       //if so, navigate('/home')
+    //create session with details
   }
   //need a onChange handler for inputs
 
