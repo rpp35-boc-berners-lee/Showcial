@@ -6,11 +6,19 @@ import compression from 'compression';
 import api_router from './api/routes/tmdb_api';
 import { router as baseEndpointRoute } from './routes/base-endpoint.route';
 import db from './database/db';
+var session = require('express-session');
+require('dotenv').config();
+
 
 const port = 8080;
 
 const app = express();
 //MIDDLEWARE
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  cookie: {}
+}))
+
 app.use(compression());
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
