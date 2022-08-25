@@ -1,0 +1,15 @@
+@use '../../../index.scss' as *;
+
+.trending-videos-container {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   .visible-videos {
+   }
+}
+
+@keyframes slideLeft {
+}
+
+@keyframes slideRight {
+}
