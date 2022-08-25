@@ -46,6 +46,7 @@ const LandingPage = () => {
             </Grid>
 
             <Features />
+            <TrendingVideos />
          </Grid>
       </>
    );

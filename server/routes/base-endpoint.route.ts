@@ -5,7 +5,7 @@ router.get('/', (req: Request, res: Response) => {
    res.status(200).json({
       status: 'success',
       data: {
-         name: 'template',
+         name: 'Blue Ocean Capstone',
          version: '1.0.0',
       },
    });
