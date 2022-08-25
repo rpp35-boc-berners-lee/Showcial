@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
+const config = require('../../config/config.js');
 
+// const mongoDB = config.mongoDB_TOKEN;
 const mongoDB = 'mongodb://127.0.0.1/blueOceanCapstoneDB';
 
 mongoose.connect(mongoDB);
