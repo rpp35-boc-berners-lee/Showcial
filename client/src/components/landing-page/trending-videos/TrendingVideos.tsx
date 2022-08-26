@@ -44,9 +44,7 @@ export const TrendingVideos = () => {
          });
    }, []);
 
-   //todo create state equal to current index
-
-   const handleSlideLeft = () => {
+   const handleSlideRight = () => {
       let updatedIndex = currentIndex - 1;
       setCurrentIndex(updatedIndex);
       let currentMovies: any;
@@ -55,27 +53,23 @@ export const TrendingVideos = () => {
             .slice(updatedIndex, updatedIndex + 2)
             .concat(popularMovies.slice(0, 1));
       } else if (updatedIndex === -1) {
-         console.log('here in first block');
          updatedIndex = popularMovies.length - 1;
          currentMovies = popularMovies
             .slice(updatedIndex, popularMovies.length)
             .concat(popularMovies.slice(0, 2));
       } else if (updatedIndex === popularMovies.length - 1) {
-         console.log('here in second block');
          currentMovies = popularMovies
 
             .slice(updatedIndex, popularMovies.length)
             .concat(popularMovies.slice(0, 2));
       } else {
-         console.log('here in third block');
-         console.log('updatedIndex:', updatedIndex);
          currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 3);
       }
       setCurrentIndex(updatedIndex);
       setActiveMovies(currentMovies);
    };
 
-   const handleSlideRight = () => {
+   const handleSlideLeft = () => {
       let updatedIndex = currentIndex + 1;
       if (updatedIndex >= popularMovies.length) {
          updatedIndex = 0;
@@ -92,12 +86,6 @@ export const TrendingVideos = () => {
             .slice(updatedIndex, updatedIndex + 2)
             .concat(popularMovies.slice(0, 1));
       } else {
-         console.log('popularMovies:', popularMovies);
-         console.log('updatedIndex: ', updatedIndex);
-         console.log(
-            'slicedarrays:',
-            popularMovies.slice(updatedIndex, updatedIndex + 3)
-         );
          currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 3);
       }
 
