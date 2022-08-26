@@ -9,7 +9,7 @@ var passport = require('passport');
 
 const saltRounds = 10;
 
-const checkAuth = (req: Request, res: Response, next) => {
+const checkAuth = (req: Request, res: Response, next: any) => {
   if (!req.session.user) {
     res.redirect('/signin');
   } else next();
@@ -31,8 +31,8 @@ router.post('/signup', (req: Request, res: Response) => {
   let email = params.email;
   let password = params.password;
   let services = params.services;
-  //find one from db using email, if unsuccessful, hash password and store a new user
-    //if successful, res send 'email already in use, sign in or try another'
+  //find one from db using userName, if unsuccessful, hash password and store a new user
+    //if successful, res send 'Username already in use, sign in or try another'
 
   bcrypt.hash(password, saltRounds, (hash) => {
     //store user data here and update/save the session
@@ -56,6 +56,11 @@ router.post('/login/password', passport.authenticate('local', {
   failureRedirect: '/login'
 }));
 
+router.post('/guest', (req: Request, res: Response) => {
+  //update req.session.user to null
+  req.session.user = null;
+  res.send('Logged in as "guest"')
+})
 //need a delete route for logging out
 
 
