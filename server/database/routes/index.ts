@@ -20,8 +20,6 @@ router.post('/addUser', (req: Request, res: Response) => {
 router.get('/findUser', (req: Request, res: Response) => {
   return controllers.findUser(req.query.userName)
     .then((results: any) => {
-      results[0].hashedPassword = null;
-      delete results[0].hashedPassword;
       res.status(200).send(results[0]);
       res.end();
     })
@@ -45,14 +43,14 @@ router.get('/findUser', (req: Request, res: Response) => {
 //!================ VIDEO TABLE =================//
 //!==============================================//
 router.post('/addVideo', (req: Request, res: Response) => {
-  return controllers.addVideo();
+  // return controllers.addVideo();
 });
 
 //!==============================================//
 //!=============== RATINGS TABLE ================//
 //!==============================================//
 router.post('/addRating', (req: Request, res: Response) => {
-  return controllers.addRating();
+  // return controllers.addRating();
 });
 
 export default router;
