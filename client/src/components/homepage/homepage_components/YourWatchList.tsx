@@ -33,15 +33,18 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
     let box = document.querySelector('.MuiGrid-container');
     // let card = document.querySelector('.MuiCard-root');
     if (box !== null) {
-      let maxWidthCards = Math.floor(box.clientWidth / 300);
+      let maxWidthCards = Math.floor(box.clientWidth / 300) - 1;
       setMaxRowCards(maxWidthCards);
       setNumDisplayed(numDisplayed + maxWidthCards);
-      setDisplayedVideos(watchList.slice(0, maxWidthCards))
     }
   }, []);
 
   useEffect(() => {
-    setDisplayedVideos(watchList.slice(0, numDisplayed - 1));
+    console.log(numDisplayed);
+    if (numDisplayed > watchList.length) {
+      setNumDisplayed(watchList.length)
+    }
+    setDisplayedVideos(watchList.slice(0, numDisplayed));
   }, [numDisplayed]);
 
    return (
@@ -64,10 +67,10 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
       </Box>
       <Stack spacing={2} direction="row">
         {displayedVideos.length < watchList.length ?
-          <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={() => setNumDisplayed(numDisplayed + maxRowCards - 1)}>SHOW MORE</Button> : null}
+          <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={() => setNumDisplayed(numDisplayed + maxRowCards)}>SHOW MORE</Button> : null}
         {displayedVideos.length > maxRowCards ?
           <Button variant="text" startIcon={<ExpandLessIcon />} onClick={() =>
-            setNumDisplayed((numDisplayed - maxRowCards - 1 < maxRowCards) ? maxRowCards : (numDisplayed - maxRowCards - 1))}>SHOW LESS</Button> : null}
+            setNumDisplayed((numDisplayed - maxRowCards < maxRowCards) ? maxRowCards : (numDisplayed - maxRowCards))}>SHOW LESS</Button> : null}
       </Stack>
     </div>
    );
