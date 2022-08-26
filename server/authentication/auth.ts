@@ -44,3 +44,9 @@ router.get('/signin', (req: Request, res: Response) => {
       //if false, res.send('wrong email or password')
     //if unsuccessful, res.send('wrong email or password')
 })
+
+//the above route for sign in needs to be formulated to this...
+router.post('/login/password', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}));
