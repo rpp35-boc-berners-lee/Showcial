@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './TrendingVideos.scss';
-import { TrendingVideoItem } from './TrendingVideoItem';
+import { TrendingVideoItem } from './trending-video-item/TrendingVideoItem';
 import axios from 'axios';
-import { Typography, Stack } from '@mui/material';
+import { Typography, Stack, Grid, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 type PopularMovie = {
    backdrop_path: string;
-   first_air_date: string;
+   adult: boolean;
    id: number;
-   name: string;
-   origin_country: string[];
+   title: string;
    original_language: string;
-   original_name: string;
+   original_title: string;
    overview: string;
    popularity: number;
-   post_path: string;
+   release_date: string;
    vote_average: number;
    vote_count: number;
 };
@@ -25,20 +24,19 @@ export const TrendingVideos = () => {
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);
    const [imageUrl, setImageUrl] = useState<string>('');
    const [imageSize, setImageSize] = useState<string>('');
-   const [index, setIndex] = useState<number>(0);
-
+   const [currentIndex, setCurrentIndex] = useState<number>(0);
+   const [activeMovies, setActiveMovies] = useState<PopularMovie[] | []>([]);
    useEffect(() => {
       axios
          .get('http://localhost:8080/tmdb/movie/popular')
          .then((response) => {
-            console.log('response.data:', response.data);
             axios
                .get('http://localhost:8080/tmdb/configuration')
                .then((config) => {
-                  console.log('config:', config);
                   setImageUrl(config.data.images.secure_base_url);
-                  setImageSize(config.data.images.backdrop_sizes[1]);
+                  setImageSize(config.data.images.backdrop_sizes[0]);
                   setPopularMovies(response.data.results);
+                  setActiveMovies(response.data.results.slice(0, 3));
                });
          })
          .catch((err) => {
@@ -46,9 +44,66 @@ export const TrendingVideos = () => {
          });
    }, []);
 
-   const handleSlideLeft = () => {};
+   //todo create state equal to current index
 
-   const handleSlideRight = () => {};
+   const handleSlideLeft = () => {
+      let updatedIndex = currentIndex - 1;
+      setCurrentIndex(updatedIndex);
+      let currentMovies: any;
+      if (updatedIndex === popularMovies.length - 2) {
+         currentMovies = popularMovies
+            .slice(updatedIndex, updatedIndex + 2)
+            .concat(popularMovies.slice(0, 1));
+      } else if (updatedIndex === -1) {
+         console.log('here in first block');
+         updatedIndex = popularMovies.length - 1;
+         currentMovies = popularMovies
+            .slice(updatedIndex, popularMovies.length)
+            .concat(popularMovies.slice(0, 2));
+      } else if (updatedIndex === popularMovies.length - 1) {
+         console.log('here in second block');
+         currentMovies = popularMovies
+
+            .slice(updatedIndex, popularMovies.length)
+            .concat(popularMovies.slice(0, 2));
+      } else {
+         console.log('here in third block');
+         console.log('updatedIndex:', updatedIndex);
+         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 3);
+      }
+      setCurrentIndex(updatedIndex);
+      setActiveMovies(currentMovies);
+   };
+
+   const handleSlideRight = () => {
+      let updatedIndex = currentIndex + 1;
+      if (updatedIndex >= popularMovies.length) {
+         updatedIndex = 0;
+      }
+      setCurrentIndex(updatedIndex);
+      let currentMovies: any;
+
+      if (popularMovies.length - 1 === updatedIndex) {
+         currentMovies = popularMovies
+            .slice(updatedIndex, updatedIndex + 1)
+            .concat(popularMovies.slice(0, 2));
+      } else if (popularMovies.length - 2 === updatedIndex) {
+         currentMovies = popularMovies
+            .slice(updatedIndex, updatedIndex + 2)
+            .concat(popularMovies.slice(0, 1));
+      } else {
+         console.log('popularMovies:', popularMovies);
+         console.log('updatedIndex: ', updatedIndex);
+         console.log(
+            'slicedarrays:',
+            popularMovies.slice(updatedIndex, updatedIndex + 3)
+         );
+         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 3);
+      }
+
+      setActiveMovies(currentMovies);
+   };
+
    if (popularMovies.length > 0) {
       return (
          <>
@@ -57,19 +112,35 @@ export const TrendingVideos = () => {
                   Currently Trending
                </Typography>
                <div className='trending-videos-container'>
-                  <ArrowBackIosIcon onClick={handleSlideLeft} />
-                  <div className='visible-videos'>
-                     {popularMovies.map((movie) => (
+                  <IconButton onClick={handleSlideLeft}>
+                     <ArrowBackIosIcon />
+                  </IconButton>
+                  <Grid
+                     wrap='wrap'
+                     direction='row'
+                     container
+                     gap='1rem'
+                     justifyContent='space-around'
+                     rowSpacing={2}
+                     sx={{ overflow: 'hidden', height: '260px', width: '100%' }}
+                     columns={{ xs: 4, sm: 4, md: 12 }}
+                  >
+                     {activeMovies.map((movie, index) => (
                         <TrendingVideoItem
+                           itemIndex={index}
+                           currentIndex={currentIndex}
                            key={movie.id}
                            image={movie.backdrop_path}
-                           name={movie.name}
+                           title={movie.title}
                            imageUrl={imageUrl}
                            imageSize={imageSize}
+                           totalArrayLength={popularMovies.length}
                         />
                      ))}
-                  </div>
-                  <ArrowForwardIosIcon onClick={handleSlideRight} />
+                  </Grid>
+                  <IconButton onClick={handleSlideRight}>
+                     <ArrowForwardIosIcon />
+                  </IconButton>
                </div>
             </Stack>
          </>
