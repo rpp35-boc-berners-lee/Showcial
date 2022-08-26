@@ -20,7 +20,9 @@ router.post('/addUser', (req: Request, res: Response) => {
 router.get('/findUser', (req: Request, res: Response) => {
   return controllers.findUser(req.query.userName)
     .then((results: any) => {
-      res.status(200).send(results);
+      results[0].hashedPassword = null;
+      delete results[0].hashedPassword;
+      res.status(200).send(results[0]);
       res.end();
     })
     .catch((error: any) => {
@@ -30,12 +32,27 @@ router.get('/findUser', (req: Request, res: Response) => {
     })
 });
 
+//TODO: add userID to following list
+//TODO: remove userID from following list
+//TODO: add videoID to watched list
+//TODO: remove videoID from watched list
+//TODO: add videoID to recommended list
+//TODO: remove videoID from recommended list
+//TODO: add service to owned list
+//TODO: remove service from owned list
+
 //!==============================================//
 //!================ VIDEO TABLE =================//
 //!==============================================//
+router.post('/addVideo', (req: Request, res: Response) => {
+  return controllers.addVideo();
+});
 
 //!==============================================//
 //!=============== RATINGS TABLE ================//
 //!==============================================//
+router.post('/addRating', (req: Request, res: Response) => {
+  return controllers.addRating();
+});
 
 export default router;

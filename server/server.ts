@@ -6,18 +6,16 @@ import compression from 'compression';
 import api_router from './api/routes/tmdb_api';
 import videoDB_router from './database/routes/index';
 import { router as baseEndpointRoute } from './routes/base-endpoint.route';
-import db from './database/db';
+// import db from './database/db';
 
 const port = 8080;
 
 const app = express();
+
 //MIDDLEWARE
 app.use(compression());
-
 app.use(express.static(path.join(__dirname, '../client/dist')));
-
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(bodyParser.json());
 
 // API ROUTE

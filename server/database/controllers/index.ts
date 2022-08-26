@@ -19,9 +19,9 @@ const addUser = (userData: UserData) => {
     userName: userData.userName,
     email: userData.email,
     hashedPassword: userData.hashedPassword,
-    followingList: [], // userData.followingList || [] ???
-    watchedVideos: [],
-    recommendedVideos: [],
+    followingList:  userData.followingList || [],
+    watchedVideos: userData.watchedVideos || [],
+    recommendedVideos: userData.recommendedVideos || [],
     ownedServices: userData.ownedServices || [],
   })
   return newUser.save()
@@ -34,10 +34,8 @@ const addUser = (userData: UserData) => {
 };
 
 const findUser = (userName: any) => {
-  console.log('findUser controller', userName);
   return models.UserTable.find({'userName': userName})
     .then((results: any) => {
-      console.log('findUser results', results)
       return results;
     })
     .catch((error: any) => {
@@ -45,7 +43,6 @@ const findUser = (userName: any) => {
     });
 };
 
-//? delete existing user
 //TODO: add userID to following list
 //TODO: remove userID from following list
 
@@ -57,32 +54,33 @@ const findUser = (userName: any) => {
 
 //TODO: add service to owned list
 //TODO: remove service from owned list
+// update user document w/ options
+const updateUser = () => {};
 
-
-//TODO: get watched list by userName/userID??
-//TODO: get following list by userName/userID??
-//TODO: get recommended list by userName/userID??
-  //!--> get all user info by
-
-
-
+//? delete existing user
 
 //!==============================================//
 //!================ VIDEO TABLE =================//
 //!==============================================//
 //TODO: add new video
-//TODO: remove existing video??
+const addVideo = () => {};
+
+//? remove existing video??
 
 //!==============================================//
 //!=============== RATINGS TABLE ================//
 //!==============================================//
 //TODO: create rating
+const addRating = () => {};
+
 //? delete rating
 //? update rating
 //? update comment
 
-// export controllers
 export default {
   addUser,
-  findUser
+  findUser,
+  updateUser,
+  addVideo,
+  addRating
 }
