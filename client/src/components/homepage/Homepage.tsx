@@ -17,24 +17,21 @@ export function Homepage() {
   }, [])
 
   async function fetchAPI () {
-    let config = await axios.get<ConfigAPI>('http://localhost:8080/tmdb/configuration');
-    console.log(config.data);
+    let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
     setConfig(config.data);
-    let tv_top = await axios.get<TVAPI>('http://localhost:8080/tmdb/tv/top_rated');
-    console.log(tv_top.data);
+    let tv_top = await axios.get<TVAPI>(`http://localhost:8080/tmdb/tv/top_rated`);
     setTopTV(tv_top.data);
-    let tv_trending = await axios.get<TVAPI>('http://localhost:8080/tmdb/tv/popular');
+    let tv_trending = await axios.get<TVAPI>(`http://localhost:8080/tmdb/tv/popular`);
     setTrendingTV(tv_trending.data);
-    let movie_top = await axios.get<MovieAPI>('http://localhost:8080/tmdb/movie/top_rated');
+    let movie_top = await axios.get<MovieAPI>(`http://localhost:8080/tmdb/movie/top_rated`);
     setTopMovie(movie_top.data);
-    let movie_trending = await axios.get<MovieAPI>('http://localhost:8080/tmdb/movie/popular');
+    let movie_trending = await axios.get<MovieAPI>(`http://localhost:8080/tmdb/movie/popular`);
     setTrendingMovie(movie_trending.data);
   }
 
   return (
       <>
         <p>Hello World</p>
-        <h3>YOUR WATCH LIST</h3>
         {topTV !== undefined ?
         <YourWatchList watchList={topTV.results} config={config}/>: null}
       </>
