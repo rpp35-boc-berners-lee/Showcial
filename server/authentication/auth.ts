@@ -2,14 +2,19 @@ import { RequestPage } from '@mui/icons-material';
 import { Request, Response, Router } from 'express';
 const bcrypt = require('bcrypt');
 const router = Router();
+var session = require('express-session');
+var passport = require('passport');
+
+
 
 const saltRounds = 10;
 
+const checkAuth = (req: Request, res: Response, next) => {
+  if (!req.session.user) {
+    res.redirect('/signin');
+  } else next();
+}
 
-// router.get('/configuration', async (req: Request, res: Response) => {
-//   let params = req.params as unknown as Params;
-//   res.send(await tmdb.getConfig());
-// })
 type Params = {
   firstName: string;
   lastName: string;
@@ -19,7 +24,7 @@ type Params = {
 
 };
 
-router.get('/signup', (req: Request, res: Response) => {
+router.post('/signup', (req: Request, res: Response) => {
   let params = req.params as unknown as Params;
   let firstName = params.firstName;
   let lastName = params.lastName;
@@ -30,11 +35,11 @@ router.get('/signup', (req: Request, res: Response) => {
     //if successful, res send 'email already in use, sign in or try another'
 
   bcrypt.hash(password, saltRounds, (hash) => {
-    //store user data here
+    //store user data here and update/save the session
   })
 });
 
-router.get('/signin', (req: Request, res: Response) => {
+router.post('/signin', (req: Request, res: Response) => {
   let params = req.params as unknown as Params;
   let email = params.email;
   let password = params.password;
@@ -50,3 +55,8 @@ router.post('/login/password', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login'
 }));
+
+//need a delete route for logging out
+
+
+export default {checkAuth, router};
