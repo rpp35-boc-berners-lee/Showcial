@@ -10,6 +10,10 @@ type UserData = {
   ownedServices: string[];
 };
 
+type VideoData = {
+
+}
+
 //!==============================================//
 //!================ USER TABLE ==================//
 //!==============================================//
@@ -45,13 +49,10 @@ const findUser = (userName: any) => {
 
 //TODO: add userID to following list
 //TODO: remove userID from following list
-
 //TODO: add videoID to watched list
 //TODO: remove videoID from watched list
-
 //TODO: add videoID to recommended list
 //TODO: remove videoID from recommended list
-
 //TODO: add service to owned list
 //TODO: remove service from owned list
 // update user document w/ options
@@ -62,16 +63,44 @@ const updateUser = () => {};
 //!==============================================//
 //!================ VIDEO TABLE =================//
 //!==============================================//
-//TODO: add new video
-const addVideo = () => {};
+const addVideo = (videoData: any) => {
+  const newVideo = new models.VideoTable({
+    videoName: videoData.videoName,
+    overallRating: videoData.overallRating,
+    userName: videoData.userName,
+    watchProviders: videoData.watchProviders
+  });
+  return newVideo.save()
+    .then(() => {
+      console.log("success posting new video");
+    })
+    .catch((error: any) => {
+      console.log('Error posting new video', error)
+    });
+};
 
+//? get videos by reviewer/for movie?
 //? remove existing video??
 
 //!==============================================//
 //!=============== RATINGS TABLE ================//
 //!==============================================//
 //TODO: create rating
-const addRating = () => {};
+const addRating = (ratingData: any) => {
+  const newRating = models.RatingsTable({
+    videoName: ratingData.videoName,
+    userName: ratingData.userName,
+    userRating: ratingData.userRating,
+    comments: ratingData.comments
+  });
+  return newRating.save()
+    .then(() => {
+      console.log('success posting new rating')
+    })
+    .catch((error: any) => {
+      console.log('error posting new rating', error);
+    });
+};
 
 //? delete rating
 //? update rating
