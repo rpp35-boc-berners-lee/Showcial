@@ -9,7 +9,7 @@ import {
    useAutocomplete,
 } from '@mui/material';
 import AboutPageImage from './images/Subscribe.svg';
-import { TrendingVideos } from './trending-videos/TrendingVideos';
+import { TrendingVideos } from '../shared/trending-videos/TrendingVideos';
 import { useNavigate } from 'react-router-dom';
 const AboutPage = () => {
    const navigate = useNavigate();
