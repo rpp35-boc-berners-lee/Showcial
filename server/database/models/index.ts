@@ -20,7 +20,13 @@ mongoose.connection.once('open', () => {
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const userTableSchema = mongoose.Schema({
-  userName: String, //! make a unique value
+  userName: {
+    type: String,
+    index: {
+      unique: true,
+      dropDups: true
+    }
+  },
   email: String,
   hashedPassword: String, // removed from response
   followingList: Array, // array of "followed" userIDs
@@ -33,15 +39,17 @@ const UserTable = mongoose.model('userTable', userTableSchema);
 const videoTableSchema = mongoose.Schema({
   videoName: String,
   overallRating: Number, // rating from video API
-  userID: Number, //! foreign key
-  watchProvider: String, // or ID?
+  userName: String, //! foreign key
+  // userID: Number, // foreign key
+  watchProviders: Array, // array of service providers
 });
 const VideoTable = mongoose.model('videoTable', videoTableSchema);
 
 const ratingsTableSchema = mongoose.Schema({
-  videoID: Number, //! foreign key
+  // videoID: Number, // foreign key
+  videoName: String, //! foreign key
   userName: String,
-  rating: Number,
+  userRating: Number,
   comments: String // optional
 });
 const RatingsTable = mongoose.model('ratingsTable', ratingsTableSchema);
