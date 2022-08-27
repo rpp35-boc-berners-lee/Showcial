@@ -4,9 +4,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import api_router from './api/routes/tmdb_api';
+import videoDB_router from './database/routes/index';
 import { router as baseEndpointRoute } from './routes/base-endpoint.route';
 import {router as authRouter} from './authentication/auth';
-import db from './database/db';
+// import db from './database/db';
 var session = require('express-session');
 const MongoStore = require('connect-mongo');
 var passport = require('passport');
@@ -16,10 +17,10 @@ const port = 8080;
 const db_conn = process.env.DB_CONN
 const secret = process.env.SESSION_SECRET
 const app = express();
+
 //MIDDLEWARE
 
 app.use(compression());
-
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.use(session({
@@ -36,11 +37,13 @@ store: MongoStore.create({mongoUrl: db_conn})
 }))
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(bodyParser.json());
 
 // API ROUTE
 app.use('/tmdb', api_router);
+
+// MONGODB ROUTE
+app.use('/videoDB', videoDB_router);
 
 //ROUTES
 app.use('/api', baseEndpointRoute);
