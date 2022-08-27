@@ -20,7 +20,13 @@ mongoose.connection.once('open', () => {
 mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const userTableSchema = mongoose.Schema({
-  userName: String, //! make a unique value
+  userName: {
+    type: String,
+    index: {
+      unique: true,
+      dropDups: true
+    }
+  },
   email: String,
   hashedPassword: String, // removed from response
   followingList: Array, // array of "followed" userIDs

@@ -56,7 +56,15 @@ const findUser = (userName: any) => {
 //TODO: add service to owned list
 //TODO: remove service from owned list
 // update user document w/ options
-const updateUser = () => {};
+const updateUser = (userName: string, prop: string, value: any) => {
+  models.UserTable.findOneAndUpdate({userName}, {[prop]: value})
+    .then(() => {
+      console.log(`Success updating ${userName} with {${prop}: ${value}}`)
+    })
+    .catch((error: any) => {
+      console.log(`Error updating ${userName} with {${prop}: ${value}}`);
+    });
+};
 
 //? delete existing user
 
@@ -102,9 +110,9 @@ const addRating = (ratingData: any) => {
     });
 };
 
-//? delete rating
 //? update rating
 //? update comment
+//? delete rating
 
 export default {
   addUser,
