@@ -12,7 +12,8 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useNavigate } from 'react-router-dom';
 
-const pages = ['Log in', 'Sign up'];
+
+const pages = ['Sign in', 'Sign up'];
 
 const ResponsiveAppBar = () => {
    const navigate = useNavigate();
@@ -39,12 +40,13 @@ const ResponsiveAppBar = () => {
    };
 
    const handleNavigate = (page: string) => {
-      if (page === 'Log in') {
-         navigate('/login');
-      } else {
+      if (page === 'Sign in') {
+         navigate('/signin');
+      }
+      if (page === 'Sign up') {
          navigate('/signup');
       }
-   };
+   }
 
    return (
       <AppBar position='static'>
