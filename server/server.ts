@@ -6,7 +6,7 @@ import compression from 'compression';
 import api_router from './api/routes/tmdb_api';
 import { router as baseEndpointRoute } from './routes/base-endpoint.route';
 import db from './database/db';
-
+import cors from 'cors';
 const port = 8080;
 
 const app = express();
@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
+app.use(cors());
 
 // API ROUTE
 app.use('/tmdb', api_router);

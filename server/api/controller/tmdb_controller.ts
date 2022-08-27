@@ -5,9 +5,7 @@ const token = process.env.TOKEN;
 
 const config = {
   headers: {
-    Authorization: `Bearer ${token}`
-    // 'Content-Type': 'application/json;charset=utf-8'
-  }
+    Authorization: `Bearer ${token}`}// 'Content-Type': 'application/json;charset=utf-8}
 }
 
 let getConfig = async () => {
