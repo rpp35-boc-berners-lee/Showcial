@@ -13,6 +13,7 @@ const LandingPage = () => {
             columns={{ xs: 4, sm: 8, md: 12 }}
             direction='row'
             className='landing-page'
+            spacing={4}
          >
             <Grid
                item

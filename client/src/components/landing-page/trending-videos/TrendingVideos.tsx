@@ -95,7 +95,10 @@ export const TrendingVideos = () => {
    if (popularMovies.length > 0) {
       return (
          <>
-            <Stack direction='column' sx={{ height: '100%', width: '100%' }}>
+            <Stack
+               direction='column'
+               sx={{ height: '100%', width: '100%', pt: '2rem' }}
+            >
                <Typography variant='h4' component='h2'>
                   Currently Trending
                </Typography>
