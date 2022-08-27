@@ -20,7 +20,7 @@ export const TrendingVideoItem = ({
 }: Props) => {
    return (
       <>
-         <Grid item xs={4} sm={4} md={3}>
+         <Grid item xs={4} sm={4} md={3} sx={{ alignItems: 'center' }}>
             {/* <div className='item-inner-container'>
                <img src={`${imageUrl}${imageSize}${image}`} alt={title} />
                <Typography variant='h4' align='center'>

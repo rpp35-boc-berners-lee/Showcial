@@ -99,7 +99,7 @@ export const TrendingVideos = () => {
                direction='column'
                sx={{ height: '100%', width: '100%', pt: '2rem' }}
             >
-               <Typography variant='h4' component='h2'>
+               <Typography variant='h4' component='h2' align='center'>
                   Currently Trending
                </Typography>
                <div className='trending-videos-container'>

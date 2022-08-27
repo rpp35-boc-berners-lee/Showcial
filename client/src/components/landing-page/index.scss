@@ -1,6 +1,10 @@
 @use '../../index.scss' as *;
 
 .landing-page {
+   @include set-size(100%);
+   @include devices(mobile) {
+      padding: 0 2rem;
+   }
    padding: 0 5rem;
    img {
       max-height: 50vh;
