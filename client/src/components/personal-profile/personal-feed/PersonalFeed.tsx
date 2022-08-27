@@ -1,10 +1,17 @@
 import React from 'react';
-import './PersonalFeed.scss';
+import { Post } from '../post/Post';
+import { Stack } from '@mui/material';
 
 export const PersonalFeed = () => {
    return (
-      <>
-         <p>This is personal feed</p>
-      </>
+      <div>
+        <Stack spacing={2}>
+         <Post />
+         <Post />
+         <Post />
+         <Post />
+        </Stack>
+         
+      </div>
    );
 };
