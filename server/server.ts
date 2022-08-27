@@ -6,7 +6,7 @@ import compression from 'compression';
 import api_router from './api/routes/tmdb_api';
 import videoDB_router from './database/routes/index';
 import { router as baseEndpointRoute } from './routes/base-endpoint.route';
-import {router as authRouter} from './authentication/auth';
+import { router as authRouter } from './authentication/auth';
 import cors from 'cors';
 
 var session = require('express-session');
@@ -39,10 +39,7 @@ store: MongoStore.create({mongoUrl: db_conn})
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cors());
-
 app.use(bodyParser.json());
-app.use(cors());
 
 // API ROUTE
 app.use('/tmdb', api_router);
