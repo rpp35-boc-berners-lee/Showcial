@@ -42,6 +42,7 @@ app.use(
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
+app.use(cors());
 
 // API ROUTE
 app.use('/tmdb', api_router);
