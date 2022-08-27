@@ -31,7 +31,6 @@ export function Homepage() {
 
   return (
       <>
-        <p>Hello World</p>
         {topTV !== undefined ?
         <YourWatchList watchList={topTV.results} config={config}/>: null}
       </>

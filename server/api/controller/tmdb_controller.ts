@@ -20,6 +20,7 @@ let getConfig = async () => {
 let getTV = async (tv_id: number) => {
   return await axios.get(`https://api.themoviedb.org/3/tv/${tv_id}`, config)
     .then(results => {
+      // console.log(results.data);
       return results.data;
     });
 }
@@ -27,6 +28,13 @@ let getTV = async (tv_id: number) => {
 let getTopTVs = async () => {
   return await axios.get('https://api.themoviedb.org/3/tv/top_rated', config)
     .then(results => {
+      // console.log(results.data);
+      // for (let i = 0; i < results.data.length; i++) {
+      //   let watchProviders = getTVWatchProviders(results.data[i].id);
+      //   console.log(watchProviders);
+      //   results.data[i].watchProviders = watchProviders;
+      //   console.log(results.data[i]);
+      // }
       return results.data;
     });
 }
