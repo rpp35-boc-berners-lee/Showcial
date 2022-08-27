@@ -42,16 +42,10 @@ export const WatchProviders = () => {
       component="ul"
     >
       {chipData.map((data) => {
-        // let icon;
-
-        // if (data.label === 'React') {
-        //   icon = <TagFacesIcon />;
-        // }
         console.log(data);
         return (
           <ListItem key={data.key}>
             <Chip
-              // icon={icon}
               label={data.label}
               onDelete={handleDelete(data)}
             />

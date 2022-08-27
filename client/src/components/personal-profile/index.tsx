@@ -1,7 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
 import './PersonalProfile.scss';
-// import { SelectBar } from './select-bar/SelectBar';
 import { ForYou } from './for-you/ForYou';
 import { FollowingList } from './following-list/FollowingList';
 
