@@ -7,7 +7,7 @@ import controllers from '../controllers/index';
 //!==============================================//
 router.post('/addUser', (req: Request, res: Response) => {
   return controllers.addUser(req.body)
-    .then((success: any) => {
+    .then((results: any) => {
       res.status(201);
       res.end();
     })
@@ -20,8 +20,6 @@ router.post('/addUser', (req: Request, res: Response) => {
 router.get('/findUser', (req: Request, res: Response) => {
   return controllers.findUser(req.query.userName)
     .then((results: any) => {
-      results[0].hashedPassword = null;
-      delete results[0].hashedPassword;
       res.status(200).send(results[0]);
       res.end();
     })
@@ -45,14 +43,30 @@ router.get('/findUser', (req: Request, res: Response) => {
 //!================ VIDEO TABLE =================//
 //!==============================================//
 router.post('/addVideo', (req: Request, res: Response) => {
-  return controllers.addVideo();
+  return controllers.addVideo(req.body)
+    .then((results: any) => {
+      res.status(201);
+      res.end();
+    })
+    .catch((error: any) => {
+      console.log('failed POST /addVideo', error)
+      res.status(400).send(error);
+      res.end();
+    });
 });
 
 //!==============================================//
 //!=============== RATINGS TABLE ================//
 //!==============================================//
 router.post('/addRating', (req: Request, res: Response) => {
-  return controllers.addRating();
+  return controllers.addRating(req.body)
+    .then((results: any) => {
+      res.status(201);
+      res.end();
+    })
+    .catch((error: any) => {
+      console.log('Failed POST /addRating')
+    });
 });
 
 export default router;
