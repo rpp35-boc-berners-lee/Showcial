@@ -36,7 +36,7 @@ export const TrendingVideos = () => {
                   setImageUrl(config.data.images.secure_base_url);
                   setImageSize(config.data.images.backdrop_sizes);
                   setPopularMovies(response.data.results);
-                  setActiveMovies(response.data.results.slice(0, 3));
+                  setActiveMovies(response.data.results.slice(0, 6));
                });
          })
          .catch((err) => {
@@ -45,25 +45,22 @@ export const TrendingVideos = () => {
    }, []);
 
    const handleSlideRight = () => {
+      console.log('currentIndex:', currentIndex);
       let updatedIndex = currentIndex - 1;
-      setCurrentIndex(updatedIndex);
       let currentMovies: any;
-      if (updatedIndex === popularMovies.length - 2) {
+      if (updatedIndex === -1) {
          currentMovies = popularMovies
-            .slice(updatedIndex, updatedIndex + 2)
-            .concat(popularMovies.slice(0, 1));
-      } else if (updatedIndex === -1) {
+            .slice(updatedIndex)
+            .concat(popularMovies.slice(0, 7 + updatedIndex));
          updatedIndex = popularMovies.length - 1;
+      } else if (updatedIndex >= popularMovies.length - 6) {
          currentMovies = popularMovies
             .slice(updatedIndex, popularMovies.length)
-            .concat(popularMovies.slice(0, 2));
-      } else if (updatedIndex === popularMovies.length - 1) {
-         currentMovies = popularMovies
-
-            .slice(updatedIndex, popularMovies.length)
-            .concat(popularMovies.slice(0, 2));
+            .concat(
+               popularMovies.slice(0, 7 - (popularMovies.length - updatedIndex))
+            );
       } else {
-         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 3);
+         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 7);
       }
       setCurrentIndex(updatedIndex);
       setActiveMovies(currentMovies);
@@ -71,24 +68,22 @@ export const TrendingVideos = () => {
 
    const handleSlideLeft = () => {
       let updatedIndex = currentIndex + 1;
+
       if (updatedIndex >= popularMovies.length) {
          updatedIndex = 0;
       }
-      setCurrentIndex(updatedIndex);
+
       let currentMovies: any;
-
-      if (popularMovies.length - 1 === updatedIndex) {
+      if (updatedIndex >= popularMovies.length - 6) {
          currentMovies = popularMovies
-            .slice(updatedIndex, updatedIndex + 1)
-            .concat(popularMovies.slice(0, 2));
-      } else if (popularMovies.length - 2 === updatedIndex) {
-         currentMovies = popularMovies
-            .slice(updatedIndex, updatedIndex + 2)
-            .concat(popularMovies.slice(0, 1));
+            .slice(updatedIndex, popularMovies.length)
+            .concat(
+               popularMovies.slice(0, 7 - (popularMovies.length - updatedIndex))
+            );
       } else {
-         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 3);
+         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 7);
       }
-
+      setCurrentIndex(updatedIndex);
       setActiveMovies(currentMovies);
    };
 
@@ -110,11 +105,15 @@ export const TrendingVideos = () => {
                      wrap='wrap'
                      direction='row'
                      container
-                     gap='1rem'
-                     justifyContent='space-around'
                      rowSpacing={2}
-                     sx={{ overflow: 'hidden', height: '260px', width: '100%' }}
-                     columns={{ xs: 4, sm: 4, md: 12 }}
+                     sx={{
+                        overflow: 'hidden',
+                        height: '260px',
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                     }}
+                     columns={{ xs: 4, sm: 6, md: 12, lg: 12, xl: 20 }}
                   >
                      {activeMovies.map((movie, index) => (
                         <TrendingVideoItem
@@ -125,7 +124,6 @@ export const TrendingVideos = () => {
                            title={movie.title}
                            imageUrl={imageUrl}
                            imageSize={imageSize}
-                           totalArrayLength={popularMovies.length}
                         />
                      ))}
                   </Grid>

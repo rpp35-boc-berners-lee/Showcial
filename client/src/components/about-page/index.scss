@@ -3,9 +3,9 @@
 .landing-page {
    @include set-size(100%);
    @include devices(mobile) {
-      padding: 0 2rem;
+      padding: 0 1rem;
    }
-   padding: 0 5rem;
+   padding: 0 3rem;
    img {
       max-height: 50vh;
    }

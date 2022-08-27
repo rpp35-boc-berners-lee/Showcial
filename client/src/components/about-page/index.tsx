@@ -8,10 +8,10 @@ import {
    Button,
    useAutocomplete,
 } from '@mui/material';
-import LandingPageImage from './images/Subscribe.svg';
+import AboutPageImage from './images/Subscribe.svg';
 import { TrendingVideos } from './trending-videos/TrendingVideos';
 import { useNavigate } from 'react-router-dom';
-const LandingPage = () => {
+const AboutPage = () => {
    const navigate = useNavigate();
    return (
       <>
@@ -25,21 +25,14 @@ const LandingPage = () => {
                <Grid
                   item
                   component='img'
-                  src={LandingPageImage}
+                  src={AboutPageImage}
                   alt='main page image'
                   xs={4}
                   sm={4}
                   md={6}
                />
 
-               <Grid
-                  item
-                  xs={4}
-                  sm={4}
-                  md={6}
-                  justifyContent='center'
-                  alignItems='center'
-               >
+               <Grid item xs={4} sm={4} md={6} alignSelf={'center'}>
                   <Typography
                      variant='h2'
                      component='h1'
@@ -58,6 +51,7 @@ const LandingPage = () => {
                      occaecat cupidatat non proident, sunt in culpa qui officia
                      deserunt mollit anim id est laborum.
                   </Typography>
+
                   <Stack direction='row' spacing={1}>
                      <Button
                         variant='contained'
@@ -84,4 +78,4 @@ const LandingPage = () => {
    );
 };
 
-export default LandingPage;
+export default AboutPage;

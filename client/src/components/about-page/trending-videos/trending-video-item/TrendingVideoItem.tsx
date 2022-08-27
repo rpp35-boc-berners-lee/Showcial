@@ -7,26 +7,30 @@ interface Props {
    imageUrl: string;
    imageSize: string[];
    currentIndex: number;
-   totalArrayLength: number;
    itemIndex: number;
 }
 
 export const TrendingVideoItem = ({
    image,
-   totalArrayLength,
    title,
    imageUrl,
    imageSize,
 }: Props) => {
    return (
       <>
-         <Grid item xs={4} sm={4} md={3} sx={{ alignItems: 'center' }}>
-            {/* <div className='item-inner-container'>
-               <img src={`${imageUrl}${imageSize}${image}`} alt={title} />
-               <Typography variant='h4' align='center'>
-                  {title}
-               </Typography>
-            </div> */}
+         <Grid
+            item
+            xs={4}
+            sm={3}
+            md={6}
+            lg={4}
+            xl={4}
+            sx={{
+               display: 'flex',
+               justifyContent: 'center',
+               maxWidth: '300px',
+            }}
+         >
             <VideoCard
                base_url={imageUrl}
                backdrop_sizes={imageSize}
