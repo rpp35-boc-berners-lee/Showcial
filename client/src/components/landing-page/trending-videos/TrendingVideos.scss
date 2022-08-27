@@ -1,0 +1,33 @@
+@use '../../../index.scss' as *;
+
+.trending-videos-container {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+
+   img {
+      // @include set-size(50%);
+      @include cover-background();
+      // object-fit: scale-down;
+      // max-width: 300px;
+      // width: 100%;
+      height: auto;
+   }
+}
+
+.inactive {
+   display: hidden;
+}
+.item-inner-container {
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   justify-content: center;
+   gap: 1rem;
+   padding-top: 1rem;
+}
+@keyframes slideLeft {
+}
+
+@keyframes slideRight {
+}

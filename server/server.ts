@@ -7,7 +7,8 @@ import api_router from './api/routes/tmdb_api';
 import videoDB_router from './database/routes/index';
 import { router as baseEndpointRoute } from './routes/base-endpoint.route';
 import {router as authRouter} from './authentication/auth';
-// import db from './database/db';
+import cors from 'cors';
+
 var session = require('express-session');
 const MongoStore = require('connect-mongo');
 var passport = require('passport');
@@ -19,7 +20,7 @@ const secret = process.env.SESSION_SECRET;
 const app = express();
 
 //MIDDLEWARE
-
+app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
