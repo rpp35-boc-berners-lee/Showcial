@@ -24,6 +24,7 @@ type Video = {
   backdrop_path: string;
   name: string;
   id: number;
+  original_title: string;
 }
 
 
@@ -70,36 +71,36 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
    return (
     <div>
       <div>
-      <Typography>YOUR WATCH LIST</Typography>
-      <FormControl sx={{ m: 1, width: '10%' }} size='small'>
-        <InputLabel id="filter">Filter</InputLabel>
-        <Select
-          labelId="filter-label"
-          id="filter-select"
-          value={filter}
-          label="Filter"
-          onChange={handleFilter}
-        >
-          <MenuItem value={'Netflix'}>Netflix</MenuItem>
-          <MenuItem value={'Hulu'}>Hulu</MenuItem>
-          <MenuItem value={'HBO Max'}>HBO Max</MenuItem>
-          <MenuItem value={'Disney+'}>Disney+</MenuItem>
-          <MenuItem value={'Amazon Prime'}>Amazon Prime</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl sx={{ m: 1, width: '10%' }} size='small'>
-        <InputLabel id="sort">Sort</InputLabel>
-        <Select
-          labelId="sort-label"
-          id="sort-select"
-          value={sort}
-          label="Sort"
-          onChange={handleSort}
-        >
-          <MenuItem value={'Release Date'}>Release Date</MenuItem>
-          <MenuItem value={'Ratings'}>Ratings</MenuItem>
-        </Select>
-      </FormControl>
+        <Typography>YOUR WATCH LIST</Typography>
+        <FormControl sx={{ m: 1, width: '10%' }} size='small'>
+          <InputLabel id="filter">Filter</InputLabel>
+          <Select
+            labelId="filter-label"
+            id="filter-select"
+            value={filter}
+            label="Filter"
+            onChange={handleFilter}
+          >
+            <MenuItem value={'Netflix'}>Netflix</MenuItem>
+            <MenuItem value={'Hulu'}>Hulu</MenuItem>
+            <MenuItem value={'HBO Max'}>HBO Max</MenuItem>
+            <MenuItem value={'Disney+'}>Disney+</MenuItem>
+            <MenuItem value={'Amazon Prime'}>Amazon Prime</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl sx={{ m: 1, width: '10%' }} size='small'>
+          <InputLabel id="sort">Sort</InputLabel>
+          <Select
+            labelId="sort-label"
+            id="sort-select"
+            value={sort}
+            label="Sort"
+            onChange={handleSort}
+          >
+            <MenuItem value={'popularity'}>Trending</MenuItem>
+            <MenuItem value={'vote_average'}>Ratings</MenuItem>
+          </Select>
+        </FormControl>
       </div>
       <Box sx={{ width: '100%' }}>
         <Grid container spacing={4} justifyContent='center'>
@@ -110,7 +111,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
                   base_url={config.images.base_url}
                   backdrop_sizes={config.images.backdrop_sizes}
                   backdrop_path={video.backdrop_path}
-                  name={video.name}
+                  name={video.name || video.original_title}
                 />
               </Grid>
             )

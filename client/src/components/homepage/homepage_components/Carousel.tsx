@@ -16,6 +16,7 @@ type Video = {
   backdrop_path: string;
   name: string;
   id: number;
+  original_title: string;
 }
 
 const breakPoints = [
@@ -35,7 +36,7 @@ export const CarouselList: React.FC<Props> = ({ vedioList, config}) => {
               <VideoCard base_url={config.images.base_url}
                 backdrop_sizes={config.images.backdrop_sizes}
                 backdrop_path={video.backdrop_path}
-                name={video.name}
+                name={video.name || video.original_title}
                 key={video.id}
               />
             </Paper>
