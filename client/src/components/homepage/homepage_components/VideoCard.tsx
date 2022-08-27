@@ -14,7 +14,7 @@ type ChildProps = {
 
 export const VideoCard:React.FC<ChildProps> = ({ base_url, backdrop_sizes, backdrop_path, name }) => {
    return (
-      <Card sx={{ maxWidth: 300}}>
+      <Card sx={{ minWidth: 300, maxWidth: 300}}>
          <CardMedia
             component='img'
             height='169'

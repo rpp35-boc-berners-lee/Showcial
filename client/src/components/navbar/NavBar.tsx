@@ -10,10 +10,12 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from 'react-router-dom';
 
 const pages = ['Log in', 'Sign up'];
 
 const ResponsiveAppBar = () => {
+   const navigate = useNavigate();
    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
       null
    );
@@ -34,6 +36,14 @@ const ResponsiveAppBar = () => {
 
    const handleCloseUserMenu = () => {
       setAnchorElUser(null);
+   };
+
+   const handleNavigate = (page: string) => {
+      if (page === 'Log in') {
+         navigate('/login');
+      } else {
+         navigate('/signup');
+      }
    };
 
    return (
@@ -128,7 +138,7 @@ const ResponsiveAppBar = () => {
                      <Button
                         key={page}
                         variant='contained'
-                        onClick={handleCloseNavMenu}
+                        onClick={() => handleNavigate(page)}
                         sx={{ my: 2, color: 'white', display: 'block' }}
                      >
                         {page}
