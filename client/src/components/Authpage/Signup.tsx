@@ -33,8 +33,8 @@ export default function Signup () {
   const guestLogin = () => {
     //send a post request to '/guest'
     let options: any = {
-      url: 'http://localhost:8080/guest',
-      method: 'post'
+      url: 'http://localhost:8080/auth/guest',
+      method: 'get'
     }
     axios(options)
       .then((res) =>

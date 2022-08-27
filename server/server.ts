@@ -14,8 +14,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 
 const port = 8080;
-const db_conn = process.env.DB_CONN
-const secret = process.env.SESSION_SECRET
+const db_conn = process.env.mongoDB_TOKEN;
+const secret = process.env.SESSION_SECRET;
 const app = express();
 
 //MIDDLEWARE
@@ -47,6 +47,11 @@ app.use('/videoDB', videoDB_router);
 
 //ROUTES
 app.use('/api', baseEndpointRoute);
+
+//AUTH ROUTE
+app.use('/auth', authRouter);
+
+
 
 //for all other routes not found, send index.html file
 app.get('/*', (req, res) => {

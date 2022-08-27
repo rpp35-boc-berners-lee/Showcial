@@ -24,7 +24,7 @@ var LocalStrategy = require('passport-local');
 //  }));
 
 
-const checkAuth = (req: Request, res: Response, next: any) => {
+const checkAuth = (req: any, res: Response, next: any) => {
   if (!req.session.user) {
     res.redirect('/signin');
   } else next();
@@ -48,9 +48,9 @@ router.post('/signup', (req: Request, res: Response) => {
   //find one from db using userName, if unsuccessful, hash password and store a new user
   //if successful, res send 'Username already in use, sign in or try another'
 
-  bcrypt.hash(password, saltRounds, (hash) => {
+  // bcrypt.hash(password, saltRounds, (hash) => {
     //store user data here and update/save the session
-  })
+  // })
 });
 
 router.post('/signin', (req: Request, res: Response) => {
@@ -70,7 +70,7 @@ router.post('/login/password', passport.authenticate('local', {
   failureRedirect: '/login'
 }));
 
-router.post('/guest', (req: any, res: Response) => {
+router.get('/guest', (req: any, res: Response) => {
   //update req.session.user to null
   console.log('guest');
   req.session.user = null;
@@ -81,4 +81,4 @@ router.post('/guest', (req: any, res: Response) => {
 
 
 export {router};
-export default checkAuth;
+// export default checkAuth;
