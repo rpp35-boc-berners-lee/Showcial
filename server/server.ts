@@ -38,6 +38,9 @@ store: MongoStore.create({mongoUrl: db_conn})
 }))
 
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(cors());
+
 app.use(bodyParser.json());
 
 // API ROUTE
