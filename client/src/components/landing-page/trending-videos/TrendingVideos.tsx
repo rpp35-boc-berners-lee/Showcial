@@ -23,7 +23,7 @@ type PopularMovie = {
 export const TrendingVideos = () => {
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);
    const [imageUrl, setImageUrl] = useState<string>('');
-   const [imageSize, setImageSize] = useState<string>('');
+   const [imageSize, setImageSize] = useState<string[]>(['']);
    const [currentIndex, setCurrentIndex] = useState<number>(0);
    const [activeMovies, setActiveMovies] = useState<PopularMovie[] | []>([]);
    useEffect(() => {
@@ -34,7 +34,7 @@ export const TrendingVideos = () => {
                .get('http://localhost:8080/tmdb/configuration')
                .then((config) => {
                   setImageUrl(config.data.images.secure_base_url);
-                  setImageSize(config.data.images.backdrop_sizes[0]);
+                  setImageSize(config.data.images.backdrop_sizes);
                   setPopularMovies(response.data.results);
                   setActiveMovies(response.data.results.slice(0, 3));
                });

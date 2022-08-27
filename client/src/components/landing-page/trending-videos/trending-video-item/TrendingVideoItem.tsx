@@ -1,11 +1,11 @@
 import React from 'react';
 import { Typography, Grid } from '@mui/material';
-
+import { VideoCard } from '../../../homepage/homepage_components/VideoCard';
 interface Props {
    image: string;
    title: string;
    imageUrl: string;
-   imageSize: string;
+   imageSize: string[];
    currentIndex: number;
    totalArrayLength: number;
    itemIndex: number;
@@ -21,12 +21,18 @@ export const TrendingVideoItem = ({
    return (
       <>
          <Grid item xs={4} sm={4} md={3}>
-            <div className='item-inner-container'>
+            {/* <div className='item-inner-container'>
                <img src={`${imageUrl}${imageSize}${image}`} alt={title} />
                <Typography variant='h4' align='center'>
                   {title}
                </Typography>
-            </div>
+            </div> */}
+            <VideoCard
+               base_url={imageUrl}
+               backdrop_sizes={imageSize}
+               backdrop_path={image}
+               name={title}
+            />
          </Grid>
       </>
    );
