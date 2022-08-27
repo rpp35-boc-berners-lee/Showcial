@@ -1,4 +1,4 @@
-import { VideoCard } from './VideoCard';
+import { VideoCard } from '../../shared/VideoCard';
 import React from 'react';
 import Box from '@mui/material/Box';
 import Carousel from 'react-material-ui-carousel';
