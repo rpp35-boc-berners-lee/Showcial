@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Homepage.scss';
-import { YourWatchList } from './homepage_components/YourWatchList'
+import { YourWatchList } from './homepage_components/YourWatchList';
 import { ConfigAPI, ConfigImages, ConfigResponse, TVAPI, TVResults, TVResponse, MovieAPI, MovieResults, MovieResponse } from '../../../../types';
-import { CarouselList } from './homepage_components/Carousel'
+import { CarouselList } from './homepage_components/Carousel';
+
+interface MouseEvent {
+  target: {
+    id: string
+  }
+}
 
 export function Homepage() {
   const [config, setConfig] = useState<ConfigAPI | undefined>();
@@ -12,6 +18,7 @@ export function Homepage() {
   const [topMovie, setTopMovie] = useState<MovieAPI | undefined>();
   const [trendingMovie, setTrendingMovie] = useState<MovieAPI | undefined>();
   const [watchList, setWatchList] = useState([]);
+
 
   useEffect(() => {
     fetchAPI();
@@ -29,6 +36,10 @@ export function Homepage() {
     let movie_trending = await axios.get<MovieAPI>(`http://localhost:8080/tmdb/movie/popular`);
     setTrendingMovie(movie_trending.data);
   }
+
+  const addToWatchList = (event: MouseEvent) => {
+      let videoId = Number(event.target.id)
+    }
 
   return (
       <>

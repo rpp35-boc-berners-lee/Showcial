@@ -32,12 +32,12 @@ export const CarouselList: React.FC<Props> = ({ vedioList, config}) => {
       <Carousel>
         {vedioList.map((video: Video) => {
           return (
-            <Paper>
+            <Paper key={video.id}>
               <VideoCard base_url={config.images.base_url}
                 backdrop_sizes={config.images.backdrop_sizes}
                 backdrop_path={video.backdrop_path}
                 name={video.name || video.original_title}
-                key={video.id}
+                id={video.id}
               />
             </Paper>
           )

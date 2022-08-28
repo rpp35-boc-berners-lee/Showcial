@@ -112,6 +112,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
                   backdrop_sizes={config.images.backdrop_sizes}
                   backdrop_path={video.backdrop_path}
                   name={video.name || video.original_title}
+                  id={video.id}
                 />
               </Grid>
             )
