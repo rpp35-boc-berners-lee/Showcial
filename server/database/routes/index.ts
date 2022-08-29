@@ -8,11 +8,13 @@ import controllers from '../controllers/index';
 router.post('/addUser', (req: Request, res: Response) => {
   return controllers.addUser(req.body)
     .then((results: any) => {
+      console.log(`/addUser: Success adding ${req.body} to user table`);
       res.status(201);
       res.end();
     })
     .catch((error: any) => {
-      console.log('failed POST /addUser', error);
+      console.log(`/addUser: Error adding ${req.body} to user table`, error);
+      res.status(400).send(error);
       res.end();
     });
 });
@@ -20,51 +22,73 @@ router.post('/addUser', (req: Request, res: Response) => {
 router.get('/findUser', (req: Request, res: Response) => {
   return controllers.findUser(req.query.userName)
     .then((results: any) => {
+      console.log(`/findUser: Success finding ${req.query.userName} in user table`);
       res.status(200).send(results);
       res.end();
     })
     .catch((error: any) => {
-      console.log('failed GET /findUser', error)
+      console.log(`/findUser: Error finding ${req.query.userName} in user table`, error);
       res.status(400).send(error);
       res.end();
     })
 });
 
-//TODO: add userName to following list
 router.put('/addFollowed', (req: Request, res: Response) => {
   return controllers.updateUser(req.body.userName, req.body.prop, req.body.value)
     .then(() => {
-      console.log('/addFollowed: Success adding user to followers list');
+      console.log(`/addService: Success adding ${req.body.value} to following list`);
       res.status(201);
       res.end();
     })
     .catch((error: any) => {
-      console.log('/addFollowed: Error adding user to followers list', error);
+      console.log(`/addFollowed: Error adding ${req.body.value} to following list`, error);
+      res.status(400).send(error);
+      res.end();
     })
 });
 
-//TODO: remove userName from following list
 router.put('/removeFollowed', (req: Request, res: Response) => {
   return controllers.updateUser(req.body.userName, req.body.prop, req.body.value)
     .then(() => {
-      console.log('/removeFollowed: Success removing user to followers list');
+      console.log(`/removeService: Success removing ${req.body.value} to following list`);
       res.status(201);
       res.end();
     })
     .catch((error: any) => {
-      console.log('/removeFollowed: Error removing user to followers list', error);
+      console.log(`/removeService: Error removing ${req.body.value} to following list`, error);
+      res.status(400).send(error);
+      res.end();
     })
 });
 
-//TODO: add service to owned list
 router.put('/addService', (req: Request, res: Response) => {
-
+  return controllers.updateUser(req.body.userName, req.body.prop, req.body.value)
+    .then(() => {
+      console.log(`/addService: Success adding ${req.body.value} to service list`);
+      res.status(201);
+      res.end();
+    })
+    .catch((error: any) => {
+      console.log(`/addService: Error adding ${req.body.value} to service list`, error);
+      res.status(400).send(error);
+      res.end();
+    });
 });
 
-//TODO: remove service from owned list
-router.put('/addService', (req: Request, res: Response) => {
-
+router.put('/removeService', (req: Request, res: Response) => {
+  return controllers.updateUser(req.body.userName, req.body.prop, req.body.value)
+    .then(() => {
+      console.log(`/removeService: Success removing ${req.body.value} to service list`);
+      res.status(201);
+      res.end();
+    })
+    .catch((error: any) => {
+      console.log(`/removeService: Error removing ${req.body.value} to service list`, error);
+      res.status(400).send(error);
+      res.end();
+    });
 });
+
 // add videoID to watched list
 // remove videoID from watched list
 // add videoID to recommended list
