@@ -34,9 +34,9 @@ router.get('/findUser', (req: Request, res: Response) => {
 });
 
 router.put('/addFollowed', (req: Request, res: Response) => {
-  return controllers.updateUser(req.body.userName, req.body.prop, req.body.value)
+  return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
     .then(() => {
-      console.log(`/addService: Success adding ${req.body.value} to following list`);
+      console.log(`/addFollowed: Success adding ${req.body.value} to following list`);
       res.status(201);
       res.end();
     })
@@ -48,21 +48,21 @@ router.put('/addFollowed', (req: Request, res: Response) => {
 });
 
 router.put('/removeFollowed', (req: Request, res: Response) => {
-  return controllers.updateUser(req.body.userName, req.body.prop, req.body.value)
+  return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
     .then(() => {
-      console.log(`/removeService: Success removing ${req.body.value} to following list`);
+      console.log(`/removeFollowed: Success removing ${req.body.value} to following list`);
       res.status(201);
       res.end();
     })
     .catch((error: any) => {
-      console.log(`/removeService: Error removing ${req.body.value} to following list`, error);
+      console.log(`/removeFollowed: Error removing ${req.body.value} to following list`, error);
       res.status(400).send(error);
       res.end();
     })
 });
 
 router.put('/addService', (req: Request, res: Response) => {
-  return controllers.updateUser(req.body.userName, req.body.prop, req.body.value)
+  return controllers.updateUser(req.body.userName, 'ownedServices', req.body.value)
     .then(() => {
       console.log(`/addService: Success adding ${req.body.value} to service list`);
       res.status(201);
@@ -76,7 +76,7 @@ router.put('/addService', (req: Request, res: Response) => {
 });
 
 router.put('/removeService', (req: Request, res: Response) => {
-  return controllers.updateUser(req.body.userName, req.body.prop, req.body.value)
+  return controllers.updateUser(req.body.userName, 'ownedServices', req.body.value)
     .then(() => {
       console.log(`/removeService: Success removing ${req.body.value} to service list`);
       res.status(201);

@@ -50,18 +50,14 @@ const findUser = (userName: any) => {
 const updateUser = (userName: string, prop: string, value: any) => {
   return findUser(userName)
     .then((foundUser: any) => {
-      if (foundUser[prop].includes(value)) {
-        foundUser[prop] = foundUser[prop].map((item: any) => {
-          console.log(item)
-          if (item !== value && item !== null && item !== undefined) {
-            return item;
-          }
-        })
-        console.log('foundUser after removal', foundUser[prop]);
+      // add or remove value
+      const foundIndex = foundUser[prop].indexOf(value);
+      if (foundIndex !== -1) {
+        foundUser[prop].splice(foundIndex, 1);
       } else {
         foundUser[prop] = foundUser[prop].concat([value])
-      }
-
+      };
+      // save updated document
       return foundUser.save()
         .then(() => {
           console.log('updateUser(): Success updating user');
@@ -81,6 +77,7 @@ const updateUser = (userName: string, prop: string, value: any) => {
 //!==============================================//
 //!================ VIDEO TABLE =================//
 //!==============================================//
+
 const addVideo = (videoData: any) => {
   const newVideo = new models.VideoTable({
     videoName: videoData.videoName,
@@ -103,7 +100,7 @@ const addVideo = (videoData: any) => {
 //!==============================================//
 //!=============== RATINGS TABLE ================//
 //!==============================================//
-//TODO: create rating
+
 const addRating = (ratingData: any) => {
   const newRating = models.RatingsTable({
     videoName: ratingData.videoName,
