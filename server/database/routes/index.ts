@@ -20,7 +20,7 @@ router.post('/addUser', (req: Request, res: Response) => {
 router.get('/findUser', (req: Request, res: Response) => {
   return controllers.findUser(req.query.userName)
     .then((results: any) => {
-      res.status(200).send(results[0]);
+      res.status(200).send(results);
       res.end();
     })
     .catch((error: any) => {
@@ -30,14 +30,29 @@ router.get('/findUser', (req: Request, res: Response) => {
     })
 });
 
-//TODO: add userID to following list
-//TODO: remove userID from following list
-//TODO: add videoID to watched list
-//TODO: remove videoID from watched list
-//TODO: add videoID to recommended list
-//TODO: remove videoID from recommended list
+//TODO: add userName to following list
+router.put('/addFollowed', (req: Request, res: Response) => {
+
+});
+
+//TODO: remove userName from following list
+router.put('/removeFollowed', (req: Request, res: Response) => {
+
+});
+
 //TODO: add service to owned list
+router.put('/addService', (req: Request, res: Response) => {
+
+});
+
 //TODO: remove service from owned list
+router.put('/addService', (req: Request, res: Response) => {
+
+});
+// add videoID to watched list
+// remove videoID from watched list
+// add videoID to recommended list
+// remove videoID from recommended list
 
 //!==============================================//
 //!================ VIDEO TABLE =================//

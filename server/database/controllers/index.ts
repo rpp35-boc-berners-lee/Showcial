@@ -38,7 +38,7 @@ const addUser = (userData: UserData) => {
 };
 
 const findUser = (userName: any) => {
-  return models.UserTable.find({'userName': userName})
+  return models.UserTable.findOne({'userName': userName})
     .then((results: any) => {
       return results;
     })
@@ -48,25 +48,46 @@ const findUser = (userName: any) => {
 };
 
 //TODO: add userID to following list
-//TODO: remove userID from following list
+//TODO: remove userID to following list
+
 //TODO: add videoID to watched list
 //TODO: remove videoID from watched list
+
 //TODO: add videoID to recommended list
 //TODO: remove videoID from recommended list
+
 //TODO: add service to owned list
 //TODO: remove service from owned list
+
 // update user document w/ options
 const updateUser = (userName: string, prop: string, value: any) => {
-  models.UserTable.findOneAndUpdate({userName}, {[prop]: value})
-    .then(() => {
-      console.log(`Success updating ${userName} with {${prop}: ${value}}`)
+  // if findOneAndUpdate doesn't work, try reusing findUser to grab the document, set value, and save()
+  return findUser(userName)
+    .then((foundUser: any) => {
+      // if value/prop is already found on userName, delete it
+      if (foundUser[prop].includes(value)) {
+        // delete value from array
+      } else {
+        // else add value to prop on username (log which)
+
+      }
+      // save() document
     })
     .catch((error: any) => {
       console.log(`Error updating ${userName} with {${prop}: ${value}}`);
     });
+
+  // models.UserTable.findOneAndUpdate({userName: userName}, {[prop]: value})
+  //   .then(() => {
+  //     console.log(`Success updating ${userName} with {${prop}: ${value}}`)
+  //   })
+  //   .catch((error: any) => {
+  //     console.log(`Error updating ${userName} with {${prop}: ${value}}`);
+  //   });
 };
 
 //? delete existing user
+  // reuse find user & delete?
 
 //!==============================================//
 //!================ VIDEO TABLE =================//
