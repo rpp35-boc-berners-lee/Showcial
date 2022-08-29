@@ -28,7 +28,7 @@ const userTableSchema = mongoose.Schema({
   },
   email: String,
   hashedPassword: String, // removed from response
-  followingList: Array, // array of "followed" userIDs
+  followingList: Array, // array of "followed" userNames
   watchedVideos: Array, // array of "watched" videoIDs
   recommendedVideos: Array, // array of "recommended" videoIDs
   ownedServices: Array, // array of serviceIDs OR names?

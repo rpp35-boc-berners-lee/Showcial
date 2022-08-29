@@ -32,12 +32,28 @@ router.get('/findUser', (req: Request, res: Response) => {
 
 //TODO: add userName to following list
 router.put('/addFollowed', (req: Request, res: Response) => {
-
+  return controllers.updateUser(req.body.userName, req.body.prop, req.body.value)
+    .then(() => {
+      console.log('/addFollowed: Success adding user to followers list');
+      res.status(201);
+      res.end();
+    })
+    .catch((error: any) => {
+      console.log('/addFollowed: Error adding user to followers list', error);
+    })
 });
 
 //TODO: remove userName from following list
 router.put('/removeFollowed', (req: Request, res: Response) => {
-
+  return controllers.updateUser(req.body.userName, req.body.prop, req.body.value)
+    .then(() => {
+      console.log('/removeFollowed: Success removing user to followers list');
+      res.status(201);
+      res.end();
+    })
+    .catch((error: any) => {
+      console.log('/removeFollowed: Error removing user to followers list', error);
+    })
 });
 
 //TODO: add service to owned list

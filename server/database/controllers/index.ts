@@ -67,11 +67,27 @@ const updateUser = (userName: string, prop: string, value: any) => {
       // if value/prop is already found on userName, delete it
       if (foundUser[prop].includes(value)) {
         // delete value from array
+        console.log('value already in array', foundUser[prop])
+        foundUser[prop] = foundUser[prop].map((item: any) => {
+          if (item !== value && item !== null && item !== undefined) {
+            return item;
+          }
+        })
+        console.log('array after splice', foundUser[prop])
       } else {
-        // else add value to prop on username (log which)
-
+        // else add value to prop (array) on username (log which)
+        foundUser[prop] = foundUser[prop].concat([value])
       }
+
       // save() document
+      console.log('foundUser', foundUser);
+      return foundUser.save()
+        .then(() => {
+          console.log('updateUser(): Success updating user');
+        })
+        .catch((error: any) => {
+          console.log('updateUser(): Error updating user', error)
+        })
     })
     .catch((error: any) => {
       console.log(`Error updating ${userName} with {${prop}: ${value}}`);
@@ -87,7 +103,7 @@ const updateUser = (userName: string, prop: string, value: any) => {
 };
 
 //? delete existing user
-  // reuse find user & delete?
+  // reuse find user & delete or use findOneAndDelete()
 
 //!==============================================//
 //!================ VIDEO TABLE =================//
