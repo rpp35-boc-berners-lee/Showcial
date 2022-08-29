@@ -6,7 +6,6 @@
 // // const mongoDB = 'mongodb://localhost:27017/blueOceanCapstoneDB';
 // const mongoDB = 'mongodb://localhost/blueOceanCapstoneDB';
 
-
 // mongoose.connect(mongoDB)
 //   .then(() => {
 //     console.log("Database Connected");
