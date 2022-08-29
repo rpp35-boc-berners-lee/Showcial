@@ -10,16 +10,17 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const pages = ['Sign in', 'Sign up'];
 
 const ResponsiveAppBar = () => {
    const navigate = useNavigate();
+   const location = useLocation();
    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
       null
    );
+   console.log('location:', location);
    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
       null
    );
@@ -46,7 +47,7 @@ const ResponsiveAppBar = () => {
       if (page === 'Sign up') {
          navigate('/signup');
       }
-   }
+   };
 
    return (
       <AppBar position='static'>
@@ -126,27 +127,29 @@ const ResponsiveAppBar = () => {
                >
                   LOGO
                </Typography>
-               <Box
-                  sx={{
-                     flexGrow: 1,
-                     display: { xs: 'none', md: 'flex' },
-                     gap: 2,
-                     ml: 'auto',
-                     float: 'right',
-                     alignSelf: 'flex-end',
-                  }}
-               >
-                  {pages.map((page) => (
-                     <Button
-                        key={page}
-                        variant='contained'
-                        onClick={() => handleNavigate(page)}
-                        sx={{ my: 2, color: 'white', display: 'block' }}
-                     >
-                        {page}
-                     </Button>
-                  ))}
-               </Box>
+               {location.pathname !== '/about' ? (
+                  <Box
+                     sx={{
+                        flexGrow: 1,
+                        display: { xs: 'none', md: 'flex' },
+                        gap: 2,
+                        ml: 'auto',
+                        float: 'right',
+                        alignSelf: 'flex-end',
+                     }}
+                  >
+                     {pages.map((page) => (
+                        <Button
+                           key={page}
+                           variant='contained'
+                           onClick={() => handleNavigate(page)}
+                           sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                           {page}
+                        </Button>
+                     ))}
+                  </Box>
+               ) : null}
             </Toolbar>
          </Container>
       </AppBar>

@@ -38,7 +38,7 @@ const addUser = (userData: UserData) => {
 };
 
 const findUser = (userName: any) => {
-  return models.UserTable.findOne({'userName': userName})
+  return models.UserTable.findOne({userName})
     .then((results: any) => {
       return results;
     })
@@ -50,14 +50,12 @@ const findUser = (userName: any) => {
 const updateUser = (userName: string, prop: string, value: any) => {
   return findUser(userName)
     .then((foundUser: any) => {
-      // add or remove value
       const foundIndex = foundUser[prop].indexOf(value);
       if (foundIndex !== -1) {
         foundUser[prop].splice(foundIndex, 1);
       } else {
-        foundUser[prop] = foundUser[prop].concat([value])
+        foundUser[prop] = [value].concat(foundUser[prop]);
       };
-      // save updated document
       return foundUser.save()
         .then(() => {
           console.log('updateUser(): Success updating user');
@@ -67,12 +65,17 @@ const updateUser = (userName: string, prop: string, value: any) => {
         })
     })
     .catch((error: any) => {
-      console.log(`Error updating ${userName} with {${prop}: ${value}}`);
+      console.log(`Error updating ${userName} with ${prop}: ${value}`);
     });
 };
 
-//? delete existing user
-  // reuse find user & delete OR use findOneAndDelete()
+const deleteUser = ((userName: any) => {
+  return models.UserTable.deleteOne({userName})
+    .then()
+    .catch((error: any) => {
+      console.log(`deleteUser(): Error deleting ${userName}`)
+    });
+});
 
 //!==============================================//
 //!================ VIDEO TABLE =================//
@@ -126,5 +129,6 @@ export default {
   findUser,
   updateUser,
   addVideo,
-  addRating
+  addRating,
+  deleteUser
 }

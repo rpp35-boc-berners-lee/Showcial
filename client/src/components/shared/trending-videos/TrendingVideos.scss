@@ -6,11 +6,7 @@
    justify-content: space-between;
 
    img {
-      // @include set-size(50%);
       @include cover-background();
-      // object-fit: scale-down;
-      // max-width: 300px;
-      // width: 100%;
       height: auto;
    }
 }
