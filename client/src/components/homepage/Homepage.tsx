@@ -3,7 +3,8 @@ import axios from 'axios';
 import './Homepage.scss';
 import { YourWatchList } from './homepage_components/YourWatchList'
 import { ConfigAPI, ConfigImages, ConfigResponse, TVAPI, TVResults, TVResponse, MovieAPI, MovieResults, MovieResponse } from '../../../../types';
-import { CarouselList } from './homepage_components/Carousel'
+import { CarouselList } from './homepage_components/carousel/Carousel'
+import { Recommendations } from './homepage_components/recommendations/Recommendations'
 
 export function Homepage() {
   const [config, setConfig] = useState<ConfigAPI | undefined>();
@@ -35,10 +36,10 @@ export function Homepage() {
         <p>Hello World</p>
         <h3>RECOMMENDATIONS FOR YOU</h3>
         {topTV !== undefined ?
-        <CarouselList vedioList={topTV.results} config={config}/>: null}
+        <Recommendations vedios={topTV.results} config={config}/>: null}
         <h3>CURRENTLY TRENDING</h3>
-        {topMovie !== undefined ?
-        <CarouselList vedioList={topMovie.results} config={config}/>: null}
+        {trendingMovie !== undefined ?
+        <CarouselList vedioList={trendingMovie.results} config={config}/>: null}
         <h3>YOUR WATCH LIST</h3>
         {topTV !== undefined ?
         <YourWatchList watchList={topTV.results} config={config}/>: null}

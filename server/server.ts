@@ -38,11 +38,8 @@ store: MongoStore.create({mongoUrl: db_conn})
 }))
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
-app.use(cors());
-
 app.use(bodyParser.json());
-app.use(cors());
+
 
 // API ROUTE
 app.use('/tmdb', api_router);
