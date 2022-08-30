@@ -5,6 +5,7 @@ import { YourWatchList } from './homepage_components/YourWatchList';
 import { ConfigAPI, ConfigImages, ConfigResponse, TVAPI, TVResults, TVResponse, MovieAPI, MovieResults, MovieResponse } from '../../../../types';
 import { CarouselList } from './homepage_components/carousel/Carousel'
 import {Recommendations} from './homepage_components/recommendations/Recommendations'
+import {TrendingVideos} from '../shared/trending-videos/TrendingVideos'
 interface MouseEvent {
   target: {
     id: string
@@ -68,9 +69,9 @@ export function Homepage() {
         <h3>RECOMMENDATIONS FOR YOU</h3>
         {topTV !== undefined ?
         <Recommendations vedios={topTV.results} config={config}/>: null}
-        <h3>CURRENTLY TRENDING</h3>
-        {trendingMovie !== undefined ?
-        <CarouselList vedioList={trendingMovie.results} config={config}/>: null}
+        <TrendingVideos/>
+        {/* {trendingMovie !== undefined ?
+        <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
         <h3>YOUR WATCH LIST</h3>
         {topTV !== undefined ?
         <YourWatchList watchList={topTV.results} config={config}/>: null}
