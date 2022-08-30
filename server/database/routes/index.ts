@@ -2,6 +2,11 @@ import {Request, Response, Router} from 'express';
 const router = Router();
 import controllers from '../controllers/index';
 
+type Query = {
+  userName: string;
+  videoID: number;
+};
+
 //!==============================================//
 //!================ USER TABLE ==================//
 //!==============================================//
@@ -107,6 +112,38 @@ router.put('/user/removeService', (req: Request, res: Response) => {
 // remove videoID from watched list
 // add videoID to recommended list
 // remove videoID from recommended list
+//TODO: add userID to following list
+//TODO: remove userID from following list
+//TODO: add videoID to watched list
+router.post('/addToWatchedList', async (req: Request, res: Response) => {
+  let query = req.query as unknown as Query;
+  await controllers.addToWatchedList(query.userName, Number(query.videoID))
+    .then(() => {
+      res.sendStatus(201)
+    })
+    .catch((error: any) => {
+      console.log('failed POST /addToWatchedList', error)
+      res.status(400).send(error);
+      res.end();
+    })
+});
+//TODO: remove videoID from watched list
+router.post('/removeFromWatchedList', async (req: Request, res: Response) => {
+  let query = req.query as unknown as Query;
+  await controllers.removeFromWatchedList(query.userName, Number(query.videoID))
+    .then(() => {
+      res.sendStatus(201)
+    })
+    .catch((error: any) => {
+      console.log('failed POST /removeFromWatchedList', error)
+      res.status(400).send(error);
+      res.end();
+    })
+});
+//TODO: add videoID to recommended list
+//TODO: remove videoID from recommended list
+//TODO: add service to owned list
+//TODO: remove service from owned list
 
 //!==============================================//
 //!================ VIDEO TABLE =================//
