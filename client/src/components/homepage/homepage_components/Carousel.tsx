@@ -1,4 +1,4 @@
-import { VideoCard } from './VideoCard';
+import { VideoCard } from '../../shared/VideoCard';
 import React from 'react';
 import Box from '@mui/material/Box';
 // import Carousel from 'react-material-ui-carousel';
@@ -16,6 +16,7 @@ type Video = {
    backdrop_path: string;
    name: string;
    id: number;
+   original_title: string;
 };
 
 const breakPoints = [
@@ -31,13 +32,13 @@ export const CarouselList: React.FC<Props> = ({ vedioList, config }) => {
          {/* <Carousel> */}
          {vedioList.map((video: Video) => {
             return (
-               <Paper>
+               <Paper key={video.id}>
                   <VideoCard
                      base_url={config.images.base_url}
                      backdrop_sizes={config.images.backdrop_sizes}
                      backdrop_path={video.backdrop_path}
-                     name={video.name}
-                     key={video.id}
+                     name={video.name || video.original_title}
+                     id={video.id}
                   />
                </Paper>
             );
