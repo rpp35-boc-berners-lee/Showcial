@@ -24,18 +24,20 @@ app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-app.use(session({
-  secret: secret,
-  cookie: {
-   //   path: '/home',
-     httpOnly: true,
-     secure: false,
-     maxAge: 300000
-  },
-  resave: false,
-  saveUninitialized: false,
-store: MongoStore.create({mongoUrl: db_conn})
-}))
+app.use(
+   session({
+      secret: secret,
+      cookie: {
+         //   path: '/home',
+         httpOnly: true,
+         secure: false,
+         maxAge: 300000,
+      },
+      resave: false,
+      saveUninitialized: false,
+      store: MongoStore.create({ mongoUrl: db_conn }),
+   })
+);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -52,8 +54,6 @@ app.use('/api', baseEndpointRoute);
 
 //AUTH ROUTE
 app.use('/auth', authRouter);
-
-
 
 //for all other routes not found, send index.html file
 app.get('/*', (req, res) => {
