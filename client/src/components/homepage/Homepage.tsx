@@ -18,6 +18,8 @@ export function Homepage() {
   const [topMovie, setTopMovie] = useState<MovieAPI | undefined>();
   const [trendingMovie, setTrendingMovie] = useState<MovieAPI | undefined>();
   const [watchList, setWatchList] = useState([]);
+  // temporary username
+  const [userName, setUserName] = useState<string>('Nourse41');
 
 
   useEffect(() => {
@@ -35,10 +37,30 @@ export function Homepage() {
     setTopMovie(movie_top.data);
     let movie_trending = await axios.get<MovieAPI>(`http://localhost:8080/tmdb/movie/popular`);
     setTrendingMovie(movie_trending.data);
+    // let watch_list = await axios.get(`http://localhost:8080/videoDB/findUser?userName=${userName}&videoID=${videoID}`)
+    // setWatchList(watch_list.data.watchedVideos)
   }
 
-  const addToWatchList = (event: MouseEvent) => {
-      let videoId = Number(event.target.id)
+  const addToWatchList = async (event: MouseEvent) => {
+    let videoID = Number(event.target.id);
+    await axios.post(`http://localhost:8080/videoDB/addToWatchedList?userName=${userName}&videoID=${videoID}`)
+      .then(() => {
+        console.log(`Video id ${videoID} has been added to ${userName}'s watched list`);
+      })
+      .catch((err: any) => {
+        console.log(`There was an error adding the video id ${videoID} to ${userName}'s watched list`);
+      })
+    }
+
+  const removeFromWatchList = async (event: MouseEvent) => {
+    let videoID = Number(event.target.id);
+    await axios.post(`http://localhost:8080/videoDB/removeFromWatchedList?userName=${userName}&videoID=${videoID}`)
+      .then(() => {
+        console.log(`Video id ${videoID} has been added to ${userName}'s watched list`);
+      })
+      .catch((err: any) => {
+        console.log(`There was an error adding the video id ${videoID} to ${userName}'s watched list`);
+      })
     }
 
   return (

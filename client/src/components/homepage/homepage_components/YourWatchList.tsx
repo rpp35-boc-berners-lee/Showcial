@@ -33,8 +33,10 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
   const [displayedVideos, setDisplayedVideos] = useState([]);
   const [numDisplayed, setNumDisplayed] = useState(0);
   const [maxRowCards, setMaxRowCards] = useState(0);
-  const [filter, setFilter] = useState('');
-  const [sort, setSort] = useState('');
+  const [filterType, setFilterType] = useState('');
+  const [filteredList, setFilteredList] = useState([]);
+  const [sortType, setSortType] = useState('');
+  const [sortedList, setSortedList] = useState([]);
 
   useEffect(() => {
     let box = document.querySelector('.MuiGrid-container');
@@ -54,12 +56,12 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
     setDisplayedVideos(watchList.slice(0, numDisplayed));
   }, [numDisplayed]);
 
-  const handleFilter = (event: SelectChangeEvent) => {
-    setFilter(event.target.value as string);
+  const handleFilterType = (event: SelectChangeEvent) => {
+    setFilterType(event.target.value as string);
   };
 
-  const handleSort = (event: SelectChangeEvent) => {
-    setSort(event.target.value as string);
+  const handleSortType = (event: SelectChangeEvent) => {
+    setSortType(event.target.value as string);
   };
 
   async function getWatchProviders() {
@@ -77,9 +79,9 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
           <Select
             labelId="filter-label"
             id="filter-select"
-            value={filter}
+            value={filterType}
             label="Filter"
-            onChange={handleFilter}
+            onChange={handleFilterType}
           >
             <MenuItem value={'Netflix'}>Netflix</MenuItem>
             <MenuItem value={'Hulu'}>Hulu</MenuItem>
@@ -93,9 +95,9 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
           <Select
             labelId="sort-label"
             id="sort-select"
-            value={sort}
+            value={sortType}
             label="Sort"
-            onChange={handleSort}
+            onChange={handleSortType}
           >
             <MenuItem value={'popularity'}>Trending</MenuItem>
             <MenuItem value={'vote_average'}>Ratings</MenuItem>
