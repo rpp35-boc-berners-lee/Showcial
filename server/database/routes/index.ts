@@ -32,10 +32,12 @@ router.get('/findUser', (req: Request, res: Response) => {
 
 //TODO: add userID to following list
 //TODO: remove userID from following list
+
 //TODO: add videoID to watched list
 //TODO: remove videoID from watched list
 //TODO: add videoID to recommended list
 //TODO: remove videoID from recommended list
+
 //TODO: add service to owned list
 //TODO: remove service from owned list
 
