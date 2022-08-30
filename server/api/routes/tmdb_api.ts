@@ -5,7 +5,14 @@ import tmdb from '../controller/tmdb_controller';
 type Params = {
    tv_id: number;
    movie_id: number;
+   search: string;
+   page: number;
 };
+
+type Query = {
+   search: string;
+   page: number;
+}
 
 // CONFIGURATION
 router.get('/configuration', async (req: Request, res: Response) => {
@@ -56,5 +63,11 @@ router.get(
       res.send(await tmdb.getMovieWatchProviders(params.movie_id));
    }
 );
+
+// SEARCH
+router.get('/search/:search/:page', async (req: Request, res: Response) => {
+   let params = req.params as unknown as Query;
+   res.send(await tmdb.getSearchResults(params.search, params.page));
+});
 
 export default router;
