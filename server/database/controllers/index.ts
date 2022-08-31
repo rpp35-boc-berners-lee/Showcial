@@ -145,6 +145,7 @@ const addRating = (ratingData: any) => {
     videoName: ratingData.videoName,
     userName: ratingData.userName,
     userRating: ratingData.userRating,
+    created_at: new Date(),
     comments: ratingData.comments
   });
   return newRating.save()
