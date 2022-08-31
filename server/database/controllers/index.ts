@@ -47,8 +47,6 @@ const findUser = (userName: any) => {
     });
 };
 
-//TODO: add userID to following list
-//TODO: remove userID from following list
 //TODO: add videoID to watched list
 const addToWatchedList = async (userName: any, videoID: number) => {
   return await models.UserTable.find({ userName })
@@ -64,6 +62,7 @@ const addToWatchedList = async (userName: any, videoID: number) => {
       console.log(`Error updating ${userName}'s watched list with videoID ${videoID}: ${error}`)
     })
 }
+
 //TODO: remove videoID from watched list
 const removeFromWatchedList = async (userName: any, videoID: number) => {
   return await models.UserTable.find({ userName })
@@ -79,11 +78,7 @@ const removeFromWatchedList = async (userName: any, videoID: number) => {
       console.log(`Error removing videoID ${videoID} from ${userName}'s watched list: ${error}`)
     })
 }
-//TODO: add videoID to recommended list
-//TODO: remove videoID from recommended list
-//TODO: add service to owned list
-//TODO: remove service from owned list
-// update user document w/ options
+
 const updateUser = (userName: string, prop: string, value: any) => {
   return findUser(userName)
     .then((foundUser: any) => {
@@ -113,6 +108,10 @@ const deleteUser = ((userName: any) => {
       console.log(`deleteUser(): Error deleting ${userName}`)
     });
 });
+
+
+//TODO: add userID to following list
+//TODO: remove userID from following list
 
 //!==============================================//
 //!================ VIDEO TABLE =================//

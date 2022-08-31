@@ -1,11 +1,12 @@
 import React from 'react';
 import { Paper } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
-export const FollowingItem = () => {
+
+export const FollowingItem = (/*userName: string*/) => {
    return (
       <div>
          <Paper>
-          user
+          userName
          </Paper>
       </div>
    );
@@ -18,4 +19,3 @@ export const FollowingItem = () => {
 //    textAlign: 'center',
 //    color: theme.palette.text.secondary,
 //  }));
- 
