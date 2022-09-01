@@ -1,9 +1,8 @@
 import React, { SyntheticEvent } from 'react';
-import { Paper } from '@mui/material';
+import { Paper, Card, CardMedia, CardContent, CardHeader, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import axios from 'axios';
 
-// make an onClick function for remove friend (axios request)
 // make an onClick function for username that makes axios request for users data and passes it to for-follower page
 
 export const FollowingItem = (userName: string, index: number, parentUserName: string) => {
@@ -25,7 +24,7 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
             value: userName
          })
          .then((results: any) => {
-            //! change button to undo/update list/change username displayed to removed ???
+            //! change button to undo/update list/
             console.log(`removeFollower(${userName}) Success`, results);
          })
          .catch((error) => {
@@ -34,15 +33,30 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
    }
 
    return (
-      <Paper>
-         <div><button onClick={(event: any) => {
-            console.log(fetchForFollowerData(event.target.innerText));
-         }}>{userName}</button></div>
-         <div><button onClick={(event: any) => {
-            // console.log(`Remove ${userName}!`)
-            removeFollower(userName);
-            event.target.innerText = 'REMOVED';
-         }}>remove</button></div>
-      </Paper>
+      <Card>
+         <CardHeader
+            className='followedCard'
+            style={{ cursor: 'pointer'}}
+            onClick={(event: any) => {
+               console.log(fetchForFollowerData(event.target.innerText));
+            }}
+           title={userName}
+         />
+         <CardContent>
+            <button onClick={(event: any) => {
+               // console.log(`Remove ${userName}!`)
+               removeFollower(userName);
+               event.target.innerText = 'REMOVED';
+            }}>remove</button>
+         </CardContent>
+      </Card>
    );
 };
+
+// export const FollowingItem = styled(Paper)(({ theme }) => ({
+//    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+//    ...theme.typography.body2,
+//    padding: theme.spacing(2),
+//    textAlign: 'center',
+//    color: theme.palette.text.secondary,
+//  }));

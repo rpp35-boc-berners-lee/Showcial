@@ -6,7 +6,7 @@ import { Box, Paper, Grid } from '@mui/material';
 
 export const FollowingList = () => {
   const [followingList, setFollowingList] = useState<any>([])
-  const [userName, setUserName] = useState<string>('Nourse41');
+  const [userName, setUserName] = useState<string>('Nourse41'); //! switch to current signed in user
 
   useEffect(() => {
     fetchFollowingList();
@@ -23,13 +23,17 @@ export const FollowingList = () => {
   }
 
   return (
-    <>
-      {followingList.map((followedUserName: any, index: any) => {
-        return (
-          FollowingItem(followedUserName, index, userName)
-        );
-      })}
-    </>
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid container spacing={{ xs: 1, md: 2, xl: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+        {followingList.map((followedUserName: any, index: any) => {
+          return (
+            <Grid xs={2} sm={4} md={4} key={index}>
+              {FollowingItem(followedUserName, index, userName)}
+            </Grid>
+            );
+          })}
+        </Grid>
+    </Box>
   );
 };
 
