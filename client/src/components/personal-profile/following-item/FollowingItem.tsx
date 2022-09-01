@@ -41,6 +41,7 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
          <div><button onClick={(event: any) => {
             // console.log(`Remove ${userName}!`)
             removeFollower(userName);
+            event.target.innerText = 'REMOVED';
          }}>remove</button></div>
       </Paper>
    );
