@@ -68,15 +68,21 @@ router.post('/removeFromWatchedList', async (req: Request, res: Response) => {
 //TODO: remove videoID from recommended list
 
 //TODO: retrieve service to owned list
-router.get('/watchList', async (req: Request, res: Response) => {
-  
+router.get('/services', async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+    let result = await controllers.retrieveServices(req.body.userName);
+    res.status(200).send(result);
+  } catch (error) {
+    console.log('failed GET /services', error);
+  }
 })
 //TODO: add service to owned list
-router.post('/watchList', async (req: Request, res: Response) => {
+router.post('/services', async (req: Request, res: Response) => {
   
 })
 //TODO: remove service from owned list
-router.post('/watchList', async (req: Request, res: Response) => {
+router.put('/services', async (req: Request, res: Response) => {
   
 })
 

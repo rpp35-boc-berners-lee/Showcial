@@ -81,6 +81,17 @@ const removeFromWatchedList = async (userName: any, videoID: number) => {
 }
 //TODO: add videoID to recommended list
 //TODO: remove videoID from recommended list
+
+//TODO: retrieve owned services
+let services = ['Netflix', 'HBO Max', 'Hulu', 'Disney+', 'Prime Video'];
+const retrieveServices = async (userName: string) => {
+  try {
+    let data = await  models.UserTable.find({ userName })
+    return data[0].ownedServices;
+  } catch (error) {
+    console.log(`Error retrieving owned services for user ${userName}: ${error}`);
+  }
+}
 //TODO: add service to owned list
 //TODO: remove service from owned list
 // update user document w/ options
@@ -149,5 +160,6 @@ export default {
   addVideo,
   addRating,
   addToWatchedList,
-  removeFromWatchedList
+  removeFromWatchedList,
+  retrieveServices
 }
