@@ -4,8 +4,6 @@ import './Homepage.scss';
 import { YourWatchList } from './homepage_components/YourWatchList';
 import { Search } from './homepage_components/Search';
 import { ConfigAPI, APIResponse } from '../../../../types';
-import { CarouselList } from './homepage_components/Carousel';
-import { Routes, Route, useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -17,14 +15,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
+import { CarouselList } from './homepage_components/carousel/Carousel'
+import { Recommendations } from './homepage_components/recommendations/Recommendations'
+import { TrendingVideos } from '../shared/trending-videos/TrendingVideos'
 
 interface MouseEvent {
   target: {
     id: string
   }
 }
-
 export function Homepage() {
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const [topTV, setTopTV] = useState<APIResponse | undefined>();
@@ -37,8 +36,6 @@ export function Homepage() {
   const [query, setQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
   const [page, setPage] = useState<number>(1);
-
-  let navigate = useNavigate();
 
   useEffect(() => {
     fetchAPI();
@@ -134,16 +131,12 @@ export function Homepage() {
             <>
               <h3>RECOMMENDATIONS FOR YOU</h3>
               {topTV !== undefined ?
-              <CarouselList vedioList={topTV.results} config={config}/>: null}
-              <h3>CURRENTLY TRENDING</h3>
-              {topMovie !== undefined ?
-              <CarouselList vedioList={topMovie.results} config={config}/>: null}
-              <h3>YOUR WATCH LIST</h3>
+              <Recommendations vedios={topTV.results} config={config}/>: null}
+              <TrendingVideos/>
+              {/* {trendingMovie !== undefined ?
+              <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
               {topTV !== undefined ?
               <YourWatchList watchList={topTV.results} config={config}/>: null}
-              {/* <Routes>
-                <Route path='/search' element={<Search query={search} config={config} />} />
-              </Routes> */}
             </>
         }
     </>
