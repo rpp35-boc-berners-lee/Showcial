@@ -10,26 +10,57 @@ type Query = {
 //!==============================================//
 //!================ USER TABLE ==================//
 //!==============================================//
-router.post('/addUser', (req: Request, res: Response) => {
+router.post('/user', (req: Request, res: Response) => {
   return controllers.addUser(req.body)
     .then((results: any) => {
+      console.log(`/user: Success adding ${req.body} to user table`);
       res.status(201);
       res.end();
     })
     .catch((error: any) => {
-      console.log('failed POST /addUser', error);
+      console.log(`/user: Error adding ${req.body} to user table`, error);
+      res.status(400).send(error);
       res.end();
     });
 });
 
-router.get('/findUser', (req: Request, res: Response) => {
+router.get('/user', (req: Request, res: Response) => {
   return controllers.findUser(req.query.userName)
     .then((results: any) => {
-      res.status(200).send(results[0]);
+      console.log(`/user: Success finding ${req.query.userName} in user table`);
+      res.status(200).send(results);
       res.end();
     })
     .catch((error: any) => {
-      console.log('failed GET /findUser', error)
+      console.log(`/user: Error finding ${req.query.userName} in user table`, error);
+      res.status(400).send(error);
+      res.end();
+    })
+});
+
+router.delete('/user', (req: Request, res: Response) => {
+  return controllers.deleteUser(req.query.userName)
+    .then(() => {
+      console.log(`/user: Success deleting ${req.query.userName}`);
+      res.status(201);
+      res.end();
+    })
+    .catch((error: any) => {
+      console.log(`/user: Error deleting ${req.query.userName}`, error);
+      res.status(400).send(error);
+      res.end();
+    })
+});
+
+router.put('/user/addFollowed', (req: Request, res: Response) => {
+  return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
+    .then(() => {
+      console.log(`/user/addFollowed: Success adding ${req.body.value} to following list`);
+      res.status(201);
+      res.end();
+    })
+    .catch((error: any) => {
+      console.log(`/user/addFollowed: Error adding ${req.body.value} to following list`, error);
       res.status(400).send(error);
       res.end();
     })
@@ -37,6 +68,41 @@ router.get('/findUser', (req: Request, res: Response) => {
 
 //TODO: add userID to following list
 //TODO: remove userID from following list
+router.put('/user/removeFollowed', (req: Request, res: Response) => {
+  return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
+    .then(() => {
+      console.log(`/user/removeFollowed: Success removing ${req.body.value} to following list`);
+      res.status(201);
+      res.end();
+    })
+    .catch((error: any) => {
+      console.log(`/user/removeFollowed: Error removing ${req.body.value} to following list`, error);
+      res.status(400).send(error);
+      res.end();
+    })
+});
+
+//TODO: retrieve owned services list
+router.get('/user/services', async (req: Request, res: Response) => {
+  try {
+    let result = await controllers.retrieveServices(req.body.userName);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(400).send(error);
+    console.log('failed GET /services', error);
+  }
+})
+
+//TODO: update owned services list
+router.put('/user/services', async (req: Request, res: Response) => {
+  try {
+    await controllers.updateServices(req.body.userName, req.body.services);
+    res.sendStatus(204)
+  } catch (error) {
+    res.status(400).send(error);
+    console.log('failed PUT /user/services', error)
+  }
+})
 
 //TODO: add videoID to watched list
 router.post('/addToWatchedList', async (req: Request, res: Response) => {
@@ -67,35 +133,17 @@ router.post('/removeFromWatchedList', async (req: Request, res: Response) => {
 //TODO: add videoID to recommended list
 //TODO: remove videoID from recommended list
 
-//TODO: retrieve owned services list
-router.get('/services', async (req: Request, res: Response) => {
-  try {
-    let result = await controllers.retrieveServices(req.body.userName);
-    res.status(200).send(result);
-  } catch (error) {
-    res.status(400).send(error);
-    console.log('failed GET /services', error);
-  }
-})
-
-//TODO: update owned services list
-router.put('/services', async (req: Request, res: Response) => {
-  console.log(req.body);
-  controllers.updateServices(req.body.userName, req.body.services);
-  res.sendStatus(204)
-})
-
 //!==============================================//
 //!================ VIDEO TABLE =================//
 //!==============================================//
-router.post('/addVideo', (req: Request, res: Response) => {
+router.post('/video', (req: Request, res: Response) => {
   return controllers.addVideo(req.body)
     .then((results: any) => {
       res.status(201);
       res.end();
     })
     .catch((error: any) => {
-      console.log('failed POST /addVideo', error)
+      console.log('failed POST /video', error)
       res.status(400).send(error);
       res.end();
     });
@@ -104,14 +152,14 @@ router.post('/addVideo', (req: Request, res: Response) => {
 //!==============================================//
 //!=============== RATINGS TABLE ================//
 //!==============================================//
-router.post('/addRating', (req: Request, res: Response) => {
+router.post('/rating', (req: Request, res: Response) => {
   return controllers.addRating(req.body)
     .then((results: any) => {
       res.status(201);
       res.end();
     })
     .catch((error: any) => {
-      console.log('Failed POST /addRating')
+      console.log('Failed POST /rating');
     });
 });
 
