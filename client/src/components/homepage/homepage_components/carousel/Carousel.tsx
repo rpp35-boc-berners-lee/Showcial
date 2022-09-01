@@ -1,4 +1,4 @@
-import { VideoCard } from '../../shared/VideoCard';
+import { VideoCard } from '../../../shared/VideoCard';
 import React from 'react';
 import Box from '@mui/material/Box';
 // import Carousel from 'react-material-ui-carousel';
@@ -20,10 +20,10 @@ type Video = {
 };
 
 const breakPoints = [
-   { width: 1, itemsToShow: 1 },
-   { width: 550, itemsToShow: 2, itemsToScroll: 2 },
-   { width: 768, itemsToShow: 3 },
-   { width: 1200, itemsToShow: 4 },
+  { width: 1, itemsToShow: 1 },
+  { width: 550, itemsToShow: 2, itemsToScroll: 2 },
+  { width: 768, itemsToShow: 3 },
+  { width: 1200, itemsToShow: 4 }
 ];
 
 export const CarouselList: React.FC<Props> = ({ vedioList, config }) => {
