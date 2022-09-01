@@ -1,1 +1,17 @@
 @use '../../index.scss' as *;
+
+.followedCard {
+  align-self: center;
+  padding: 1.5rem;
+  margin: 2rem;
+}
+
+.unfollowButton {
+  gap: .5rem;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  padding: 7px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}

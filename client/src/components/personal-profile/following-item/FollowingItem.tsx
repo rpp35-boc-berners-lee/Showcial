@@ -1,5 +1,5 @@
 import React, { SyntheticEvent } from 'react';
-import { Paper, Card, CardMedia, CardContent, CardHeader, Typography } from '@mui/material';
+import { Paper, Card, CardMedia, CardContent, CardHeader, Typography, Shadows } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import axios from 'axios';
 
@@ -33,17 +33,18 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
    }
 
    return (
-      <Card>
+      <Card className='followedCard' sx={{ boxShadow: 3 }}>
          <CardHeader
-            className='followedCard'
-            style={{ cursor: 'pointer'}}
+            style={{ cursor: 'pointer', textAlign: 'center'}}
             onClick={(event: any) => {
                console.log(fetchForFollowerData(event.target.innerText));
             }}
            title={userName}
          />
-         <CardContent>
-            <button onClick={(event: any) => {
+         <CardContent
+            style={{textAlign: 'center'}}
+         >
+            <button className='unfollowButton' onClick={(event: any) => {
                // console.log(`Remove ${userName}!`)
                removeFollower(userName);
                event.target.innerText = 'REMOVED';
@@ -57,6 +58,6 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
 //    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
 //    ...theme.typography.body2,
 //    padding: theme.spacing(2),
-//    textAlign: 'center',
+//    textAlighn: 'center',
 //    color: theme.palette.text.secondary,
 //  }));

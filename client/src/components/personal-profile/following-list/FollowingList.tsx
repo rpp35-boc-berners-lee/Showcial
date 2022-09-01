@@ -24,7 +24,11 @@ export const FollowingList = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Grid container spacing={{ xs: 1, md: 2, xl: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+      <Grid
+        container
+        spacing={{ xs: 1, md: 2, xl: 3 }}
+        columns={{ xs: 1, sm: 8, md: 12 }}
+      >
         {followingList.map((followedUserName: any, index: any) => {
           return (
             <Grid xs={2} sm={4} md={4} key={index}>
@@ -36,13 +40,3 @@ export const FollowingList = () => {
     </Box>
   );
 };
-
-//   <Box sx={{ flexGrow: 1 }}>
-//   <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-//     {Array.from(Array(6)).map((_, index) => (
-//       <Grid xs={2} sm={4} md={4} key={index}>
-//       {FollowingItem(userName, index)}
-//      </Grid>
-//    ))}
-//  </Grid>
-//</Box>
