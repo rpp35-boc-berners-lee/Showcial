@@ -2,7 +2,6 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 
 const mongoDB = process.env.mongoDB_TOKEN;
-// const mongoDB = 'mongodb://localhost/blueOceanCapstoneDB';
 
 mongoose.connect(mongoDB)
   .then(() => {
@@ -29,7 +28,7 @@ const userTableSchema = mongoose.Schema({
   },
   email: String,
   hashedPassword: String, // removed from response
-  followingList: Array, // array of "followed" userIDs
+  followingList: [String], // array of "followed" userNames
   watchedVideos: Array, // array of "watched" videoIDs
   recommendedVideos: Array, // array of "recommended" videoIDs
   ownedServices: Array, // array of serviceIDs OR names?
@@ -57,18 +56,35 @@ const RatingsTable = mongoose.model('ratingsTable', ratingsTableSchema);
 const services = {
   netflix: {
     cost: 15.49,
+    logo_path: "/9A1JSVmSxsyaBK4SUFsYVqbAYfW.jpg",
+    provider_name: "Netflix",
+    provider_id: 8
   },
   primeVideo: {
-    cost: 8.99
+    cost: 8.99,
+    display_priority: 1,
+    logo_path: "/68MNrwlkpF7WnmNPXLah69CR5cb.jpg",
+    provider_name: "Amazon Prime Video",
+    provider_id: 9,
+    provider_id_alt: 119
   },
   hboMax: {
-    cost: 14.99
+    cost: 14.99,
+    logo_path: "/aS2zvJWn9mwiCOeaaCkIh4wleZS.jpg",
+    provider_name: "HBO Max",
+    provider_id: 384
   },
   hulu: {
-    cost: 12.99
+    cost: 12.99,
+    logo_path: "/giwM8XX4V2AQb9vsoN7yti82tKK.jpg",
+    provider_name: "Hulu",
+    provider_id: 15
   },
   disneyPlus: {
-    cost: 7.99
+    cost: 7.99,
+    logo_path: "/dgPueyEdOwpQ10fjuhL2WYFQwQs.jpg",
+    provider_name: "Disney Plus",
+    provider_id: 337
   }
 };
 
