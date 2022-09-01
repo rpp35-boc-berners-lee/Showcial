@@ -70,7 +70,7 @@ router.put('/user/removeFollowed', (req: Request, res: Response) => {
   return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
     .then(() => {
       console.log(`/user/removeFollowed: Success removing ${req.body.value} to following list`);
-      res.status(201);
+      res.status(204);
       res.end();
     })
     .catch((error: any) => {

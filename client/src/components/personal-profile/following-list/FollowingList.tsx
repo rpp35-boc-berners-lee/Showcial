@@ -6,7 +6,7 @@ import { Box, Paper, Grid } from '@mui/material';
 
 export const FollowingList = () => {
   const [followingList, setFollowingList] = useState<any>([])
-  const [userName, setUserName] = useState<string | undefined>('Nourse41');
+  const [userName, setUserName] = useState<string>('Nourse41');
 
   useEffect(() => {
     fetchFollowingList();
@@ -24,9 +24,9 @@ export const FollowingList = () => {
 
   return (
     <>
-      {followingList.map((userName: any, index: any) => {
+      {followingList.map((followedUserName: any, index: any) => {
         return (
-          FollowingItem(userName, index)
+          FollowingItem(followedUserName, index, userName)
         );
       })}
     </>
