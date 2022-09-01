@@ -6,7 +6,7 @@ import compression from 'compression';
 import api_router from './api/routes/tmdb_api';
 import videoDB_router from './database/routes/index';
 import { router as baseEndpointRoute } from './routes/base-endpoint.route';
-import {router as authRouter} from './authentication/auth';
+import { router as authRouter } from './authentication/auth';
 import cors from 'cors';
 
 var session = require('express-session');
@@ -24,25 +24,24 @@ app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
-app.use(session({
-  secret: secret,
-  cookie: {
-   //   path: '/home',
-     httpOnly: true,
-     secure: false,
-     maxAge: 300000
-  },
-  resave: false,
-  saveUninitialized: false,
-store: MongoStore.create({mongoUrl: db_conn})
-}))
+app.use(
+   session({
+      secret: secret,
+      cookie: {
+         //   path: '/home',
+         httpOnly: true,
+         secure: false,
+         maxAge: 300000,
+      },
+      resave: false,
+      saveUninitialized: false,
+      store: MongoStore.create({ mongoUrl: db_conn }),
+   })
+);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cors());
-
 app.use(bodyParser.json());
-app.use(cors());
 
 // API ROUTE
 app.use('/tmdb', api_router);
@@ -55,8 +54,6 @@ app.use('/api', baseEndpointRoute);
 
 //AUTH ROUTE
 app.use('/auth', authRouter);
-
-
 
 //for all other routes not found, send index.html file
 app.get('/*', (req, res) => {
