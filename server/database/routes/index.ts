@@ -70,7 +70,6 @@ router.post('/removeFromWatchedList', async (req: Request, res: Response) => {
 //TODO: retrieve service to owned list
 router.get('/services', async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
     let result = await controllers.retrieveServices(req.body.userName);
     res.status(200).send(result);
   } catch (error) {
@@ -79,6 +78,13 @@ router.get('/services', async (req: Request, res: Response) => {
 })
 //TODO: add service to owned list
 router.post('/services', async (req: Request, res: Response) => {
+  try {
+    console.log(req.body);
+    await controllers.addServices(req.body.userName, req.body.services);
+    res.sendStatus(201);
+  } catch (error) {
+    console.log('failed POST /sercices', error);
+  }
   
 })
 //TODO: remove service from owned list

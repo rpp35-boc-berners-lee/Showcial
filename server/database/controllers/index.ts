@@ -83,7 +83,7 @@ const removeFromWatchedList = async (userName: any, videoID: number) => {
 //TODO: remove videoID from recommended list
 
 //TODO: retrieve owned services
-let services = ['Netflix', 'HBO Max', 'Hulu', 'Disney+', 'Prime Video'];
+let AllServices = ['Netflix', 'HBO Max', 'Hulu', 'Disney+', 'Prime Video'];
 const retrieveServices = async (userName: string) => {
   try {
     let data = await  models.UserTable.find({ userName })
@@ -93,6 +93,26 @@ const retrieveServices = async (userName: string) => {
   }
 }
 //TODO: add service to owned list
+const addServices = async (userName: string, services: string[]) => {
+  const validService = (services: string[]) => {
+    services.forEach((service) => {
+      if (AllServices.indexOf(service) === -1) {
+        return false
+      }
+    })
+    return true;
+  }
+    try {
+      if (validService(services)){
+        await models.UserTable.updateOne({ userName }, {$push: {ownedServices: {$each: services }}})
+        console.log('successfully added services')
+      } else {
+        throw Error;
+      }
+    } catch (error) {
+      console.log(`Error adding owned services ${services} for user ${userName}: ${error}`)
+    }
+}
 //TODO: remove service from owned list
 // update user document w/ options
 const updateUser = (userName: string, prop: string, value: any) => {
@@ -161,5 +181,6 @@ export default {
   addRating,
   addToWatchedList,
   removeFromWatchedList,
-  retrieveServices
+  retrieveServices,
+  addServices
 }
