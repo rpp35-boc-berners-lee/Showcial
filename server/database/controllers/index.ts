@@ -91,7 +91,7 @@ const retrieveServices = async (userName: string) => {
     console.log(`Error retrieving owned services for user ${userName}: ${error}`);
   }
 }
-//TODO: add service to owned list
+//TODO: update owned services
 const updateServices = async (userName: string, services: string[]) => {
     try {
       await models.UserTable.updateOne({ userName }, {$set: {ownedServices: services }})
@@ -100,15 +100,6 @@ const updateServices = async (userName: string, services: string[]) => {
       console.log(`Error updating owned services ${services} for user ${userName}: ${error}`)
     }
 }
-//TODO: remove service from owned list
-// const removeServices = async (userName: string, services: string[]) => {
-//   try {
-//     await models.UserTable.updateOne({ userName }, {$pull: {ownedServices: {$each: services }}})
-//         
-//   } catch (error) {
-//     console.log(`Error removing owned services ${services} for user ${userName}: ${error}`)
-//   }
-// }
 
 // update user document w/ options
 const updateUser = (userName: string, prop: string, value: any) => {

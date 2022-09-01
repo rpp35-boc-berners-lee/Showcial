@@ -67,7 +67,7 @@ router.post('/removeFromWatchedList', async (req: Request, res: Response) => {
 //TODO: add videoID to recommended list
 //TODO: remove videoID from recommended list
 
-//TODO: retrieve service to owned list
+//TODO: retrieve owned services list
 router.get('/services', async (req: Request, res: Response) => {
   try {
     let result = await controllers.retrieveServices(req.body.userName);
@@ -77,18 +77,8 @@ router.get('/services', async (req: Request, res: Response) => {
     console.log('failed GET /services', error);
   }
 })
-//TODO: add service to owned list
-// router.post('/services', async (req: Request, res: Response) => {
-//   try {
-//     await controllers.addServices(req.body.userName, req.body.services);
-//     res.sendStatus(201);
-//   } catch (error) {
-//     res.status(400).send(error);
-//     console.log('failed POST /sercices', error);
-//   }
-  
-// })
-//TODO: remove service from owned list
+
+//TODO: update owned services list
 router.put('/services', async (req: Request, res: Response) => {
   console.log(req.body);
   controllers.updateServices(req.body.userName, req.body.services);
