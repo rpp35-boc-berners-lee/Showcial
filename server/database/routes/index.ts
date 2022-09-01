@@ -38,6 +38,20 @@ router.get('/user', (req: Request, res: Response) => {
     })
 });
 
+router.get('/user/all', (req: Request, res: Response) => {
+  return controllers.findAllUsers()
+    .then((results: any) => {
+      console.log(`/user/all: Success finding all users`);
+      res.status(200).send(results);
+      res.end();
+    })
+    .catch((error: any) => {
+      console.log(`/user/all: Error finding all users`, error);
+      res.status(400).send(error);
+      res.end();
+    });
+});
+
 router.delete('/user', (req: Request, res: Response) => {
   return controllers.deleteUser(req.query.userName)
     .then(() => {

@@ -47,6 +47,18 @@ const findUser = (userName: any) => {
     });
 };
 
+const findAllUsers = () => {
+  return models.UserTable.find({})
+    .then((results: any) => {
+      return results.map((result: any) => {
+        return result.userName;
+      })
+    })
+    .catch((error: any) => {
+      console.log('Error finding all users', error)
+    })
+};
+
 //TODO: add videoID to watched list
 const addToWatchedList = async (userName: any, videoID: number) => {
   return await models.UserTable.find({ userName })
@@ -164,6 +176,7 @@ const addRating = (ratingData: any) => {
 export default {
   addUser,
   findUser,
+  findAllUsers,
   updateUser,
   addVideo,
   addRating,
