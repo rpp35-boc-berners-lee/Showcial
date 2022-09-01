@@ -66,7 +66,7 @@ router.get(
 
 // SEARCH
 router.get('/search/:search/:page', async (req: Request, res: Response) => {
-   let params = req.params as unknown as Query;
+   let params = req.params as unknown as Params;
    res.send(await tmdb.getSearchResults(params.search, params.page));
 });
 

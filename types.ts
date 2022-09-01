@@ -71,4 +71,5 @@ export {
   APIResponse,
   TVResults,
   MovieResults,
+  PersonResults,
 }
