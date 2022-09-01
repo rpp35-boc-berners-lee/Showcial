@@ -73,23 +73,26 @@ router.get('/services', async (req: Request, res: Response) => {
     let result = await controllers.retrieveServices(req.body.userName);
     res.status(200).send(result);
   } catch (error) {
+    res.status(400).send(error);
     console.log('failed GET /services', error);
   }
 })
 //TODO: add service to owned list
-router.post('/services', async (req: Request, res: Response) => {
-  try {
-    console.log(req.body);
-    await controllers.addServices(req.body.userName, req.body.services);
-    res.sendStatus(201);
-  } catch (error) {
-    console.log('failed POST /sercices', error);
-  }
+// router.post('/services', async (req: Request, res: Response) => {
+//   try {
+//     await controllers.addServices(req.body.userName, req.body.services);
+//     res.sendStatus(201);
+//   } catch (error) {
+//     res.status(400).send(error);
+//     console.log('failed POST /sercices', error);
+//   }
   
-})
+// })
 //TODO: remove service from owned list
 router.put('/services', async (req: Request, res: Response) => {
-  
+  console.log(req.body);
+  controllers.updateServices(req.body.userName, req.body.services);
+  res.sendStatus(204)
 })
 
 //!==============================================//
