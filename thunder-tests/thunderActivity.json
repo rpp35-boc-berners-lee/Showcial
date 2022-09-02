@@ -4,21 +4,21 @@
     "colId": "history",
     "containerId": "",
     "name": "https://api.themoviedb.org/3/movie/{movie_id}?api_key=\"b72ef47794d7392f4566348ad3b34361\"&language=en-US",
-    "url": "https://api.themoviedb.org/3/movie/{movie_id}?api_key=\"b72ef47794d7392f4566348ad3b34361\"&language=en-US",
+    "url": "https://api.themoviedb.org/3/movie/{movie_id}?api_key=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNzJlZjQ3Nzk0ZDczOTJmNDU2NjM0OGFkM2IzNDM2MSIsInN1YiI6IjYzMDY4ZjYyYWFmODk3MDA4NDQ5MjAzMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UPta8KJxsyMh5z9WXIT0Yj1On8lHNfw7XRYCUom0Yfg&language=en-US",
     "method": "GET",
     "sortNum": 0,
     "created": "2022-08-26T16:56:16.604Z",
-    "modified": "2022-08-26T16:56:16.836Z",
+    "modified": "2022-08-31T21:20:35.017Z",
     "headers": [],
     "params": [
       {
         "name": "movie_id",
-        "value": "1",
+        "value": "550",
         "isPath": true
       },
       {
         "name": "api_key",
-        "value": "\"b72ef47794d7392f4566348ad3b34361\"",
+        "value": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiNzJlZjQ3Nzk0ZDczOTJmNDU2NjM0OGFkM2IzNDM2MSIsInN1YiI6IjYzMDY4ZjYyYWFmODk3MDA4NDQ5MjAzMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UPta8KJxsyMh5z9WXIT0Yj1On8lHNfw7XRYCUom0Yfg",
         "isPath": false
       },
       {
@@ -34,26 +34,96 @@
     "colId": "history",
     "containerId": "",
     "name": "https://api.themoviedb.org/3/movie/{movie_id}?api_key=b72ef47794d7392f4566348ad3b34361&language=en-US",
-    "url": "https://api.themoviedb.org/3/movie/{movie_id}?api_key=b72ef47794d7392f4566348ad3b34361&language=en-US",
+    "url": "https://api.themoviedb.org/3/genre/movie/list?api-key=b72ef47794d7392f4566348ad3b34361",
     "method": "GET",
     "sortNum": 0,
     "created": "2022-08-26T16:56:26.925Z",
-    "modified": "2022-08-26T17:06:14.413Z",
+    "modified": "2022-08-31T21:15:13.131Z",
     "headers": [],
     "params": [
       {
-        "name": "movie_id",
-        "value": "550",
-        "isPath": true
-      },
+        "name": "api-key",
+        "value": "b72ef47794d7392f4566348ad3b34361",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "30668651-444f-4c6c-8292-fbd7997d5608",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:8080/api/videoDB/findUser?userName\"=\"Bonnie\"",
+    "url": "http://localhost:8080/api/videoDB/findUser?userName\"=\"Bonnie\"",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-08-30T16:39:56.891Z",
+    "modified": "2022-08-30T16:39:56.945Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "userName\"",
+        "value": "\"Bonnie\"",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "a137da5b-4f88-4f43-82aa-75260ad14379",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:8080/api/videoDB/findUser?userName=\"Bonnie\"",
+    "url": "http://localhost:8080/api/videoDB/findUser?userName=\"Bonnie\"",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-08-30T16:40:04.885Z",
+    "modified": "2022-08-30T16:40:04.906Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "userName",
+        "value": "\"Bonnie\"",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "59923d15-fab0-4f8c-9b50-935d3b16aa71",
+    "colId": "history",
+    "containerId": "",
+    "name": "http://localhost:8080/api/videoDB/findUser?userName=\"Joe\"",
+    "url": "http://localhost:8080/api/videoDB/findUser?userName=\"Joe\"",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-08-30T16:40:23.182Z",
+    "modified": "2022-08-30T16:40:23.205Z",
+    "headers": [],
+    "params": [
+      {
+        "name": "userName",
+        "value": "\"Joe\"",
+        "isPath": false
+      }
+    ],
+    "tests": []
+  },
+  {
+    "_id": "ce54fcf5-d413-463c-97d1-c796b855e068",
+    "colId": "history",
+    "containerId": "",
+    "name": "https://api.themoviedb.org/3/movie/550?api_key=b72ef47794d7392f4566348ad3b34361",
+    "url": "https://api.themoviedb.org/3/movie/550?api_key=b72ef47794d7392f4566348ad3b34361",
+    "method": "GET",
+    "sortNum": 0,
+    "created": "2022-08-31T21:39:36.725Z",
+    "modified": "2022-08-31T21:39:36.909Z",
+    "headers": [],
+    "params": [
       {
         "name": "api_key",
         "value": "b72ef47794d7392f4566348ad3b34361",
-        "isPath": false
-      },
-      {
-        "name": "language",
-        "value": "en-US",
         "isPath": false
       }
     ],
