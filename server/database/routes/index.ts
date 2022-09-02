@@ -156,7 +156,33 @@ router.post('/removeFromWatchedList', async (req: Request, res: Response) => {
     })
 });
 //TODO: add videoID to recommended list
+router.post('/addToRecommended', async (req: Request, res: Response) => {
+  let query = req.query as unknown as Query;
+  await controllers.addToRecommended(query.userName, Number(query.videoID))
+    .then(() => {
+      res.sendStatus(201)
+    })
+    .catch((error: any) => {
+      console.log('failed to add recommend', error)
+      res.status(400).send(error);
+      res.end();
+    })
+});
 //TODO: remove videoID from recommended list
+router.post('/addToRecommended', async (req: Request, res: Response) => {
+  let query = req.query as unknown as Query;
+  await controllers.removeFromRecommended(query.userName, Number(query.videoID))
+    .then(() => {
+      res.sendStatus(201)
+    })
+    .catch((error: any) => {
+      console.log('failed to remove recommend', error)
+      res.status(400).send(error);
+      res.end();
+    })
+});
+//TODO: add service to owned list
+//TODO: remove service from owned list
 
 //!==============================================//
 //!================ VIDEO TABLE =================//
