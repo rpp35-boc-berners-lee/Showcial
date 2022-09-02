@@ -3,6 +3,7 @@ import './PersonalProfile.scss';
 import { ForYou } from './for-you/ForYou';
 import { FollowingList } from './following-list/FollowingList';
 import { FollowerSearchBar } from './followerSearchBar/followerSearchBar';
+import { ForFollower } from './for-follower/ForFollower';
 import axios from 'axios';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -11,16 +12,14 @@ import AssistantPhotoOutlinedIcon from '@mui/icons-material/AssistantPhotoOutlin
 import SelectSearch from 'react-select-search';
 
 //! "for-followed" page is conditionally rendered using currentOption value --> how to set from child component??
-//! also conditionally render search page or use search bar style --> how to handle clicking each name?
+  // create hook for friends profile data & pass to SearchBar/FollowingList
+  //  pass setValue hook to SearchBar/FollowingList/ForFollower components
+  // create condition to render "for-follower" page if value === 3
 
 export const PersonalProfile = () => {
   const [value, setValue] = React.useState(1);
-  const [userList, setUserList] = React.useState([]);
   const [userName, setUserName] = useState<string>('Nourse41'); //! switch to current signed in user
-
-  useEffect(() => {
-    fetchUserList();
-  },[])
+  const [followeeData, setFolloweeData] = useState<any>(undefined)
 
   let currentOption = value;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -29,16 +28,6 @@ export const PersonalProfile = () => {
     console.log('new value: ',  newValue);
     currentOption = newValue
   };
-
-  function fetchUserList () {
-    axios.get('http://localhost:8080/videoDB/user/all')
-      .then((results: any) => {
-        setUserList(results.data);
-      })
-      .catch((error: any) => {
-        console.log('fetchUserList() FAILED: ', error);
-      })
-  }
 
   const SelectBar = () => {
     return (
@@ -49,12 +38,21 @@ export const PersonalProfile = () => {
     );
   }
 
+  // render FollowingList, ForYou or ForFollow components based off currentOption value
+  let component = undefined;
+  if (currentOption === 0) {
+    component = (<FollowingList />);
+  } else if (currentOption === 1) {
+    component = (<ForYou />);
+  } else if (currentOption === 2) {
+    component = (ForFollower(followeeData, setValue));
+  }
 
   return (
     <div>
       <FollowerSearchBar/>
       <SelectBar />
-      {currentOption === 1 ? <ForYou /> : <FollowingList />}
+      {component}
     </div>
   );
 };
