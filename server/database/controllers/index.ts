@@ -4,9 +4,9 @@ type UserData = {
   userName: string;
   email: string;
   hashedPassword: string;
-  followingList: number[];
-  watchedVideos: number[];
-  recommendedVideos: number[];
+  followingList: string[];
+  watchedVideos: string[];
+  recommendedVideos: string[];
   ownedServices: string[];
 };
 
@@ -23,7 +23,7 @@ const addUser = (userData: UserData) => {
     userName: userData.userName,
     email: userData.email,
     hashedPassword: userData.hashedPassword,
-    followingList:  userData.followingList || [],
+    followingList: ['Bonnie', 'Joe'],
     watchedVideos: userData.watchedVideos || [],
     recommendedVideos: userData.recommendedVideos || [],
     ownedServices: userData.ownedServices || [],
@@ -38,7 +38,7 @@ const addUser = (userData: UserData) => {
 };
 
 const findUser = (userName: any) => {
-  return models.UserTable.find({'userName': userName})
+  return models.UserTable.findOne({userName})
     .then((results: any) => {
       return results;
     })
@@ -47,9 +47,18 @@ const findUser = (userName: any) => {
     });
 };
 
-//TODO: add userID to following list
-//TODO: remove userID from following list
-//TODO: add videoID to watched list
+const findAllUsers = () => {
+  return models.UserTable.find({})
+    .then((results: any) => {
+      return results.map((result: any) => {
+        return result.userName;
+      })
+    })
+    .catch((error: any) => {
+      console.log('Error finding all users', error)
+    })
+};
+
 const addToWatchedList = async (userName: any, videoID: number) => {
   return await models.UserTable.find({ userName })
     .then(async (results: any) => {
@@ -64,7 +73,7 @@ const addToWatchedList = async (userName: any, videoID: number) => {
       console.log(`Error updating ${userName}'s watched list with videoID ${videoID}: ${error}`)
     })
 }
-//TODO: remove videoID from watched list
+
 const removeFromWatchedList = async (userName: any, videoID: number) => {
   return await models.UserTable.find({ userName })
     .then(async (results: any) => {
@@ -113,20 +122,39 @@ const removeFromRecommended = async (userName: any, videoID: number) => {
 //TODO: remove service from owned list
 // update user document w/ options
 const updateUser = (userName: string, prop: string, value: any) => {
-  models.UserTable.findOneAndUpdate({userName}, {[prop]: value})
-    .then(() => {
-      console.log(`Success updating ${userName} with {${prop}: ${value}}`)
+  return findUser(userName)
+    .then((foundUser: any) => {
+      const foundIndex = foundUser[prop].indexOf(value);
+      if (foundIndex !== -1) {
+        foundUser[prop].splice(foundIndex, 1);
+      } else {
+        foundUser[prop] = [value].concat(foundUser[prop]);
+      };
+      return foundUser.save()
+        .then(() => {
+          console.log('updateUser(): Success updating user');
+        })
+        .catch((error: any) => {
+          console.log('updateUser(): Error updating user', error)
+        })
     })
     .catch((error: any) => {
-      console.log(`Error updating ${userName} with {${prop}: ${value}}`);
+      console.log(`Error updating ${userName} with ${prop}: ${value}`);
     });
 };
 
-//? delete existing user
+const deleteUser = ((userName: string | any) => {
+  return models.UserTable.deleteOne({userName})
+    .then()
+    .catch((error: any) => {
+      console.log(`deleteUser(): Error deleting ${userName}`)
+    });
+});
 
 //!==============================================//
 //!================ VIDEO TABLE =================//
 //!==============================================//
+
 const addVideo = (videoData: any) => {
   const newVideo = new models.VideoTable({
     videoName: videoData.videoName,
@@ -149,12 +177,13 @@ const addVideo = (videoData: any) => {
 //!==============================================//
 //!=============== RATINGS TABLE ================//
 //!==============================================//
-//TODO: create rating
+
 const addRating = (ratingData: any) => {
   const newRating = models.RatingsTable({
     videoName: ratingData.videoName,
     userName: ratingData.userName,
     userRating: ratingData.userRating,
+    created_at: new Date(),
     comments: ratingData.comments
   });
   return newRating.save()
@@ -173,11 +202,13 @@ const addRating = (ratingData: any) => {
 export default {
   addUser,
   findUser,
+  findAllUsers,
   updateUser,
   addVideo,
   addToRecommended,
   removeFromRecommended,
   addRating,
+  deleteUser,
   addToWatchedList,
   removeFromWatchedList
 }

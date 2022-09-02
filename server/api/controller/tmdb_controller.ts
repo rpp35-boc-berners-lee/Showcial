@@ -66,10 +66,17 @@ let getPopularMovies = async () => {
 }
 
 let getMovieWatchProviders = async (movie_id: number) => {
-  return await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/watch/providers`)
+  return await axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/watch/providers`, config)
     .then(results => {
       return results.data;
     });
+}
+
+let getSearchResults = async (query: string, page: number) => {
+  return await axios.get(`https://api.themoviedb.org/3/search/multi?query=${query}&page=${page}`, config)
+    .then(results => {
+      return results.data;
+    })
 }
 
 export default {
@@ -81,5 +88,6 @@ export default {
   getTopMovies,
   getPopularMovies,
   getMovieWatchProviders,
-  getConfig
+  getConfig,
+  getSearchResults,
 };
