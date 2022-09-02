@@ -2,24 +2,14 @@ import React, { useState, useEffect }  from 'react';
 import axios from 'axios';
 import { Card, CardContent } from '@mui/material';
 
-export const SearchItem = (userName: string, index: number) => {
-  function fetchForFollowerData (userName: string) {
-    return axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
-        .then((results: any) => {
-           console.log(results.data);
-           return results.data;
-        })
-        .catch((error) => {
-           console.log('fetchForFollowerData() Failed', error);
-        });
-  }
-
+export const SearchItem = (props: any) => {
   return (
-    <Card style={{ cursor: 'pointer'}} onClick={(event: any) => {
-      fetchForFollowerData(userName);
+    <Card style={{cursor: 'pointer'}} key={props.index} onClick={(event: any) => {
+      props.setFolloweeData(props.followee);
+      props.setValue(2);
     }}>
       <CardContent>
-        {userName}
+        {props.followee}
       </CardContent>
     </Card>
   )

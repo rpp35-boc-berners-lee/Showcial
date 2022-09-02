@@ -6,18 +6,6 @@ import axios from 'axios';
 // make an onClick function for username that makes axios request for users data and passes it to for-follower page
 
 export const FollowingItem = (props: any) => {
-
-   async function fetchForFollowerData (userName: string) {
-     await axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
-         .then((results: any) => {
-            console.log(results.data);
-            return results.data;
-         })
-         .catch((error) => {
-            console.log('fetchForFollowerData() Failed', error);
-         });
-   }
-
    function removeFollower (userName: any) {
       axios.put<any>('http://localhost:8080/videoDB/user/removeFollowed', {
             userName: props.followedUserName,
@@ -37,9 +25,8 @@ export const FollowingItem = (props: any) => {
          <CardHeader
             style={{ cursor: 'pointer', textAlign: 'center'}}
             onClick={(event: any) => {
-               console.log(fetchForFollowerData(event.target.innerText));
+               props.setFolloweeData(props.followedUserName);
                props.setValue(2);
-               props.setFolloweeData(fetchForFollowerData(event.target.innerText))
             }}
            title={props.followedUserName}
          />

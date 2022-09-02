@@ -20,12 +20,27 @@ export const PersonalProfile = () => {
   const [value, setValue] = React.useState(1);
   const [userName, setUserName] = useState<string>('Nourse41'); //! switch to current signed in user
   const [followeeData, setFolloweeData] = useState<any>(undefined)
+  const [followingList, setFollowingList] = useState<any>([]) //! create hook for user's data and pass to followingList as prop
+
+  useEffect(() => {
+    fetchFollowingList();
+  },[])
+
+  function fetchFollowingList () {
+    axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
+      .then((results: any) => {
+        setFollowingList(results.data.followingList);
+      })
+      .catch((error) => {
+        console.log('fetchFollowingList() Failed', error);
+      })
+  }
 
   let currentOption = value;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log('value: ',value);
+    console.log('value: ', value);
     setValue(newValue);
-    console.log('new value: ',  newValue);
+    console.log('new value: ', newValue);
     currentOption = newValue
   };
 
@@ -38,21 +53,26 @@ export const PersonalProfile = () => {
     );
   }
 
-  // render FollowingList, ForYou or ForFollow components based off currentOption value
+  // Conditionally render main component (FollowingList/For-You/For-Follower), SelectBar and FollowerSearchBar
+  let followerSearchBar = undefined;
+  let selectBar = undefined;
   let component = undefined;
   if (currentOption === 0) {
-    // component = FollowingList(setValue, setFolloweeData);
-    component = (<FollowingList setValue={setValue} setFolloweeData={setFolloweeData}/>);
+    followerSearchBar = (<FollowerSearchBar setValue={setValue} setFolloweeData={setFolloweeData}/>);
+    selectBar = (<SelectBar />);
+    component = (<FollowingList setValue={setValue} setFolloweeData={setFolloweeData} followingList={followingList}/>);
   } else if (currentOption === 1) {
+    followerSearchBar = (<FollowerSearchBar setValue={setValue} setFolloweeData={setFolloweeData}/>);
+    selectBar = (<SelectBar />);
     component = (<ForYou />);
   } else if (currentOption === 2) {
-    component = (<ForFollower setValue={setValue} setFolloweeData={setFolloweeData}/>);
+    component = (<ForFollower setValue={setValue} followeeData={followeeData} followingList={followingList}/>);
   }
 
   return (
     <div>
-      <FollowerSearchBar/>
-      <SelectBar />
+      {followerSearchBar}
+      {selectBar}
       {component}
     </div>
   );
