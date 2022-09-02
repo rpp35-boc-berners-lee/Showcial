@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 import axios from 'axios';
 import './YourWatchList.scss';
-import { VideoCard } from './VideoCard';
+import { VideoCard } from '../../shared/VideoCard';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -24,16 +24,17 @@ type Video = {
   backdrop_path: string;
   name: string;
   id: number;
+  original_title: string;
 }
-
-
 
 export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
   const [displayedVideos, setDisplayedVideos] = useState([]);
   const [numDisplayed, setNumDisplayed] = useState(0);
   const [maxRowCards, setMaxRowCards] = useState(0);
-  const [filter, setFilter] = useState('');
-  const [sort, setSort] = useState('');
+  const [filterType, setFilterType] = useState('');
+  const [filteredList, setFilteredList] = useState([]);
+  const [sortType, setSortType] = useState('');
+  const [sortedList, setSortedList] = useState([]);
 
   useEffect(() => {
     let box = document.querySelector('.MuiGrid-container');
@@ -53,53 +54,60 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
     setDisplayedVideos(watchList.slice(0, numDisplayed));
   }, [numDisplayed]);
 
-  const handleFilter = (event: SelectChangeEvent) => {
-    setFilter(event.target.value as string);
+  const handleFilterType = (event: SelectChangeEvent) => {
+    setFilterType(event.target.value as string);
   };
 
-  const handleSort = (event: SelectChangeEvent) => {
-    setSort(event.target.value as string);
+  const handleSortType = (event: SelectChangeEvent) => {
+    setSortType(event.target.value as string);
   };
 
-  async function getWatchProviders() {
-    let newWatchList = await axios.get<any>(`http://localhost:8080/tmdb/movie/popular`, {
-      params: watchList
-    })
-  }
+  // async function getWatchProviders() {
+  //   let newWatchList = await axios.get<any>(`http://localhost:8080/tmdb/movie/popular`, {
+  //     params: watchList
+  //   })
+  // }
+
+  // const handleSort = () => {
+  //   let sorted = watchList.slice();
+  //   sorted.sort((a, b) => {
+
+  //   })
+  // }
 
    return (
     <div>
       <div>
-      <Typography>YOUR WATCH LIST</Typography>
-      <FormControl sx={{ m: 1, width: '10%' }} size='small'>
-        <InputLabel id="filter">Filter</InputLabel>
-        <Select
-          labelId="filter-label"
-          id="filter-select"
-          value={filter}
-          label="Filter"
-          onChange={handleFilter}
-        >
-          <MenuItem value={'Netflix'}>Netflix</MenuItem>
-          <MenuItem value={'Hulu'}>Hulu</MenuItem>
-          <MenuItem value={'HBO Max'}>HBO Max</MenuItem>
-          <MenuItem value={'Disney+'}>Disney+</MenuItem>
-          <MenuItem value={'Amazon Prime'}>Amazon Prime</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl sx={{ m: 1, width: '10%' }} size='small'>
-        <InputLabel id="sort">Sort</InputLabel>
-        <Select
-          labelId="sort-label"
-          id="sort-select"
-          value={sort}
-          label="Sort"
-          onChange={handleSort}
-        >
-          <MenuItem value={'Release Date'}>Release Date</MenuItem>
-          <MenuItem value={'Ratings'}>Ratings</MenuItem>
-        </Select>
-      </FormControl>
+        <Typography>YOUR WATCH LIST</Typography>
+        <FormControl sx={{ m: 1, width: '10%' }} size='small'>
+          <InputLabel id="filter">Filter</InputLabel>
+          <Select
+            labelId="filter-label"
+            id="filter-select"
+            value={filterType}
+            label="Filter"
+            onChange={handleFilterType}
+          >
+            <MenuItem value={'Netflix'}>Netflix</MenuItem>
+            <MenuItem value={'Hulu'}>Hulu</MenuItem>
+            <MenuItem value={'HBO Max'}>HBO Max</MenuItem>
+            <MenuItem value={'Disney+'}>Disney+</MenuItem>
+            <MenuItem value={'Amazon Prime'}>Amazon Prime</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl sx={{ m: 1, width: '10%' }} size='small'>
+          <InputLabel id="sort">Sort</InputLabel>
+          <Select
+            labelId="sort-label"
+            id="sort-select"
+            value={sortType}
+            label="Sort"
+            onChange={handleSortType}
+          >
+            <MenuItem value={'popularity'}>Trending</MenuItem>
+            <MenuItem value={'vote_average'}>Ratings</MenuItem>
+          </Select>
+        </FormControl>
       </div>
       <Box sx={{ width: '100%' }}>
         <Grid container spacing={4} justifyContent='center'>
@@ -110,7 +118,8 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
                   base_url={config.images.base_url}
                   backdrop_sizes={config.images.backdrop_sizes}
                   backdrop_path={video.backdrop_path}
-                  name={video.name}
+                  name={video.name || video.original_title}
+                  id={video.id}
                 />
               </Grid>
             )
