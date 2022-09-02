@@ -49,6 +49,7 @@ const ratingsTableSchema = mongoose.Schema({
   videoName: String, //! foreign key
   userName: String,
   userRating: Number,
+  created_at: Date,
   comments: String // optional
 });
 const RatingsTable = mongoose.model('ratingsTable', ratingsTableSchema);
