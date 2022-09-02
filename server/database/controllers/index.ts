@@ -1,3 +1,5 @@
+import { FollowingList } from "../../../client/src/components/personal-profile/following-list/FollowingList";
+
 const models = require('../models/index.ts');
 
 type UserData = {
@@ -37,8 +39,8 @@ const addUser = (userData: UserData) => {
     });
 };
 
-const findUser = (userName: any) => {
-  return models.UserTable.findOne({userName})
+const findUser = async (userName: any) => {
+  return await models.UserTable.findOne({userName})
     .then((results: any) => {
       return results;
     })
@@ -178,6 +180,30 @@ const addVideo = (videoData: any) => {
 //!=============== RATINGS TABLE ================//
 //!==============================================//
 
+// This controller isused to retrieve all activity for a certain user
+const retrieveActivities = async (userName: string) => {
+  try {
+    let activities = await models.RatingsTable.find({userName: userName}).sort({created_at: 1});
+    return activities;
+  } catch (error) {
+    console.log(`Error retrieving activities for user ${userName}: ${error}`);
+  }
+}
+
+// This controller is used to retrieve feed that is generated from following list of a user
+const retrieveFeed = async (userName: string) => {
+  try {
+    let user = await findUser(userName);
+    let followingList = user.followingList;
+
+    let feed = await models.RatingsTable.find({userName: {$in: followingList}}).sort({created_at: 1});
+    return feed;
+  } catch (error) {
+    console.log(`Error retrieving feed for user ${userName}: ${error}`);
+  }
+
+}
+
 const addRating = (ratingData: any) => {
   const newRating = models.RatingsTable({
     videoName: ratingData.videoName,
@@ -210,5 +236,9 @@ export default {
   addRating,
   deleteUser,
   addToWatchedList,
-  removeFromWatchedList
+  removeFromWatchedList,
+  retrieveServices,
+  updateServices,
+  retrieveActivities,
+  retrieveFeed
 }
