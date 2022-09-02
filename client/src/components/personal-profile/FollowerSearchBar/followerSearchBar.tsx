@@ -1,19 +1,7 @@
 import React, { useState, useEffect }  from 'react';
-import { SearchItem } from './searchItem/searchItem'
+import { SearchItem } from './searchItem/searchItem';
 import axios from 'axios';
-import {
-  Paper,
-  Card,
-  CardMedia,
-  CardContent,
-  CardHeader,
-  Typography,
-  Shadows,
-  Divider,
-  Button,
-  TextField
-} from '@mui/material';
-
+import { TextField } from '@mui/material';
 
 export const FollowerSearchBar = (allFollowers: any) => {
   const [userList, setUserList] = React.useState([]);
@@ -25,11 +13,9 @@ export const FollowerSearchBar = (allFollowers: any) => {
   }, [])
 
   useEffect(() => {
-    let elements = matchedUserList.map((followee: any) => {
-      return SearchItem(followee);
-    });
-    setShownSearchItems(elements);
-    console.log(shownSearchItems);
+    setShownSearchItems(matchedUserList.map((followee: any, index: number) => {
+      return SearchItem(followee, index);
+    }));
   }, [matchedUserList])
 
   function fetchUserList () {
@@ -44,11 +30,14 @@ export const FollowerSearchBar = (allFollowers: any) => {
 
   function handleChange (event: any) {
     let regex = new RegExp(event.target.value);
-    let matchedUsers = userList.filter((user: any) => {
-      if (regex.test(user)) {
-        return user;
-      }
-    });
+    let matchedUsers: any = [];
+    if (event.target.value.length >= 2) {
+      matchedUsers = userList.filter((user: any) => {
+        if (regex.test(user)) {
+          return user;
+        }
+      });
+    }
     setMatchedUserList(matchedUsers);
   }
 
@@ -62,7 +51,6 @@ export const FollowerSearchBar = (allFollowers: any) => {
         onChange={handleChange}
       />
       <>
-        {/* render matching usernames here */}
         {shownSearchItems}
       </>
     </div>
