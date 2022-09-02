@@ -52,7 +52,7 @@ export const PersonalProfile = () => {
 
   return (
     <div>
-      {FollowerSearchBar(userList)}
+      <FollowerSearchBar/>
       <SelectBar />
       {currentOption === 1 ? <ForYou /> : <FollowingList />}
     </div>
