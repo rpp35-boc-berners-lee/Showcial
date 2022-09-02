@@ -15,7 +15,8 @@ import AssistantPhotoOutlinedIcon from '@mui/icons-material/AssistantPhotoOutlin
 export const PersonalProfile = () => {
   const [value, setValue] = React.useState(1);
   const [userList, setUserList] = React.useState([]);
-
+  const [userName, setUserName] = useState<string>('Nourse41'); //! switch to current signed in user
+  
   useEffect(() => {
     fetchUserList();
   },[])
@@ -50,7 +51,7 @@ export const PersonalProfile = () => {
   return (
     <div>
       <SelectBar />
-      {currentOption === 1 ? <ForYou /> : <FollowingList />}
+      {currentOption === 1 ? <ForYou userName={userName} /> : <FollowingList userName={userName} />}
     </div>
   );
 };
