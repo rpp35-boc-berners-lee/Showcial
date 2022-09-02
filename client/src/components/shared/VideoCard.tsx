@@ -19,7 +19,7 @@ export const VideoCard: React.FC<ChildProps> = ({
    backdrop_sizes,
    backdrop_path,
    name,
-   id,
+   id
 }) => {
    return (
       <Card sx={{ minWidth: 300, maxWidth: 300 }}>

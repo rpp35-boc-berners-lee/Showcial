@@ -1,10 +1,11 @@
 import {Request, Response, Router} from 'express';
 const router = Router();
 import controllers from '../controllers/index';
+import { TVResults, MovieResults } from '../../../types';
 
 type Query = {
   userName: string;
-  videoID: number;
+  video: TVResults | MovieResults;
 };
 
 //!==============================================//
@@ -122,10 +123,10 @@ router.put('/user/removeService', (req: Request, res: Response) => {
     });
 });
 
-//TODO: add videoID to watched list
-router.post('/addToWatchedList', async (req: Request, res: Response) => {
+//TODO: add video to watched list
+router.post('/user/addToWatchedList', async (req: Request, res: Response) => {
   let query = req.query as unknown as Query;
-  await controllers.addToWatchedList(query.userName, Number(query.videoID))
+  await controllers.addToWatchedList(query.userName, query.video)
     .then(() => {
       res.sendStatus(201)
     })
@@ -135,10 +136,10 @@ router.post('/addToWatchedList', async (req: Request, res: Response) => {
       res.end();
     })
 });
-//TODO: remove videoID from watched list
-router.post('/removeFromWatchedList', async (req: Request, res: Response) => {
+//TODO: remove video from watched list
+router.post('/user/removeFromWatchedList', async (req: Request, res: Response) => {
   let query = req.query as unknown as Query;
-  await controllers.removeFromWatchedList(query.userName, Number(query.videoID))
+  await controllers.removeFromWatchedList(query.userName, query.video)
     .then(() => {
       res.sendStatus(201)
     })

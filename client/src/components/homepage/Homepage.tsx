@@ -32,10 +32,11 @@ export function Homepage() {
   const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
   const [watchList, setWatchList] = useState([]);
   // temporary username
-  const [userName, setUserName] = useState<string>('Nourse41');
+  const [userName, setUserName] = useState<string>('JamesFranco');
   const [query, setQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
   const [page, setPage] = useState<number>(1);
+  const [selectedVideo, setSelectedVideo] = useState();
 
   useEffect(() => {
     fetchAPI();
@@ -52,8 +53,8 @@ export function Homepage() {
     setTopMovie(movie_top.data);
     let movie_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/popular`);
     setTrendingMovie(movie_trending.data);
-    // let user_data = await axios.get(`http://localhost:8080/videoDB/findUser?userName=${userName}`);
-    // setWatchList(watch_list.data.watchedVideos)
+    let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
+    setWatchList(watch_list.data.watchedVideos);
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -89,6 +90,10 @@ export function Homepage() {
   useEffect(() => {
     getSearchAPI();
   }, [page])
+
+  // const addToWatchList = async () => {
+  //   await axios.post('http://localhost:8080/videoDB/user?userName=JamesFranco', data)
+  // }
 
   return (
       <>

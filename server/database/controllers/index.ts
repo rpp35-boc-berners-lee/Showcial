@@ -1,4 +1,5 @@
 const models = require('../models/index.ts');
+import { TVResults, MovieResults } from '../../../types';
 
 type UserData = {
   userName: string;
@@ -59,33 +60,47 @@ const findAllUsers = () => {
     })
 };
 
-const addToWatchedList = async (userName: any, videoID: number) => {
+const addToWatchedList = async (userName: any, video: TVResults | MovieResults) => {
   return await models.UserTable.find({ userName })
     .then(async (results: any) => {
-      if (results[0].watchedVideos.indexOf(videoID) === -1) {
-        await models.UserTable.update({ userName }, { $push: { watchedVideos: videoID }})
-        console.log(`Success updating ${userName}'s watched list with videoID ${videoID}`)
+      let watchList = results[0].watchedVideos;
+      let exists = false;
+      for (let i = 0; i < watchList.length; i++) {
+        if (watchList[i][video.id] !== undefined) {
+          exists = true;
+        }
+      }
+      if (!exists) {
+        await models.UserTable.update({ userName }, { $push: { watchedVideos: video }})
+        console.log(`Success updating ${userName}'s watched list with videoID ${video.id}`)
       } else {
         console.log('Video already exists in user watch list');
       }
     })
     .catch((error: any) => {
-      console.log(`Error updating ${userName}'s watched list with videoID ${videoID}: ${error}`)
+      console.log(`Error updating ${userName}'s watched list with videoID ${video.id}: ${error}`)
     })
 }
 
-const removeFromWatchedList = async (userName: any, videoID: number) => {
+const removeFromWatchedList = async (userName: any, video: TVResults | MovieResults) => {
   return await models.UserTable.find({ userName })
     .then(async (results: any) => {
-      if (results[0].watchedVideos.indexOf(videoID) !== -1) {
-        await models.UserTable.update({ userName }, { $pullAll: { watchedVideos: videoID }})
-        console.log(`Success removing videoID ${videoID} from ${userName}'s watched list`)
+      let watchList = results[0].watchedVideos;
+      let exists = false;
+      for (let i = 0; i < watchList.length; i++) {
+        if (watchList[i][video.id] !== undefined) {
+          exists = true;
+        }
+      }
+      if (results[0].watchedVideos.indexOf(video.id) !== -1) {
+        await models.UserTable.update({ userName }, { $pullAll: { watchedVideos: video.id }})
+        console.log(`Success removing videoID ${video.id} from ${userName}'s watched list`)
       } else {
         console.log('Video was never in user watch list');
       }
     })
     .catch((error: any) => {
-      console.log(`Error removing videoID ${videoID} from ${userName}'s watched list: ${error}`)
+      console.log(`Error removing videoID ${video.id} from ${userName}'s watched list: ${error}`)
     })
 }
 
