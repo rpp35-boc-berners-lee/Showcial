@@ -1,3 +1,5 @@
+import { FollowingList } from "../../../client/src/components/personal-profile/following-list/FollowingList";
+
 const models = require('../models/index.ts');
 
 type UserData = {
@@ -37,8 +39,8 @@ const addUser = (userData: UserData) => {
     });
 };
 
-const findUser = (userName: any) => {
-  return models.UserTable.findOne({userName})
+const findUser = async (userName: any) => {
+  return await models.UserTable.findOne({userName})
     .then((results: any) => {
       return results;
     })
@@ -158,6 +160,22 @@ const addVideo = (videoData: any) => {
 //!==============================================//
 //!=============== RATINGS TABLE ================//
 //!==============================================//
+const retrieveRatings = async (userName: string) => {
+  
+}
+
+const retrieveFeed = async (userName: string) => {
+  try {
+    let user = await findUser(userName);
+    let followingList = user.followingList;
+    
+    let feed = await models.RatingsTable.find({userName: {$in: followingList}}).sort({created_at: 1});
+    return feed;
+  } catch (error) {
+    console.log(`Error retrieving feed for user ${userName}: ${error}`);
+  }
+  
+}
 
 const addRating = (ratingData: any) => {
   const newRating = models.RatingsTable({
@@ -189,5 +207,7 @@ export default {
   addToWatchedList,
   removeFromWatchedList,
   retrieveServices,
-  updateServices
+  updateServices,
+  retrieveRatings,
+  retrieveFeed
 }

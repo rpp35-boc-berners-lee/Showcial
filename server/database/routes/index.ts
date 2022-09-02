@@ -104,6 +104,17 @@ router.put('/user/services', async (req: Request, res: Response) => {
   }
 })
 
+//TODO: retrieve personal feed
+router.get('/user/feed', async (req: Request, res: Response) => {
+  try {
+    let result = await controllers.retrieveFeed(req.body.userName);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(400).send(error);
+    console.log('failed GET /user/feed', error)
+  }
+})
+
 //TODO: add videoID to watched list
 router.post('/addToWatchedList', async (req: Request, res: Response) => {
   let query = req.query as unknown as Query;
@@ -162,5 +173,6 @@ router.post('/rating', (req: Request, res: Response) => {
       console.log('Failed POST /rating');
     });
 });
+
 
 export default router;
