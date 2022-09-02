@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './PersonalProfile.scss';
 import { ForYou } from './for-you/ForYou';
 import { FollowingList } from './following-list/FollowingList';
+import { FollowerSearchBar } from './FollowerSearchBar/followerSearchBar';
 import axios from 'axios';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -15,6 +16,7 @@ import SelectSearch from 'react-select-search';
 export const PersonalProfile = () => {
   const [value, setValue] = React.useState(1);
   const [userList, setUserList] = React.useState([]);
+  const [userName, setUserName] = useState<string>('Nourse41'); //! switch to current signed in user
 
   useEffect(() => {
     fetchUserList();
@@ -31,12 +33,7 @@ export const PersonalProfile = () => {
   function fetchUserList () {
     axios.get('http://localhost:8080/videoDB/user/all')
       .then((results: any) => {
-        setUserList(results.data.map((userName: string) => {
-          return {
-            name: userName,
-            value: userName
-          };
-        }));
+        setUserList(results.data);
       })
       .catch((error: any) => {
         console.log('fetchUserList() FAILED: ', error);
@@ -55,15 +52,7 @@ export const PersonalProfile = () => {
 
   return (
     <div>
-      <SelectSearch
-        options={userList}
-        search
-        printOptions="never"
-        autoComplete='on'
-        className="followerSearchBar"
-        placeholder="Search for followers"
-        renderValue={(valueProps: any) => <input {...valueProps} />}
-        />
+      {FollowerSearchBar(userList)}
       <SelectBar />
       {currentOption === 1 ? <ForYou /> : <FollowingList />}
     </div>
