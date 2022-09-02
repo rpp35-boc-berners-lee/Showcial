@@ -27,8 +27,6 @@ type Video = {
   original_title: string;
 }
 
-
-
 export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
   const [displayedVideos, setDisplayedVideos] = useState([]);
   const [numDisplayed, setNumDisplayed] = useState(0);
@@ -64,11 +62,18 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
     setSortType(event.target.value as string);
   };
 
-  async function getWatchProviders() {
-    let newWatchList = await axios.get<any>(`http://localhost:8080/tmdb/movie/popular`, {
-      params: watchList
-    })
-  }
+  // async function getWatchProviders() {
+  //   let newWatchList = await axios.get<any>(`http://localhost:8080/tmdb/movie/popular`, {
+  //     params: watchList
+  //   })
+  // }
+
+  // const handleSort = () => {
+  //   let sorted = watchList.slice();
+  //   sorted.sort((a, b) => {
+
+  //   })
+  // }
 
    return (
     <div>
