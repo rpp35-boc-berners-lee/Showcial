@@ -120,8 +120,25 @@ const removeFromRecommended = async (userName: any, videoID: number) => {
       console.log(`Error removing videoID ${videoID} from ${userName}'s recommendedVideos list: ${error}`)
     })
 }
-//TODO: add service to owned list
-//TODO: remove service from owned list
+//TODO: retrieve owned services
+const retrieveServices = async (userName: string) => {
+  try {
+    let data = await  models.UserTable.find({ userName })
+    return data[0].ownedServices;
+  } catch (error) {
+    console.log(`Error retrieving owned services for user ${userName}: ${error}`);
+  }
+}
+//TODO: update owned services
+const updateServices = async (userName: string, services: string[]) => {
+    try {
+      await models.UserTable.updateOne({ userName }, {$set: {ownedServices: services }})
+      console.log('successfully updated services')
+    } catch (error) {
+      console.log(`Error updating owned services ${services} for user ${userName}: ${error}`)
+    }
+}
+
 // update user document w/ options
 const updateUser = (userName: string, prop: string, value: any) => {
   return findUser(userName)
