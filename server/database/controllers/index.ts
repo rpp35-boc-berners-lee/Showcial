@@ -23,7 +23,7 @@ const addUser = (userData: UserData) => {
     userName: userData.userName,
     email: userData.email,
     hashedPassword: userData.hashedPassword,
-    followingList:  userData.followingList || [],
+    followingList: ['Bonnie', 'Joe'],
     watchedVideos: userData.watchedVideos || [],
     recommendedVideos: userData.recommendedVideos || [],
     ownedServices: userData.ownedServices || [],

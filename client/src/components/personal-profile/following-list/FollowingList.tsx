@@ -31,7 +31,10 @@ export const FollowingList = () => {
       >
         {followingList.map((followedUserName: any, index: any) => {
           return (
-            <Grid xs={2} sm={4} md={4} key={index}>
+            <Grid
+              xs={2} sm={4} md={4}
+              key={index}
+            >
               {FollowingItem(followedUserName, index, userName)}
             </Grid>
             );
