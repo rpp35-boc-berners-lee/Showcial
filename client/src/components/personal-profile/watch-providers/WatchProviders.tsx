@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './WatchProviders.scss';
+// import OwnedServices from '../owned-services/OwnedServes';
+// import UnownedServices from '../unowned-services/UnownedServices';
 import { styled, Chip, Paper, Container, Divider } from '@mui/material';
 // import Chip from '@mui/material/Chip';
 // import Paper from '@mui/material/Paper';
@@ -7,17 +9,25 @@ import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOu
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import axios from 'axios';
 
-interface Services {
-  key: number;
-  label: string;
-}
+
+// interface Services {
+//   key: number;
+//   label: string;
+// }
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-const retrieveOwnedServices = async (userName: string) => {
-  try {
+export const WatchProviders = ({userName}: {userName: string}) => {
+
+  const allServices: string[] = ['Netflix', 'Hulu', 'Disney+', 'Prime Video', 'HBO Max'];
+  
+  const [ownedServices, setOwnedServices] = React.useState<string[]>([]);
+  
+  const [unownedServices, setUnownedServices] = React.useState<string[]>([]);
+  
+  const retrieveServices = async (userName: string) => {
     let options = {
       method: 'get',
       url: 'http://localhost:8080/videoDB/user',
@@ -26,23 +36,26 @@ const retrieveOwnedServices = async (userName: string) => {
       }
     };
     let result = await axios(options);
-    console.log('result in retrieveOwnedServices', result.data.ownedServices);
-    return result.data.ownedServices;
+    let owned = result.data.ownedServices;
+    setOwnedServices(owned);
     
-  } catch (error) {
-    console.log('Failed to retrieve owned services on the front end', error);
+    let unOwned: string[] = [];
+    
+    allServices.forEach((service) => {
+      if (owned.indexOf(service) === -1) {
+        unOwned.push(service);
+      }
+    })
+    
+    setUnownedServices(unOwned);
   }
-}
-
-export const WatchProviders = ({userName}: {userName: string}) => {
-  // Todo: retrieve user's owned services from the database to set up the initial state here
   
-  // let servicesData = retrieveOwnedServices(userName); 
-  // console.log('servicesData: ', servicesData)
+  useEffect(() => {
+    console.log('Owned: ', ownedServices);
+    console.log('Unowned: ', unownedServices);
+    retrieveServices(userName);
+  }, [])
   
-  let data = retrieveOwnedServices(userName)
-  
-  console.log('data: ', data);
   
   // const [ownedServices, setOwnedServices] = React.useState([
   //   { key: 0, label: 'Netflix' },
@@ -62,15 +75,15 @@ export const WatchProviders = ({userName}: {userName: string}) => {
   // })
   
 
-  // const handleDelete = (servicesToDelete: Services) => () => {
+  // const handleDelete = (servicesToDelete: any) => () => {
   //   console.log('servicesToDelete: ', servicesToDelete);
   //   setOwnedServices((services) => services.filter((service) => service.key !== servicesToDelete.key));
   //   console.log(ownedServices);
   // };
   
-  // const handleDelete = (servicesToDelete: Services) => () => {
-  //   console.log('servicesToDelete: ', servicesToDelete);
-  // };
+  const handleDelete = (servicesToDelete: any) => () => {
+    // console.log('servicesToDelete: ', servicesToDelete);
+  };
   
   
   
@@ -88,7 +101,7 @@ export const WatchProviders = ({userName}: {userName: string}) => {
         }}
         component="ul"
     >
-      {ownedServices.map((service: string, i: number) => {
+      {ownedServices.map((service, i) => {
         console.log('Owned Providers: ', service);
         return (
           <ListItem key={i}>
@@ -123,18 +136,18 @@ export const WatchProviders = ({userName}: {userName: string}) => {
       }}
       component="ul"
     >
-      {/* {unownedServices.map((service) => {
+      {unownedServices.map((service, i) => {
         console.log('Unowned Providers: ', service);
         return (
-          <ListItem key={service.key}>
+          <ListItem key={i}>
             <Chip
-              label={service.label}
+              label={service}
               onDelete={handleDelete(service)}
               deleteIcon={<AddCircleOutlineOutlinedIcon />}
             />
           </ListItem>
         );
-      })} */}
+      })}
     </Container>
     )
   }
@@ -148,3 +161,4 @@ export const WatchProviders = ({userName}: {userName: string}) => {
     
   );
 };
+

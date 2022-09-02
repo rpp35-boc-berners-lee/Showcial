@@ -3,6 +3,7 @@ import { Grid, Paper } from '@mui/material';
 import { WatchProviders } from '.././watch-providers/WatchProviders'
 import { PersonalFeed } from '.././personal-feed/PersonalFeed';
 
+
 export const ForYou = ({userName}: {userName: string}) => {
   
   return (

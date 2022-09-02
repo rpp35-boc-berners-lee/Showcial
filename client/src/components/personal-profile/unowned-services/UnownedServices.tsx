@@ -1,6 +1,6 @@
 import React from 'react';
 
-class OwnedServices extends React.Component {
+class UnownedServices extends React.Component {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -15,7 +15,6 @@ class OwnedServices extends React.Component {
       </div>
     )
   }
-  
 }
 
-export default OwnedServices;
+export default UnownedServices;
