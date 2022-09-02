@@ -9,48 +9,33 @@ export default function Signup() {
   const verifySignUp = () => {
     //checks Passwords match
     if (values.password === values.verifyPassword) {
-      //send axios req to '/signup' with states as params
-      let options = {
-        url: 'http://localhost:8080/auth/signup',
-        method: 'post',
-        params: {
-          userName: values.userName,
-          email: values.email,
-          password: values.password,
-          ownedServices: values.ownedServices
-        }
-      }
-      axios(options)
+      axios.post('http://localhost:8080/auth/signup',
+        {
+          params: {
+            userName: values.userName,
+            email: values.email,
+            password: values.password,
+            ownedServices: values.ownedServices
+          }
+        })
         .then((res) => {
           console.log('signup res', res);
-          navigate('/home')})
+          // navigate('/home')
+        })
         .catch((err) => {
-          console.error(err)})
-      return;
+          console.error(err)
+        })
     }
-    if(values.password !== values.verifyPassword) {
+    if (values.password !== values.verifyPassword) {
       // setOpen(true);
       window.alert("Passwords don't match");
     }
   };
 
   const guestLogin = () => {
-    //send a post request to '/guest'
-    let options: any = {
-      url: 'http://localhost:8080/auth/guest',
-      method: 'get'
-    }
-    axios(options)
-      .then((res) =>
-        navigate('/home'))
-      .catch((err) =>
-        console.error(err))
+    navigate('/home');
   }
 
-  const [open, setOpen] = useState(false);
-  const handleAlertClick = () => {
-    setOpen(false);
-  };
 
   const [values, setValues] = useState({
     userName: '',
@@ -90,11 +75,6 @@ export default function Signup() {
 
   return (
     <div>
-      {/* <Dialog open={open} onClose={handleAlertClick}>
-        <Alert>
-          Oops! Passwords dont match!
-        </Alert>
-      </Dialog> */}
       <form className='Authform'>
         <input type='text'
           value={values.userName}
