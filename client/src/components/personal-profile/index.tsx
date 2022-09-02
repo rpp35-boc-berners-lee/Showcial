@@ -41,11 +41,12 @@ export const PersonalProfile = () => {
   // render FollowingList, ForYou or ForFollow components based off currentOption value
   let component = undefined;
   if (currentOption === 0) {
-    component = (<FollowingList />);
+    // component = FollowingList(setValue, setFolloweeData);
+    component = (<FollowingList setValue={setValue} setFolloweeData={setFolloweeData}/>);
   } else if (currentOption === 1) {
     component = (<ForYou />);
   } else if (currentOption === 2) {
-    component = (ForFollower(followeeData, setValue));
+    component = (<ForFollower setValue={setValue} setFolloweeData={setFolloweeData}/>);
   }
 
   return (

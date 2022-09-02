@@ -4,7 +4,7 @@ import './FollowingList.scss';
 import { FollowingItem } from '../following-item/FollowingItem';
 import { Box, Paper, Grid } from '@mui/material';
 
-export const FollowingList = () => {
+export const FollowingList = (props: any) => {
   const [followingList, setFollowingList] = useState<any>([])
   const [userName, setUserName] = useState<string>('Nourse41'); //! switch to current signed in user
 
@@ -35,7 +35,14 @@ export const FollowingList = () => {
               item xs={2} sm={4} md={4}
               key={index}
             >
-              {FollowingItem(followedUserName, index, userName)}
+              {/* {FollowingItem(followedUserName, index, userName, props.setValue, props.setFolloweeData)} */}
+              < FollowingItem
+                followedUserName={followedUserName}
+                index={index}
+                userName={props.userName}
+                setValue={props.setValue}
+                setFolloweeData={props.setFolloweeData}
+              />
             </Grid>
             );
           })}

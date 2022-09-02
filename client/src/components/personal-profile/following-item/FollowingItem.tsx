@@ -5,7 +5,7 @@ import axios from 'axios';
 
 // make an onClick function for username that makes axios request for users data and passes it to for-follower page
 
-export const FollowingItem = (userName: string, index: number, parentUserName: string) => {
+export const FollowingItem = (props: any) => {
 
    async function fetchForFollowerData (userName: string) {
      await axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
@@ -20,7 +20,7 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
 
    function removeFollower (userName: any) {
       axios.put<any>('http://localhost:8080/videoDB/user/removeFollowed', {
-            userName: parentUserName,
+            userName: props.followedUserName,
             value: userName
          })
          .then((results: any) => {
@@ -38,8 +38,10 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
             style={{ cursor: 'pointer', textAlign: 'center'}}
             onClick={(event: any) => {
                console.log(fetchForFollowerData(event.target.innerText));
+               props.setValue(2);
+               props.setFolloweeData(fetchForFollowerData(event.target.innerText))
             }}
-           title={userName}
+           title={props.followedUserName}
          />
          <Divider/>
          <CardContent
@@ -51,7 +53,7 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
                fullWidth
                color='secondary'
                onClick={(event: any) => {
-                  removeFollower(userName);
+                  removeFollower(props.followedUserName);
                   event.target.innerText = 'REMOVED';
                }}
             >Remove</Button>
