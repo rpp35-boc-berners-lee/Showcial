@@ -1,7 +1,6 @@
 import { FollowingList } from "../../../client/src/components/personal-profile/following-list/FollowingList";
 
 const models = require('../models/index.ts');
-import { TVResults, MovieResults } from '../../../types';
 
 type UserData = {
   userName: string;
@@ -62,7 +61,7 @@ const findAllUsers = () => {
     })
 };
 
-const addToWatchedList = async (userName: any, video: TVResults | MovieResults) => {
+const addToWatchedList = async (userName: any, video: any) => {
   return await models.UserTable.find({ userName })
     .then(async (results: any) => {
       let watchList = results[0].watchedVideos;
@@ -84,7 +83,7 @@ const addToWatchedList = async (userName: any, video: TVResults | MovieResults) 
     })
 }
 
-const removeFromWatchedList = async (userName: any, video: TVResults | MovieResults) => {
+const removeFromWatchedList = async (userName: any, video: any) => {
   return await models.UserTable.find({ userName })
     .then(async (results: any) => {
       let watchList = results[0].watchedVideos;
@@ -195,18 +194,18 @@ const retrieveActivities = async (userName: string) => {
   }
 }
 
-// This controller is used to retrieve feed that is generated from following list of a user 
+// This controller is used to retrieve feed that is generated from following list of a user
 const retrieveFeed = async (userName: string) => {
   try {
     let user = await findUser(userName);
     let followingList = user.followingList;
-    
+
     let feed = await models.RatingsTable.find({userName: {$in: followingList}}).sort({created_at: 1});
     return feed;
   } catch (error) {
     console.log(`Error retrieving feed for user ${userName}: ${error}`);
   }
-  
+
 }
 
 const addRating = (ratingData: any) => {
