@@ -49,6 +49,7 @@
       "react-material-ui-carousel": "^3.4.2",
       "react-responsive-carousel": "^3.2.23",
       "react-router-dom": "^6.3.0",
+      "react-select-search": "^3.0.10",
       "styled-components": "^5.3.5",
       "webpack-bundle-analyzer": "^4.5.0",
       "webpack-merge": "^5.8.0"

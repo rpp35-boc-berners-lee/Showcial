@@ -7,10 +7,10 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import AssistantPhotoOutlinedIcon from '@mui/icons-material/AssistantPhotoOutlined';
+import SelectSearch from 'react-select-search';
 
 //! "for-followed" page is conditionally rendered using currentOption value --> how to set from child component??
 //! also conditionally render search page or use search bar style --> how to handle clicking each name?
-
 
 export const PersonalProfile = () => {
   const [value, setValue] = React.useState(1);
@@ -31,7 +31,12 @@ export const PersonalProfile = () => {
   function fetchUserList () {
     axios.get('http://localhost:8080/videoDB/user/all')
       .then((results: any) => {
-        setUserList(results.data);
+        setUserList(results.data.map((userName: string) => {
+          return {
+            name: userName,
+            value: userName
+          };
+        }));
       })
       .catch((error: any) => {
         console.log('fetchUserList() FAILED: ', error);
@@ -47,8 +52,18 @@ export const PersonalProfile = () => {
     );
   }
 
+
   return (
     <div>
+      <SelectSearch
+        options={userList}
+        search
+        printOptions="never"
+        autoComplete='on'
+        className="followerSearchBar"
+        placeholder="Search for followers"
+        renderValue={(valueProps: any) => <input {...valueProps} />}
+        />
       <SelectBar />
       {currentOption === 1 ? <ForYou /> : <FollowingList />}
     </div>
