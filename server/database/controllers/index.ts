@@ -160,10 +160,18 @@ const addVideo = (videoData: any) => {
 //!==============================================//
 //!=============== RATINGS TABLE ================//
 //!==============================================//
-const retrieveRatings = async (userName: string) => {
-  
+
+// This controller isused to retrieve all activity for a certain user
+const retrieveActivities = async (userName: string) => {
+  try {
+    let activities = await models.RatingsTable.find({userName: userName}).sort({created_at: 1});
+    return activities;
+  } catch (error) {
+    console.log(`Error retrieving activities for user ${userName}: ${error}`);
+  }
 }
 
+// This controller is used to retrieve feed that is generated from following list of a user 
 const retrieveFeed = async (userName: string) => {
   try {
     let user = await findUser(userName);
@@ -208,6 +216,6 @@ export default {
   removeFromWatchedList,
   retrieveServices,
   updateServices,
-  retrieveRatings,
+  retrieveActivities,
   retrieveFeed
 }

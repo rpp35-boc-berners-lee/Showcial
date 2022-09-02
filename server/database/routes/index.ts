@@ -174,5 +174,15 @@ router.post('/rating', (req: Request, res: Response) => {
     });
 });
 
+router.get('/activities', async (req: Request, res: Response) => {
+  try {
+    let result = await controllers.retrieveActivities(req.body.userName);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(400).send(error);
+    console.log('failed GET /activites', error)
+  }
+})
+
 
 export default router;
