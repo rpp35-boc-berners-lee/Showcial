@@ -80,6 +80,8 @@ router.put('/user/addFollowed', (req: Request, res: Response) => {
     })
 });
 
+//TODO: add userID to following list
+//TODO: remove userID from following list
 router.put('/user/removeFollowed', (req: Request, res: Response) => {
   return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
     .then(() => {
@@ -94,33 +96,38 @@ router.put('/user/removeFollowed', (req: Request, res: Response) => {
     })
 });
 
-router.put('/user/addService', (req: Request, res: Response) => {
-  return controllers.updateUser(req.body.userName, 'ownedServices', req.body.value)
-    .then(() => {
-      console.log(`/user/addService: Success adding ${req.body.value} to service list`);
-      res.status(201);
-      res.end();
-    })
-    .catch((error: any) => {
-      console.log(`/user/addService: Error adding ${req.body.value} to service list`, error);
-      res.status(400).send(error);
-      res.end();
-    });
-});
+//TODO: retrieve owned services list
+router.get('/user/services', async (req: Request, res: Response) => {
+  try {
+    let result = await controllers.retrieveServices(req.body.userName);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(400).send(error);
+    console.log('failed GET /services', error);
+  }
+})
 
-router.put('/user/removeService', (req: Request, res: Response) => {
-  return controllers.updateUser(req.body.userName, 'ownedServices', req.body.value)
-    .then(() => {
-      console.log(`/user/removeService: Success removing ${req.body.value} to service list`);
-      res.status(201);
-      res.end();
-    })
-    .catch((error: any) => {
-      console.log(`/user/removeService: Error removing ${req.body.value} to service list`, error);
-      res.status(400).send(error);
-      res.end();
-    });
-});
+//TODO: update owned services list
+router.put('/user/services', async (req: Request, res: Response) => {
+  try {
+    await controllers.updateServices(req.body.userName, req.body.services);
+    res.sendStatus(204)
+  } catch (error) {
+    res.status(400).send(error);
+    console.log('failed PUT /user/services', error)
+  }
+})
+
+//TODO: retrieve personal feed
+router.get('/user/feed', async (req: Request, res: Response) => {
+  try {
+    let result = await controllers.retrieveFeed(req.body.userName);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(400).send(error);
+    console.log('failed GET /user/feed', error)
+  }
+})
 
 //TODO: add videoID to watched list
 router.post('/addToWatchedList', async (req: Request, res: Response) => {
@@ -180,5 +187,16 @@ router.post('/rating', (req: Request, res: Response) => {
       console.log('Failed POST /rating');
     });
 });
+
+router.get('/activities', async (req: Request, res: Response) => {
+  try {
+    let result = await controllers.retrieveActivities(req.body.userName);
+    res.status(200).send(result);
+  } catch (error) {
+    res.status(400).send(error);
+    console.log('failed GET /activites', error)
+  }
+})
+
 
 export default router;
