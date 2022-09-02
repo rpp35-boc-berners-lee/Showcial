@@ -18,7 +18,7 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
          });
    }
 
-   function removeFollower (userName: string) {
+   function removeFollower (userName: any) {
       axios.put<any>('http://localhost:8080/videoDB/user/removeFollowed', {
             userName: parentUserName,
             value: userName
@@ -64,6 +64,6 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
 //    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
 //    ...theme.typography.body2,
 //    padding: theme.spacing(2),
-//    textAlighn: 'center',
+//    textAlign: 'center',
 //    color: theme.palette.text.secondary,
 //  }));
