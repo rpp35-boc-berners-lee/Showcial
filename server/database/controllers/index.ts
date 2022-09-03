@@ -34,6 +34,7 @@ const addUser = (userData: UserData) => {
     })
     .catch((error: any) => {
       console.log('Error posting new user', error);
+      return error;
     });
 };
 

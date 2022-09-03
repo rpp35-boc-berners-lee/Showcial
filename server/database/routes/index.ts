@@ -13,6 +13,7 @@ type Query = {
 router.post('/user', (req: Request, res: Response) => {
   return controllers.addUser(req.body)
     .then((results: any) => {
+      console.log('RESULTS', results);
       console.log(`/user: Success adding ${req.body} to user table`);
       res.status(201);
       res.end();

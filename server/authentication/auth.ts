@@ -27,7 +27,7 @@ router.post('/signup', async (req: Request, res: Response) => {
   let ownedServices = req.body.params.ownedServices;
   //find one from db using userName, if unsuccessful, hash password and store a new user
 
-  let hashedPassword = bcrypt.hashSync('HRiscool', 8);
+  let hashedPassword = bcrypt.hashSync(password, 8);
   console.log(hashedPassword);
 
   axios.post(
