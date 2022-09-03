@@ -12,7 +12,6 @@ import cors from 'cors';
 var session = require('express-session');
 const MongoStore = require('connect-mongo');
 var passport = require('passport');
-var LocalStrategy = require('passport-local');
 
 const port = 8080;
 const db_conn = process.env.mongoDB_TOKEN;
@@ -23,7 +22,7 @@ const app = express();
 app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../client/dist')));
-
+app.use(passport.initialize());
 app.use(
    session({
       secret: secret,
@@ -41,6 +40,7 @@ app.use(
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(passport.session());
 
 // API ROUTE
 app.use('/tmdb', api_router);

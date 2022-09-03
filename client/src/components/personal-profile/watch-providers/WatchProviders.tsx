@@ -12,14 +12,14 @@ import axios from 'axios';
 let owned: string[] = [];
 let unowned: string[] = [];
 
-export const WatchProviders = ({userName}: {userName: string}) => {
+export const WatchProviders = ({userName}: {userName: any}) => {
 
   const allServices: string[] = ['Netflix', 'Hulu', 'Disney+', 'Prime Video', 'HBO Max'];
-  
+
   const [ownedServices, setOwnedServices] = React.useState<string[]>([]);
-  
+
   const [unownedServices, setUnownedServices] = React.useState<string[]>([]);
-  
+
   const retrieveServices = async (userName: string) => {
     let options = {
       method: 'get',
@@ -29,37 +29,37 @@ export const WatchProviders = ({userName}: {userName: string}) => {
       }
     };
     let result = await axios(options);
-    
+
     owned = result.data.ownedServices;
     setOwnedServices(owned);
-    
+
     allServices.forEach((service) => {
       if (owned.indexOf(service) === -1 && unowned.indexOf(service) === -1) {
         unowned.push(service);
       }
     })
-    
+
     setUnownedServices(unowned);
   }
-  
+
   useEffect(() => {
     retrieveServices(userName);
-  }, [])  
-  
+  }, [])
+
   const handleDelete = (service: any) => () => {
-    
+
     let index: number = ownedServices.indexOf(service);
-    
+
     let removed: string = ownedServices[index];
-    
+
     ownedServices.splice(index, 1)
     setOwnedServices([...ownedServices]);
-    
+
     console.log('ownedServices: ', ownedServices);
     unownedServices.push(removed);
     setUnownedServices([...unownedServices]);
     console.log('unownedServices: ', unownedServices);
-    
+
     let options = {
       method: 'put',
       url: 'http://localhost:8080/videoDB/user/services',
@@ -68,24 +68,24 @@ export const WatchProviders = ({userName}: {userName: string}) => {
         services: owned
       }
     }
-    
+
     axios(options)
   };
-  
+
   const handleAdd = (service: any) => () => {
-    
+
     let index: number = unownedServices.indexOf(service);
-    
+
     let added: string = unownedServices[index];
-    
+
     unownedServices.splice(index, 1)
     setUnownedServices([...unownedServices]);
-    
+
     console.log('unownedServices: ', unownedServices);
     ownedServices.push(added);
     setOwnedServices([...ownedServices]);
     console.log('ownedServices: ', ownedServices);
-    
+
     let options = {
       method: 'put',
       url: 'http://localhost:8080/videoDB/user/services',
@@ -94,7 +94,7 @@ export const WatchProviders = ({userName}: {userName: string}) => {
         services: owned
       }
     }
-    
+
     axios(options)
   };
 
@@ -106,7 +106,7 @@ export const WatchProviders = ({userName}: {userName: string}) => {
       <Divider variant="middle"/>
       <UnownedProviders unownedServices={unownedServices} handleAdd={handleAdd} />
     </Paper>
-    
+
   );
 };
 

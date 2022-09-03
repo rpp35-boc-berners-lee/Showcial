@@ -4,7 +4,8 @@ import List from './list/List'
 
 type ChildProps = {
   vedios: any,
-  config: any
+  config: any,
+  userName: string
 }
 
 type Video = {
@@ -14,12 +15,12 @@ type Video = {
   id: number;
 }
 
-export const Recommendations: React.FC<ChildProps> = ({vedios,  config}) => {
+export const Recommendations: React.FC<ChildProps> = ({vedios,  config, userName}) => {
   console.log(vedios);
   console.log(config);
   return (
     <div>
-      <Slider vedios={vedios} config={config}/>
+      <Slider vedios={vedios} config={config} userName={userName}/>
       <List />
     </div>)
 }
