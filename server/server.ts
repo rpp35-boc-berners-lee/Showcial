@@ -11,8 +11,12 @@ const passport = require('passport');
 
 var session = require('express-session');
 const MongoStore = require('connect-mongo');
+<<<<<<< HEAD
 // var passport = require('passport');
 // var LocalStrategy = require('passport-local');
+=======
+var passport = require('passport');
+>>>>>>> 6f99ba7bd2904bc5c9531e0da1cdd3aeda7a2f34
 
 const port = 8080;
 const db_conn = process.env.mongoDB_TOKEN;
@@ -23,10 +27,14 @@ const app = express();
 app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../client/dist')));
+<<<<<<< HEAD
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+=======
+app.use(passport.initialize());
+>>>>>>> 6f99ba7bd2904bc5c9531e0da1cdd3aeda7a2f34
 app.use(
    session({
       secret: secret,
@@ -43,7 +51,12 @@ app.use(
    })
 );
 
+<<<<<<< HEAD
 app.use(passport.initialize());
+=======
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+>>>>>>> 6f99ba7bd2904bc5c9531e0da1cdd3aeda7a2f34
 app.use(passport.session());
 
 // API ROUTE

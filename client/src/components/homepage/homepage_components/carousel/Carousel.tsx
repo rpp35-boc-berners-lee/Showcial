@@ -3,7 +3,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 // import Carousel from 'react-material-ui-carousel';
 import { Paper, Button } from '@mui/material';
-import { defaultOptionsDirect } from '@testing-library/user-event/dist/types/options';
+import  defaultOptionsDirect  from '@testing-library/user-event/dist/types/options';
 import Grid from '@mui/material/Grid';
 
 type Props = {

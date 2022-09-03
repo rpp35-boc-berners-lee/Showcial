@@ -1,1 +1,27 @@
 @use '../../index.scss' as *;
+
+.followedCard {
+  align-self: center;
+  padding: 1.5rem;
+  margin: 2rem;
+}
+
+.unfollowButton {
+  gap: .5rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  padding: 7px 14px;
+  font-size: 14px;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+
+.followerSearchBar {
+  align-self: center;
+  padding: 1.5rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  width: 75%;
+}

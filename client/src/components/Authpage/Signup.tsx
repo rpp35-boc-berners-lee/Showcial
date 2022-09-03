@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button } from '@mui/material';
+import { Modal, Button, Alert, Dialog } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -8,34 +8,31 @@ export default function Signup() {
    const verifySignUp = () => {
       //checks Passwords match
       if (values.password === values.verifyPassword) {
-         //send axios req to '/signup' with states as params
-         let options = {
-            url: 'http://localhost:8080/signup',
-            method: 'post',
-            body: {
-               userName: values.userName,
-               email: values.email,
-               password: values.password,
-               // services: values.services
-            },
-         };
-         axios(options)
-            .then((res) => navigate('/home'))
-            .catch((err) => console.error(err));
-      } else {
-         //if passwords dont match
-         //use mui alert to say passwords dont match
+         axios
+            .post('http://localhost:8080/auth/signup', {
+               params: {
+                  userName: values.userName,
+                  email: values.email,
+                  password: values.password,
+                  ownedServices: values.ownedServices,
+               },
+            })
+            .then((res) => {
+               console.log('signup res', res);
+               // navigate('/home')
+            })
+            .catch((err) => {
+               console.error(err);
+            });
+      }
+      if (values.password !== values.verifyPassword) {
+         // setOpen(true);
+         window.alert("Passwords don't match");
       }
    };
+
    const guestLogin = () => {
-      //send a post request to '/guest'
-      let options: any = {
-         url: 'http://localhost:8080/auth/guest',
-         method: 'get',
-      };
-      axios(options)
-         .then((res) => navigate('/home'))
-         .catch((err) => console.error(err));
+      navigate('/home');
    };
 
    const [values, setValues] = useState({
@@ -43,7 +40,7 @@ export default function Signup() {
       email: '',
       password: '',
       verifyPassword: '',
-      services: [],
+      ownedServices: [],
    });
 
    const handleUserNameChange = (e: any) => {

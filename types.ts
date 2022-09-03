@@ -26,13 +26,9 @@ interface ConfigImages {
    still_sizes: string[];
 }
 
-type ConfigResponse = {
-   data: ConfigAPI[];
-};
-
-interface TVAPI {
+interface APIResponse {
    page: number;
-   results: TVResults;
+   results: TVResults | MovieResults | PersonResults;
    total_results: number;
    total_pages: number;
 }
@@ -43,6 +39,7 @@ interface TVResults {
    id: number;
    backdrop_path: string | null;
    vote_average: number;
+   media_type: string;
    overview: string;
    first_air_date: string;
    origin_country: string[];
@@ -53,17 +50,6 @@ interface TVResults {
    original_name: string;
 }
 
-type TVResponse = {
-   data: TVAPI[];
-};
-
-interface MovieAPI {
-   page: number;
-   results: MovieResults;
-   total_results: number;
-   total_pages: number;
-}
-
 interface MovieResults {
    poster_path: string | null;
    adult: boolean;
@@ -71,6 +57,7 @@ interface MovieResults {
    release_date: string;
    genre_ids: number[];
    id: number;
+   media_type: string;
    original_title: string;
    original_language: string;
    title: string;
@@ -81,18 +68,21 @@ interface MovieResults {
    vote_average: number;
 }
 
-type MovieResponse = {
-   data: MovieAPI[];
-};
+interface PersonResults {
+   profile_path: string | null;
+   adult: boolean;
+   id: number;
+   media_type: string;
+   known_for: TVResults | MovieResults;
+   name: string;
+   popularity: number;
+}
 
 export {
    ConfigAPI,
    ConfigImages,
-   ConfigResponse,
-   TVAPI,
+   APIResponse,
    TVResults,
-   TVResponse,
-   MovieAPI,
    MovieResults,
-   MovieResponse,
+   PersonResults,
 };
