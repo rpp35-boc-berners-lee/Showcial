@@ -27,13 +27,7 @@ interface MouseEvent {
    };
 }
 export function Homepage() {
-   const [config, setConfig] = useState<ConfigAPI | undefined>();
-   const [topTV, setTopTV] = useState<APIResponse | undefined>();
-   const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
-   const [topMovie, setTopMovie] = useState<APIResponse | undefined>();
-   const [trendingMovie, setTrendingMovie] = useState<
-      APIResponse | undefined
-   >();
+
    const [watchList, setWatchList] = useState([]);
    // temporary username
    const [userName, setUserName] = useState<string>('Nourse41');
@@ -42,36 +36,40 @@ export function Homepage() {
       APIResponse | undefined
    >();
    const [page, setPage] = useState<number>(1);
-   const [mediaType, setMediaType] = useState('Movie');
+  const [config, setConfig] = useState<ConfigAPI | undefined>();
+  const [topTV, setTopTV] = useState<APIResponse | undefined>();
+  const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
+  const [topMovie, setTopMovie] = useState<APIResponse | undefined>();
+  const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
+  // temporary username
+
+  const [mediaType, setMediaType] = useState('Movie');
 
    useEffect(() => {
       fetchAPI();
    }, []);
 
-   const fetchAPI = async () => {
-      let config = await axios.get<ConfigAPI>(
-         `http://localhost:8080/tmdb/configuration`
-      );
-      setConfig(config.data);
-      let tv_top = await axios.get<APIResponse>(
-         `http://localhost:8080/tmdb/tv/top_rated`
-      );
-      setTopTV(tv_top.data);
-      let tv_trending = await axios.get<APIResponse>(
-         `http://localhost:8080/tmdb/tv/popular`
-      );
-      setTrendingTV(tv_trending.data);
-      let movie_top = await axios.get<APIResponse>(
-         `http://localhost:8080/tmdb/movie/top_rated`
-      );
-      setTopMovie(movie_top.data);
-      let movie_trending = await axios.get<APIResponse>(
-         `http://localhost:8080/tmdb/movie/popular`
-      );
-      setTrendingMovie(movie_trending.data);
-      // let user_data = await axios.get(`http://localhost:8080/videoDB/findUser?userName=${userName}`);
-      // setWatchList(watch_list.data.watchedVideos)
-   };
+  useEffect(() => {
+    setSearchResults(undefined);
+  }, [query === ''])
+
+  useEffect(() => {
+    getSearchAPI();
+  }, [page])
+
+  const fetchAPI = async () => {
+    let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
+    setConfig(config.data);
+    let tv_top = await axios.get<APIResponse>(`http://localhost:8080/tmdb/tv/top_rated`);
+    setTopTV(tv_top.data);
+    let tv_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/tv/popular`);
+    setTrendingTV(tv_trending.data);
+    let movie_top = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/top_rated`);
+    setTopMovie(movie_top.data);
+    let movie_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/popular`);
+    setTrendingMovie(movie_trending.data);
+    updateWatchList();
+  }
 
    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
       setQuery(e.target.value);
@@ -82,141 +80,101 @@ export function Homepage() {
       getSearchAPI();
    };
 
-   const getSearchAPI = async () => {
-      let search = await axios.get<APIResponse>(
-         `http://localhost:8080/tmdb/search/${query}/${page}`
-      );
-      setSearchResults(search.data);
-   };
+  const handleNextPage = async () => {
+    if (page !== searchResults?.total_pages) {
+      setPage(page + 1)
+    }
+  }
 
-   const handleNextPage = async () => {
-      if (page !== searchResults?.total_pages) {
-         setPage(page + 1);
-      }
-   };
+  const handlePreviousPage = async () => {
+    if (page !== 1) {
+      setPage(page - 1)
+    }
+  }
 
-   const handlePreviousPage = async () => {
-      if (page !== 1) {
-         setPage(page - 1);
-      }
-   };
-   const handleMediaTypeChange = (event: SelectChangeEvent) => {
-      setMediaType(event.target.value as string);
-   };
-   useEffect(() => {
-      setSearchResults(undefined);
-   }, [query === '']);
+  const getSearchAPI = async () => {
+    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${query}/${page}`);
+    setSearchResults(search.data);
+  }
+  const handleMediaTypeChange = (event: SelectChangeEvent) => {
+    setMediaType(event.target.value as string);
+  };
+  useEffect(() => {
+    setSearchResults(undefined);
+  }, [query === ''])
 
-   useEffect(() => {
-      getSearchAPI();
-   }, [page]);
 
-   return (
-      <>
-         <Box sx={{ '& > :not(style)': { m: 1 } }}>
-            <form onSubmit={handleSubmit}>
-               <FormControl sx={{ m: 1, width: '25ch' }} variant='outlined'>
-                  <InputLabel htmlFor='search-adornment'>Search</InputLabel>
-                  <OutlinedInput
-                     id='search-adornment'
-                     onChange={handleChange}
-                     endAdornment={
-                        <InputAdornment position='end'>
-                           <SearchIcon />
-                        </InputAdornment>
-                     }
-                     label='search'
-                  />
-               </FormControl>
-            </form>
-         </Box>
-         {searchResults !== undefined && query !== '' ? (
-            <div>
-               <Typography>SEARCH RESULTS</Typography>
-               <Stack spacing={2} direction='row'>
-                  {page < searchResults?.total_pages ? (
-                     <Button
-                        variant='text'
-                        startIcon={<ExpandMoreIcon />}
-                        onClick={handleNextPage}
-                     >
-                        SHOW NEXT PAGE
-                     </Button>
-                  ) : null}
-                  {page > 1 ? (
-                     <Button
-                        variant='text'
-                        startIcon={<ExpandLessIcon />}
-                        onClick={handlePreviousPage}
-                     >
-                        SHOW PREVIOUS PAGE
-                     </Button>
-                  ) : null}
-               </Stack>
-               <Search searchResults={searchResults.results} config={config} />
-               <Stack spacing={2} direction='row'>
-                  {page < searchResults?.total_pages ? (
-                     <Button
-                        variant='text'
-                        startIcon={<ExpandMoreIcon />}
-                        onClick={handleNextPage}
-                     >
-                        SHOW NEXT PAGE
-                     </Button>
-                  ) : null}
-                  {page > 1 ? (
-                     <Button
-                        variant='text'
-                        startIcon={<ExpandLessIcon />}
-                        onClick={handlePreviousPage}
-                     >
-                        SHOW PREVIOUS PAGE
-                     </Button>
-                  ) : null}
-               </Stack>
-            </div>
-         ) : (
-            <>
-               <h3>RECOMMENDATIONS FOR YOU</h3>
-               <Box sx={{ maxWidth: 200 }}>
-                  <FormControl fullWidth>
-                     <InputLabel id='demo-simple-select-label'>
-                        TV or Movie
-                     </InputLabel>
-                     <Select
-                        labelId='demo-simple-select-label'
-                        id='demo-simple-select'
-                        value={mediaType}
-                        label='MediaType'
-                        onChange={handleMediaTypeChange}
-                     >
-                        <MenuItem value={'Movie'}> Movie</MenuItem>
-                        <MenuItem value={'TV'}>TV</MenuItem>
-                     </Select>
-                  </FormControl>
-               </Box>
-               {topTV !== undefined && mediaType === 'TV' ? (
-                  <Recommendations
-                     vedios={topTV.results}
-                     config={config}
-                     userName={userName}
-                  />
-               ) : null}
-               {topMovie !== undefined && mediaType === 'Movie' ? (
-                  <Recommendations
-                     vedios={topMovie.results}
-                     config={config}
-                     userName={userName}
-                  />
-               ) : null}
-               <TrendingVideos />
-               {/* {trendingMovie !== undefined ?
+  const updateWatchList = async () => {
+    let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
+    setWatchList(watch_list.data.watchedVideos);
+  }
+
+  return (
+    <>
+      <Box sx={{ '& > :not(style)': { m: 1 } }}>
+        <form onSubmit={handleSubmit}>
+          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+            <InputLabel htmlFor="search-adornment">Search</InputLabel>
+            <OutlinedInput
+              id="search-adornment"
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+              label="search"
+            />
+          </FormControl>
+        </form>
+      </Box>
+      {searchResults !== undefined && query !== ''
+        ?
+        <div>
+          <Typography>SEARCH RESULTS</Typography>
+          <Stack spacing={2} direction="row">
+            {page < searchResults?.total_pages ?
+              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
+            {page > 1 ?
+              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
+          </Stack>
+          <Search searchResults={searchResults.results} config={config} />
+          <Stack spacing={2} direction="row">
+            {page < searchResults?.total_pages ?
+              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
+            {page > 1 ?
+              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
+          </Stack>
+        </div>
+        :
+        <>
+          <h3>RECOMMENDATIONS FOR YOU</h3>
+          <Box sx={{ maxWidth: 200 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">TV or Movie</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={mediaType}
+                label="MediaType"
+                onChange={handleMediaTypeChange}
+              >
+                <MenuItem value={'Movie'}> Movie</MenuItem>
+                <MenuItem value={'TV'}>TV</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          {topTV !== undefined && mediaType === 'TV' ?
+            <Recommendations vedios={topTV.results} config={config} userName={userName} /> : null}
+          {topMovie !== undefined && mediaType === 'Movie' ?
+            <Recommendations vedios={topMovie.results} config={config} userName={userName} /> : null}
+          <TrendingVideos />
+          {/* {trendingMovie !== undefined ?
               <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
-               {topTV !== undefined ? (
-                  <YourWatchList watchList={topTV.results} config={config} />
-               ) : null}
+              {topTV !== undefined ?
+              <YourWatchList watchList={watchList} config={config}/>: null}
             </>
-         )}
-      </>
-   );
+        }
+    </>
+  );
 }

@@ -36,6 +36,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
   const [sortType, setSortType] = useState('');
   const [sortedList, setSortedList] = useState([]);
 
+
   useEffect(() => {
     let box = document.querySelector('.MuiGrid-container');
     // let card = document.querySelector('.MuiCard-root');

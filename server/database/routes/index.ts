@@ -1,11 +1,17 @@
 import {Request, Response, Router} from 'express';
 const router = Router();
 import controllers from '../controllers/index';
+import { TVResults, MovieResults } from '../../../types';
 
 type Query = {
   userName: string;
   videoID: number;
 };
+
+type Params = {
+  userName: string;
+  video: any;
+}
 
 //!==============================================//
 //!================ USER TABLE ==================//
@@ -81,8 +87,6 @@ router.put('/user/addFollowed', (req: Request, res: Response) => {
     })
 });
 
-//TODO: add userID to following list
-//TODO: remove userID from following list
 router.put('/user/removeFollowed', (req: Request, res: Response) => {
   return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
     .then(() => {
@@ -119,10 +123,9 @@ router.get('/user/feed', async (req: Request, res: Response) => {
   }
 })
 
-//TODO: add videoID to watched list
-router.post('/addToWatchedList', async (req: Request, res: Response) => {
-  let query = req.query as unknown as Query;
-  await controllers.addToWatchedList(query.userName, Number(query.videoID))
+//TODO: add video to watched list
+router.post('/user/addToWatchedList', async (req: Request, res: Response) => {
+  await controllers.addToWatchedList(req.body.userName, req.body.video)
     .then(() => {
       res.sendStatus(201)
     })
@@ -132,10 +135,9 @@ router.post('/addToWatchedList', async (req: Request, res: Response) => {
       res.end();
     })
 });
-//TODO: remove videoID from watched list
-router.post('/removeFromWatchedList', async (req: Request, res: Response) => {
-  let query = req.query as unknown as Query;
-  await controllers.removeFromWatchedList(query.userName, Number(query.videoID))
+//TODO: remove video from watched list
+router.post('/user/removeFromWatchedList', async (req: Request, res: Response) => {
+  await controllers.removeFromWatchedList(req.body.userName, req.body.videoId)
     .then(() => {
       res.sendStatus(201)
     })
@@ -171,9 +173,6 @@ router.post('/addToRecommended', async (req: Request, res: Response) => {
       res.end();
     })
 });
-//TODO: add service to owned list
-//TODO: remove service from owned list
-
 //!==============================================//
 //!================ VIDEO TABLE =================//
 //!==============================================//
@@ -203,16 +202,5 @@ router.post('/rating', (req: Request, res: Response) => {
       console.log('Failed POST /rating');
     });
 });
-
-router.get('/activities', async (req: Request, res: Response) => {
-  try {
-    let result = await controllers.retrieveActivities(req.body.userName);
-    res.status(200).send(result);
-  } catch (error) {
-    res.status(400).send(error);
-    console.log('failed GET /activites', error)
-  }
-})
-
 
 export default router;

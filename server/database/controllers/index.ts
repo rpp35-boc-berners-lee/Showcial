@@ -157,6 +157,7 @@ const removeFromRecommended = async (userName: any, videoID: number) => {
          );
       });
 };
+
 //TODO: retrieve owned services
 const retrieveServices = async (userName: string) => {
    try {
