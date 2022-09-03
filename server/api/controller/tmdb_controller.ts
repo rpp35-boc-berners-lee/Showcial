@@ -38,7 +38,7 @@ let getPopularTVs = async () => {
 }
 
 let getTVWatchProviders = async (tv_id: number) => {
-  return await axios.get(`https://api.themoviedb.org/3/tv/${tv_id}/watch/providers`)
+  return await axios.get(`https://api.themoviedb.org/3/tv/${tv_id}/watch/providers`, config)
     .then(results => {
       return results.data;
     });

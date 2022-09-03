@@ -1,17 +1,34 @@
-import React, {useState} from 'react';
-import {Modal, Button} from '@mui/material';
+import React, { useState } from 'react';
+import { Modal, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { SignalWifiStatusbarConnectedNoInternet4Sharp } from '@mui/icons-material';
 
 
 
-export default function Signin () {
+export default function Signin() {
   const navigate = useNavigate();
   const verifyLogin = () => {
-    //send axios post req to '/signin' with usename and password
-      //on success navigate to '/home'
-
+    axios.post('http://localhost:8080/auth/signin',
+      {
+        params: {
+          userName: values.userName,
+          password: values.password
+        }
+      }
+    )
+      .then((res) => {
+        console.log('status', res);
+        if (res.status === 201) {
+          navigate('/home');
+        }
+      })
+      .catch((err) => {
+        console.log(`Error logging in as ${values.userName}`, err);
+        window.alert('Incorrect username or password');
+      })
   }
+
   const [values, setValues] = useState({
     userName: '',
     password: ''
@@ -33,17 +50,21 @@ export default function Signin () {
 
   return (
     <div>
-        <form className='Authform'>
-          <input type='text'
-            placeholder='User Name'
-            onChange={(e) => handleUserNameChange(e)}
-          />
-          <input type='text'
-            placeholder='Password'
-            onChange={(e) => handlePasswordChange(e)}
-          />
-          <Button variant="contained" onClick={verifyLogin}>Sign-in</Button>
-        </form>
+      <form className='Authform' id='signinForm'>
+        <input
+          id='Usernameinput'
+          type='text'
+          placeholder='User Name'
+          onChange={(e) => handleUserNameChange(e)}
+        />
+        <input
+          id='Passwordinput'
+          type='text'
+          placeholder='Password'
+          onChange={(e) => handlePasswordChange(e)}
+        />
+        <Button variant="contained" onClick={verifyLogin}>Sign-in</Button>
+      </form>
     </div>
   )
 }
