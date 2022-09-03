@@ -35,15 +35,24 @@ export function Homepage() {
   const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
   const [watchList, setWatchList] = useState([]);
   // temporary username
-  const [userName, setUserName] = useState<string>('Nourse41');
+  const [userName, setUserName] = useState<string>('JamesFranco');
   const [query, setQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
   const [page, setPage] = useState<number>(1);
+  const [selectedVideo, setSelectedVideo] = useState();
   const [mediaType, setMediaType] = useState('Movie');
 
   useEffect(() => {
     fetchAPI();
   }, [])
+
+  useEffect(() => {
+    setSearchResults(undefined);
+  }, [query === ''])
+
+  useEffect(() => {
+    getSearchAPI();
+  }, [page])
 
   const fetchAPI = async () => {
     let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
@@ -56,8 +65,7 @@ export function Homepage() {
     setTopMovie(movie_top.data);
     let movie_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/popular`);
     setTrendingMovie(movie_trending.data);
-    // let user_data = await axios.get(`http://localhost:8080/videoDB/findUser?userName=${userName}`);
-    // setWatchList(watch_list.data.watchedVideos)
+    updateWatchList();
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -67,11 +75,6 @@ export function Homepage() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     getSearchAPI();
-  }
-
-  const getSearchAPI = async () => {
-    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${query}/${page}`);
-    setSearchResults(search.data);
   }
 
   const handleNextPage = async () => {
@@ -85,6 +88,11 @@ export function Homepage() {
       setPage(page - 1)
     }
   }
+
+  const getSearchAPI = async () => {
+    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${query}/${page}`);
+    setSearchResults(search.data);
+  }
   const handleMediaTypeChange = (event: SelectChangeEvent) => {
     setMediaType(event.target.value as string);
   };
@@ -92,9 +100,11 @@ export function Homepage() {
     setSearchResults(undefined);
   }, [query === ''])
 
-  useEffect(() => {
-    getSearchAPI();
-  }, [page])
+
+  const updateWatchList = async () => {
+    let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
+    setWatchList(watch_list.data.watchedVideos);
+  }
 
   return (
     <>
@@ -158,10 +168,10 @@ export function Homepage() {
           <TrendingVideos />
           {/* {trendingMovie !== undefined ?
               <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
-          {topTV !== undefined ?
-            <YourWatchList watchList={topTV.results} config={config} /> : null}
-        </>
-      }
+              {topTV !== undefined ?
+              <YourWatchList watchList={watchList} config={config}/>: null}
+            </>
+        }
     </>
   );
 }
