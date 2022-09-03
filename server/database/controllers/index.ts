@@ -1,137 +1,172 @@
 const models = require('../models/index.ts');
 
 type UserData = {
-  userName: string;
-  email: string;
-  hashedPassword: string;
-  followingList: string[];
-  watchedVideos: string[];
-  recommendedVideos: string[];
-  ownedServices: string[];
+   userName: string;
+   email: string;
+   hashedPassword: string;
+   followingList: string[];
+   watchedVideos: string[];
+   recommendedVideos: string[];
+   ownedServices: string[];
 };
 
-type VideoData = {
-
-}
+type VideoData = {};
 
 //!==============================================//
 //!================ USER TABLE ==================//
 //!==============================================//
 
 const addUser = (userData: UserData) => {
-  const newUser = new models.UserTable({
-    userName: userData.userName,
-    email: userData.email,
-    hashedPassword: userData.hashedPassword,
-    followingList:  userData.followingList || [],
-    watchedVideos: userData.watchedVideos || [],
-    recommendedVideos: userData.recommendedVideos || [],
-    ownedServices: userData.ownedServices || [],
-  })
-  return newUser.save()
-    .then(() => {
-      console.log('success posting new user');
-    })
-    .catch((error: any) => {
-      console.log('Error posting new user', error);
-    });
+   const newUser = new models.UserTable({
+      userName: userData.userName,
+      email: userData.email,
+      hashedPassword: userData.hashedPassword,
+      followingList: userData.followingList || [],
+      watchedVideos: userData.watchedVideos || [],
+      recommendedVideos: userData.recommendedVideos || [],
+      ownedServices: userData.ownedServices || [],
+   });
+   return newUser
+      .save()
+      .then(() => {
+         console.log('success posting new user');
+      })
+      .catch((error: any) => {
+         console.log('Error posting new user', error);
+      });
 };
 
 const findUser = (userName: any) => {
-  return models.UserTable.findOne({userName})
-    .then((results: any) => {
-      return results;
-    })
-    .catch((error: any) => {
-      console.log('Error finding user', error);
-    });
+   return models.UserTable.findOne({ userName })
+      .then((results: any) => {
+         return results;
+      })
+      .catch((error: any) => {
+         console.log('Error finding user', error);
+      });
+};
+
+const findUserByEmail = (email: string | undefined) => {
+   return models.UserTable.findOne({ email })
+      .then((results: any) => {
+         return results;
+      })
+      .catch((error: any) => {
+         console.log('Error finding user', error);
+      });
+};
+
+const findAllUsers = () => {
+   return models.UserTable.find({})
+      .then((results: any) => {
+         return results;
+      })
+      .catch((error: any) => {
+         console.log('Error finding user', error);
+      });
 };
 
 //TODO: add userID to following list
 //TODO: remove userID from following list
 //TODO: add videoID to watched list
 const addToWatchedList = async (userName: any, videoID: number) => {
-  return await models.UserTable.find({ userName })
-    .then(async (results: any) => {
-      if (results[0].watchedVideos.indexOf(videoID) === -1) {
-        await models.UserTable.update({ userName }, { $push: { watchedVideos: videoID }})
-        console.log(`Success updating ${userName}'s watched list with videoID ${videoID}`)
-      } else {
-        console.log('Video already exists in user watch list');
-      }
-    })
-    .catch((error: any) => {
-      console.log(`Error updating ${userName}'s watched list with videoID ${videoID}: ${error}`)
-    })
-}
+   return await models.UserTable.find({ userName })
+      .then(async (results: any) => {
+         if (results[0].watchedVideos.indexOf(videoID) === -1) {
+            await models.UserTable.update(
+               { userName },
+               { $push: { watchedVideos: videoID } }
+            );
+            console.log(
+               `Success updating ${userName}'s watched list with videoID ${videoID}`
+            );
+         } else {
+            console.log('Video already exists in user watch list');
+         }
+      })
+      .catch((error: any) => {
+         console.log(
+            `Error updating ${userName}'s watched list with videoID ${videoID}: ${error}`
+         );
+      });
+};
 //TODO: remove videoID from watched list
 const removeFromWatchedList = async (userName: any, videoID: number) => {
-  return await models.UserTable.find({ userName })
-    .then(async (results: any) => {
-      if (results[0].watchedVideos.indexOf(videoID) !== -1) {
-        await models.UserTable.update({ userName }, { $pullAll: { watchedVideos: videoID }})
-        console.log(`Success removing videoID ${videoID} from ${userName}'s watched list`)
-      } else {
-        console.log('Video was never in user watch list');
-      }
-    })
-    .catch((error: any) => {
-      console.log(`Error removing videoID ${videoID} from ${userName}'s watched list: ${error}`)
-    })
-}
+   return await models.UserTable.find({ userName })
+      .then(async (results: any) => {
+         if (results[0].watchedVideos.indexOf(videoID) !== -1) {
+            await models.UserTable.update(
+               { userName },
+               { $pullAll: { watchedVideos: videoID } }
+            );
+            console.log(
+               `Success removing videoID ${videoID} from ${userName}'s watched list`
+            );
+         } else {
+            console.log('Video was never in user watch list');
+         }
+      })
+      .catch((error: any) => {
+         console.log(
+            `Error removing videoID ${videoID} from ${userName}'s watched list: ${error}`
+         );
+      });
+};
 //TODO: add videoID to recommended list
 //TODO: remove videoID from recommended list
 //TODO: add service to owned list
 //TODO: remove service from owned list
 // update user document w/ options
 const updateUser = (userName: string, prop: string, value: any) => {
-  return findUser(userName)
-    .then((foundUser: any) => {
-      const foundIndex = foundUser[prop].indexOf(value);
-      if (foundIndex !== -1) {
-        foundUser[prop].splice(foundIndex, 1);
-      } else {
-        foundUser[prop] = [value].concat(foundUser[prop]);
-      };
-      return foundUser.save()
-        .then(() => {
-          console.log('updateUser(): Success updating user');
-        })
-        .catch((error: any) => {
-          console.log('updateUser(): Error updating user', error)
-        })
-    })
-    .catch((error: any) => {
-      console.log(`Error updating ${userName} with ${prop}: ${value}`);
-    });
+   return findUser(userName)
+      .then((foundUser: any) => {
+         const foundIndex = foundUser[prop].indexOf(value);
+         if (foundIndex !== -1) {
+            foundUser[prop].splice(foundIndex, 1);
+         } else {
+            foundUser[prop] = [value].concat(foundUser[prop]);
+         }
+         return foundUser
+            .save()
+            .then(() => {
+               console.log('updateUser(): Success updating user');
+            })
+            .catch((error: any) => {
+               console.log('updateUser(): Error updating user', error);
+            });
+      })
+      .catch((error: any) => {
+         console.log(`Error updating ${userName} with ${prop}: ${value}`);
+      });
 };
 
-const deleteUser = ((userName: any) => {
-  return models.UserTable.deleteOne({userName})
-    .then()
-    .catch((error: any) => {
-      console.log(`deleteUser(): Error deleting ${userName}`)
-    });
-});
+const deleteUser = (userName: any) => {
+   return models.UserTable.deleteOne({ userName })
+      .then()
+      .catch((error: any) => {
+         console.log(`deleteUser(): Error deleting ${userName}`);
+      });
+};
 
 //!==============================================//
 //!================ VIDEO TABLE =================//
 //!==============================================//
 
 const addVideo = (videoData: any) => {
-  const newVideo = new models.VideoTable({
-    videoName: videoData.videoName,
-    overallRating: videoData.overallRating,
-    userName: videoData.userName,
-    watchProviders: videoData.watchProviders
-  });
-  return newVideo.save()
-    .then(() => {
-      console.log("success posting new video");
-    })
-    .catch((error: any) => {
-      console.log('Error posting new video', error)
-    });
+   const newVideo = new models.VideoTable({
+      videoName: videoData.videoName,
+      overallRating: videoData.overallRating,
+      userName: videoData.userName,
+      watchProviders: videoData.watchProviders,
+   });
+   return newVideo
+      .save()
+      .then(() => {
+         console.log('success posting new video');
+      })
+      .catch((error: any) => {
+         console.log('Error posting new video', error);
+      });
 };
 
 //? get videos by reviewer/for movie?
@@ -142,19 +177,20 @@ const addVideo = (videoData: any) => {
 //!==============================================//
 
 const addRating = (ratingData: any) => {
-  const newRating = models.RatingsTable({
-    videoName: ratingData.videoName,
-    userName: ratingData.userName,
-    userRating: ratingData.userRating,
-    comments: ratingData.comments
-  });
-  return newRating.save()
-    .then(() => {
-      console.log('success posting new rating')
-    })
-    .catch((error: any) => {
-      console.log('error posting new rating', error);
-    });
+   const newRating = models.RatingsTable({
+      videoName: ratingData.videoName,
+      userName: ratingData.userName,
+      userRating: ratingData.userRating,
+      comments: ratingData.comments,
+   });
+   return newRating
+      .save()
+      .then(() => {
+         console.log('success posting new rating');
+      })
+      .catch((error: any) => {
+         console.log('error posting new rating', error);
+      });
 };
 
 //? update rating
@@ -162,12 +198,14 @@ const addRating = (ratingData: any) => {
 //? delete rating
 
 export default {
-  addUser,
-  findUser,
-  updateUser,
-  addVideo,
-  addRating,
-  deleteUser,
-  addToWatchedList,
-  removeFromWatchedList
-}
+   addUser,
+   findUser,
+   findUserByEmail,
+   updateUser,
+   addVideo,
+   addRating,
+   deleteUser,
+   addToWatchedList,
+   removeFromWatchedList,
+   findAllUsers,
+};

@@ -6,7 +6,7 @@ import AboutPage from './about-page';
 import { PersonalProfile } from './personal-profile';
 import Signin from './Authpage/Signin';
 import Signup from './Authpage/Signup';
-
+import { ProvideAuth } from '../hooks/useAuth';
 export const App = () => {
    return (
       <>
@@ -16,7 +16,14 @@ export const App = () => {
             <Route path='/personal/' element={<PersonalProfile />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='/home' element={<Homepage />} />
+            <Route
+               path='/home'
+               element={
+                  <ProvideAuth>
+                     <Homepage />
+                  </ProvideAuth>
+               }
+            />
             <Route path='/about' element={<AboutPage />} />
          </Routes>
       </>

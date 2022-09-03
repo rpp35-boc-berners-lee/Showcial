@@ -5,14 +5,14 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import api_router from './api/routes/tmdb_api';
 import videoDB_router from './database/routes/index';
-import { router as baseEndpointRoute } from './routes/base-endpoint.route';
-import { router as authRouter } from './authentication/auth';
+import { router as authRouter } from './authentication/routes/auth';
 import cors from 'cors';
+const passport = require('passport');
 
 var session = require('express-session');
 const MongoStore = require('connect-mongo');
-var passport = require('passport');
-var LocalStrategy = require('passport-local');
+// var passport = require('passport');
+// var LocalStrategy = require('passport-local');
 
 const port = 8080;
 const db_conn = process.env.mongoDB_TOKEN;
@@ -24,6 +24,9 @@ app.use(cors());
 app.use(compression());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.use(
    session({
       secret: secret,
@@ -31,16 +34,17 @@ app.use(
          //   path: '/home',
          httpOnly: true,
          secure: false,
-         maxAge: 300000,
+         maxAge: 3000000,
       },
+      proxy: true,
       resave: false,
       saveUninitialized: false,
       store: MongoStore.create({ mongoUrl: db_conn }),
    })
 );
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
 
 // API ROUTE
 app.use('/tmdb', api_router);
@@ -48,11 +52,19 @@ app.use('/tmdb', api_router);
 // MONGODB ROUTE
 app.use('/videoDB', videoDB_router);
 
-//ROUTES
-app.use('/api', baseEndpointRoute);
-
 //AUTH ROUTE
-app.use('/auth', authRouter);
+app.use('/api/auth', authRouter);
+
+//BASE ROUTE
+app.get('/', (req, res) => {
+   res.status(200).send({
+      status: 'success',
+      data: {
+         name: 'Blue Ocean Capstone',
+         version: '1.0.0',
+      },
+   });
+});
 
 //for all other routes not found, send index.html file
 app.get('/*', (req, res) => {
