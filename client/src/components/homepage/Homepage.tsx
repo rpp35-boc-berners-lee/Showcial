@@ -130,8 +130,9 @@ export function Homepage() {
           :
             <>
               <h3>RECOMMENDATIONS FOR YOU</h3>
+
               {topTV !== undefined ?
-              <Recommendations vedios={topTV.results} config={config}/>: null}
+              <Recommendations vedios={topTV.results} config={config} userName={userName}/>: null}
               <TrendingVideos/>
               {/* {trendingMovie !== undefined ?
               <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}

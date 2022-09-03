@@ -9,6 +9,7 @@ import ReactModal from 'react-modal';
 type ChildProps = {
   vedios: any;
   config: any;
+  userName: string
 }
 const customStyles = {
   content: {
@@ -20,7 +21,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
   },
 };
-export const Slider: React.FC<ChildProps> = ({ vedios, config }) => {
+export const Slider: React.FC<ChildProps> = ({ vedios, config, userName }) => {
   console.log(vedios, 'in Slider');
   console.log(config, 'in Slider');
   const [slideIndex, setSlideIndex] = useState(1)
@@ -75,6 +76,7 @@ export const Slider: React.FC<ChildProps> = ({ vedios, config }) => {
               vedio={vedios[slideIndex - 1]}
               image={`${config.images.base_url}${config.images.poster_sizes[6]}${vedios[slideIndex - 1].poster_path}`}
               closeModal={closeModal}
+              userName={userName}
             />
           </div>
         )
