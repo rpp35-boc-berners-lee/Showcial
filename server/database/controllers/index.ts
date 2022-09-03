@@ -48,6 +48,18 @@ const findUser = (userName: any) => {
       });
 };
 
+const findAllUsers = () => {
+   return models.UserTable.find({})
+      .then((results: any) => {
+         return results.map((result: any) => {
+            return result.userName;
+         });
+      })
+      .catch((error: any) => {
+         console.log('Error finding all users', error);
+      });
+};
+
 const findUserByEmail = (email: string | undefined) => {
    return models.UserTable.findOne({ email })
       .then((results: any) => {
@@ -284,6 +296,8 @@ export default {
    addUser,
    findUser,
    updateUser,
+   findAllUsers,
+   findUserByEmail,
    addVideo,
    addToRecommended,
    removeFromRecommended,
