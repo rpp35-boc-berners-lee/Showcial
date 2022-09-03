@@ -72,7 +72,7 @@ const addToWatchedList = async (userName: any, video: any) => {
         }
       }
       if (!exists) {
-        await models.UserTable.update({ userName }, { $push: { watchedVideos: video }})
+        await models.UserTable.update({ userName }, { $push: { watchedVideos: { [video.id]: video }}})
         console.log(`Success updating ${userName}'s watched list with videoID ${video.id}`)
       } else {
         console.log('Video already exists in user watch list');
@@ -83,7 +83,51 @@ const addToWatchedList = async (userName: any, video: any) => {
     })
 }
 
-const removeFromWatchedList = async (userName: any, video: any) => {
+const removeFromWatchedList = async (userName: any, videoId: number) => {
+  return await models.UserTable.find({ userName })
+    .then(async (results: any) => {
+      let watchList = results[0].watchedVideos;
+      let exists = false;
+      for (let i = 0; i < watchList.length; i++) {
+        if (watchList[i][videoId] !== undefined) {
+          exists = true;
+        }
+      }
+      if (exists) {
+        await models.UserTable.update({ userName }, { $pullAll: { watchedVideos: videoId }})
+        console.log(`Success removing videoID ${videoId} from ${userName}'s watched list`)
+      } else {
+        console.log('Video was never in user watch list');
+      }
+    })
+    .catch((error: any) => {
+      console.log(`Error removing videoID ${videoId} from ${userName}'s watched list: ${error}`)
+    })
+}
+//TODO: add videoID to recommended list
+const addToRecommended = async (userName: any, video: any) => {
+  return await models.UserTable.find({ userName })
+    .then(async (results: any) => {
+      let watchList = results[0].watchedVideos;
+      let exists = false;
+      for (let i = 0; i < watchList.length; i++) {
+        if (watchList[i][video.id] !== undefined) {
+          exists = true;
+        }
+      }
+      if (!exists) {
+        await models.UserTable.update({ userName }, { $push: { watchedVideos: video }})
+        console.log(`Success updating ${userName}'s watched list with videoID ${video.id}`)
+      } else {
+        console.log('Video already exists in user recommended list');
+      }
+    })
+    .catch((error: any) => {
+      console.log(`Error updating ${userName}'s watched list with videoID ${video.id}: ${error}`)
+    })
+}
+//TODO: remove videoID from recommended list
+const removeFromRecommended = async (userName: any, video: any) => {
   return await models.UserTable.find({ userName })
     .then(async (results: any) => {
       let watchList = results[0].watchedVideos;
@@ -102,36 +146,6 @@ const removeFromWatchedList = async (userName: any, video: any) => {
     })
     .catch((error: any) => {
       console.log(`Error removing videoID ${video.id} from ${userName}'s watched list: ${error}`)
-    })
-}
-//TODO: add videoID to recommended list
-const addToRecommended = async (userName: any, videoID: number) => {
-  return await models.UserTable.find({ userName })
-    .then(async (results: any) => {
-      if (results[0].recommendedVideos.indexOf(videoID) === -1) {
-        await models.UserTable.update({ userName }, { $push: { recommendedVideos: videoID }})
-        console.log(`Success updating ${userName}'s recommended list with videoID ${videoID}`)
-      } else {
-        console.log('Video already exists in user recommended list');
-      }
-    })
-    .catch((error: any) => {
-      console.log(`Error updating ${userName}'s recommended list with videoID ${videoID}: ${error}`)
-    })
-}
-//TODO: remove videoID from recommended list
-const removeFromRecommended = async (userName: any, videoID: number) => {
-  return await models.UserTable.find({ userName })
-    .then(async (results: any) => {
-      if (results[0].recommendedVideos.indexOf(videoID) !== -1) {
-        await models.UserTable.update({ userName }, { $pullAll: { recommendedVideos: videoID }})
-        console.log(`Success removing videoID ${videoID} from ${userName}'s recommendedVideos list`)
-      } else {
-        console.log('Video was never in user watch list');
-      }
-    })
-    .catch((error: any) => {
-      console.log(`Error removing videoID ${videoID} from ${userName}'s recommendedVideos list: ${error}`)
     })
 }
 //TODO: retrieve owned services

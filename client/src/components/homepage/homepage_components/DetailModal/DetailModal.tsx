@@ -42,9 +42,14 @@ const customStyles = {
   },
 };
 export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal }) => {
-  const [recommendedUsers, SetRecommendedUsers] = useState([]);
-  const [platform, SetPlatform] = useState([])
-  const[movieDetail, setMovieDetail] = (vedio);
+  const [ recommendedUsers, SetRecommendedUsers ] = useState([]);
+  const [ platform, SetPlatform ] = useState([])
+  const [ movieDetail, setMovieDetail ] = (vedio);
+  const [ mediaType, setMediaType ] = useState('movie');
+
+  // temporary username until we get username from passport
+  const userName = 'JamesFranco';
+
   //not working well
   const fetchAll = async () => {
     const Detail = await axios({
@@ -62,6 +67,19 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
     fetchAll();
     console.log('this movie is', movieDetail);
   }, [])
+
+  const addToWatchList = async () => {
+    let movieDetail = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${vedio.id}`);
+    movieDetail.data.media_type = mediaType;
+    movieDetail.data.watchProviders = getWatchProviders();
+    await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, video: movieDetail.data });
+  }
+
+  const getWatchProviders = async () => {
+    let watchProviders = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${vedio.id}/watch/providers`);
+    console.log(watchProviders.data.results.US);
+    return watchProviders.data.results.US;
+  }
 
   return (<ReactModal
     isOpen={modalIsOpen}
@@ -101,7 +119,7 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
         <IconButton>
           <StarBorderIcon aria-label="rate" />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={addToWatchList}>
           <AddCommentOutlinedIcon aria-label="add to recommend" />
         </IconButton>
       </CardActions>

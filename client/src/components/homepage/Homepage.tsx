@@ -53,8 +53,7 @@ export function Homepage() {
     setTopMovie(movie_top.data);
     let movie_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/popular`);
     setTrendingMovie(movie_trending.data);
-    let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
-    setWatchList(watch_list.data.watchedVideos);
+    updateWatchList();
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -91,9 +90,10 @@ export function Homepage() {
     getSearchAPI();
   }, [page])
 
-  // const addToWatchList = async () => {
-  //   await axios.post('http://localhost:8080/videoDB/user?userName=JamesFranco', data)
-  // }
+  const updateWatchList = async () => {
+    let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
+    setWatchList(watch_list.data.watchedVideos);
+  }
 
   return (
       <>
