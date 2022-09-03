@@ -18,8 +18,8 @@ export default function BasicMenu() {
     <div>
       <Button
         variant="outlined"
-        id="basic-button"
-        aria-controls={open ? 'basic-menu' : undefined}
+        id="personal-profile"
+        aria-controls={open ? 'profile-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
@@ -27,7 +27,7 @@ export default function BasicMenu() {
         <AccountCircleOutlinedIcon />
       </Button>
       <Menu
-        id="basic-menu"
+        id="profile-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
