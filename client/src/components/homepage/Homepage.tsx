@@ -17,7 +17,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { CarouselList } from './homepage_components/carousel/Carousel'
 import { Recommendations } from './homepage_components/recommendations/Recommendations'
-import { TrendingVideos } from './homepage_components/trending-videos/TrendingVideos'
+import { TrendingOrRecommendedVideos } from './homepage_components/trending-videos/TrendingVideos'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
@@ -155,7 +155,7 @@ export function Homepage() {
             <Recommendations vedios={topTV.results} config={config} userName={userName} /> : null}
           {topMovie !== undefined && mediaType === 'Movie' ?
             <Recommendations vedios={topMovie.results} config={config} userName={userName} /> : null}
-          <TrendingVideos mediaType={mediaType}/>
+          <TrendingOrRecommendedVideos mediaType={mediaType} trendingOrRecommended={'trending'}/>
           {/* {trendingMovie !== undefined ?
               <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
           {topTV !== undefined ?

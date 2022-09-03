@@ -20,7 +20,7 @@ type PopularMovie = {
    vote_count: number;
 };
 
-export const TrendingVideos = ({mediaType}: {mediaType: string}) => {
+export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended}: {mediaType: string; trendingOrRecommended: string}) => {
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);
    const [imageUrl, setImageUrl] = useState<string>('');
    const [imageSize, setImageSize] = useState<string[]>(['']);
