@@ -4,9 +4,8 @@ import './FollowingList.scss';
 import { FollowingItem } from '../following-item/FollowingItem';
 import { Box, Paper, Grid } from '@mui/material';
 
-export const FollowingList = () => {
+export const FollowingList = ({userName}: {userName: string}) => {
   const [followingList, setFollowingList] = useState<any>([])
-  const [userName, setUserName] = useState<string>('Nourse41'); //! switch to current signed in user
 
   useEffect(() => {
     fetchFollowingList();
@@ -32,7 +31,7 @@ export const FollowingList = () => {
         {followingList.map((followedUserName: any, index: any) => {
           return (
             <Grid
-              xs={2} sm={4} md={4}
+              item xs={2} sm={4} md={4}
               key={index}
             >
               {FollowingItem(followedUserName, index, userName)}

@@ -28,8 +28,9 @@ interface Props {
   modalIsOpen: boolean,
   setModalIsOpen: any,
   vedio: any,
-  image: string
-  closeModal: any
+  image: string,
+  closeModal: any,
+  userName: string
 }
 const customStyles = {
   content: {
@@ -45,7 +46,7 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
   const [ recommendedUsers, SetRecommendedUsers ] = useState([]);
   const [ platform, SetPlatform ] = useState([])
   const [ movieDetail, setMovieDetail ] = (vedio);
-  const [ mediaType, setMediaType ] = useState('tv');
+  const [ mediaType, setMediaType ] = useState('movie');
 
   // temporary username until we get username from passport
   const userName = 'JamesFranco';
