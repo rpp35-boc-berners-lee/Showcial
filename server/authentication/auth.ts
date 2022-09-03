@@ -1,28 +1,9 @@
-import { RequestPage } from '@mui/icons-material';
+// import { RequestPage } from '@mui/icons-material';
+import axios from 'axios';
 import { Request, Response, Router } from 'express';
 const bcrypt = require('bcryptjs');
-var session = require('express-session');
 var passport = require('passport');
-var LocalStrategy = require('passport-local');
-// const saltRounds = 10;
-
-// passport.use(new LocalStrategy(function verify(username, password, cb) {
-//    ///use same pattern but with mongoose and bcrpyt/ email and password
-
-//    // db.get('SELECT * FROM users WHERE username = ?', [ username ], function(err, row) {
-//    //   if (err) { return cb(err); }
-//    //   if (!row) { return cb(null, false, { message: 'Incorrect username or password.' }); }
-
-//    //   crypto.pbkdf2(password, row.salt, 310000, 32, 'sha256', function(err, hashedPassword) {
-//    //     if (err) { return cb(err); }
-//    //     if (!crypto.timingSafeEqual(row.hashed_password, hashedPassword)) {
-//    //       return cb(null, false, { message: 'Incorrect username or password.' });
-//    //     }
-//    //     return cb(null, row);
-//    //   });
-//    // });
-//  }));
-
+const { findUser, addUser } = require('../database/controllers/index');
 
 const checkAuth = (req: any, res: Response, next: any) => {
   if (!req.session.user) {
@@ -30,55 +11,80 @@ const checkAuth = (req: any, res: Response, next: any) => {
   } else next();
 }
 
-type Params = {
+type userData = {
   userName: string;
-  email: string;
   password: string;
-  services: string[];
-};
+  email: string;
+  ownedServices: string[];
+}
 
 const router = Router();
 
-router.post('/signup', (req: Request, res: Response) => {
-  let params = req.params as unknown as Params;
-  let userName = params.userName;
-  let email = params.email;
-  let password = params.password;
-  let services = params.services;
+router.post('/signup', async (req: Request, res: Response) => {
+  let userName = req.body.params.userName;
+  let email = req.body.params.email;
+  let password = req.body.params.password;
+  let ownedServices = req.body.params.ownedServices;
   //find one from db using userName, if unsuccessful, hash password and store a new user
-  //if successful, res send 'Username already in use, sign in or try another'
 
-  // bcrypt.hash(password, saltRounds, (hash) => {
-    //store user data here and update/save the session
-  // })
+  let hashedPassword = bcrypt.hashSync(password, 8);
+  console.log(hashedPassword);
+
+  axios.post(
+    'http://localhost:8080/videoDB/user',
+    {
+      userName,
+      hashedPassword,
+      email,
+      ownedServices
+
+    }
+  )
+    .then(() => {
+      res.status(201).send('User added to database');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(err);
+    })
 });
 
-router.post('/signin', (req: Request, res: Response) => {
-  let params = req.params as unknown as Params;
-  let email = params.email;
-  let password = params.password;
-  //search db for username,
-  //if successful, compare password against hashed password using bcryt.compare
-  //if true, update session
-  //if false, res.send('wrong username or password')
-  //if unsuccessful, res.send('username not found')
-})
+router.post('/signin', (req: any, res: Response) => {
+  let userName = req.body.params.userName;
+  let password = req.body.params.password;
 
-//the above route for sign in needs to be formulated to this...
-router.post('/login/password', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/login'
-}));
+  axios.get(
+    'http://localhost:8080/videoDB/user',
+    {
+      params: {
+        userName
+      }
+    }
+  )
+    .then((response) => {
+      let hash = response.data.hashedPassword;
+      if (bcrypt.compareSync(password, hash)) {
+        req.session.user = response.data.userName;
+        res.status(201).send('Succesfully logged in');
+      } else {
+        res.status(401).send('Incorrect username or password');
+      }
+    })
+    .catch((err) => {
+      console.log(`Error logging in as ${userName}`, err);
+      res.status(400).send(err);
+    })
+});
 
-router.get('/guest', (req: any, res: Response) => {
-  //update req.session.user to null
-  console.log('guest');
-  req.session.user = null;
-  res.send('Logged in as "guest"')
-})
+// router.get('/guest', (req: any, res: Response) => {
+//   //update req.session.user to null
+//   console.log('guest');
+//   req.session.user = null;
+//   res.send('Logged in as "guest"')
+// })
 
 //need a delete route for logging out
 
 
-export {router};
+export { router };
 // export default checkAuth;
