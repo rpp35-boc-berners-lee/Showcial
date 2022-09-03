@@ -34,7 +34,7 @@ export const WatchProviders = ({userName}: {userName: string}) => {
     setOwnedServices(owned);
     
     allServices.forEach((service) => {
-      if (owned.indexOf(service) === -1) {
+      if (owned.indexOf(service) === -1 && unowned.indexOf(service) === -1) {
         unowned.push(service);
       }
     })
@@ -53,11 +53,11 @@ export const WatchProviders = ({userName}: {userName: string}) => {
     let removed: string = ownedServices[index];
     
     ownedServices.splice(index, 1)
-    setOwnedServices(ownedServices);
+    setOwnedServices([...ownedServices]);
     
     console.log('ownedServices: ', ownedServices);
     unownedServices.push(removed);
-    setUnownedServices(unownedServices);
+    setUnownedServices([...unownedServices]);
     console.log('unownedServices: ', unownedServices);
     
     let options = {
@@ -79,11 +79,11 @@ export const WatchProviders = ({userName}: {userName: string}) => {
     let added: string = unownedServices[index];
     
     unownedServices.splice(index, 1)
-    setUnownedServices(unownedServices);
+    setUnownedServices([...unownedServices]);
     
     console.log('unownedServices: ', unownedServices);
     ownedServices.push(added);
-    setOwnedServices(ownedServices);
+    setOwnedServices([...ownedServices]);
     console.log('ownedServices: ', ownedServices);
     
     let options = {

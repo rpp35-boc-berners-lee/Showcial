@@ -20,6 +20,7 @@ export const OwnedProviders: React.FC<ChildProps> = ({ownedServices, handleDelet
     console.log('in useEffect of OwnedProviders: ', ownedServices)
   }, [ownedServices])
   
+  console.log('OwnedProviders rendered');
   return (
     <Container
       sx={{

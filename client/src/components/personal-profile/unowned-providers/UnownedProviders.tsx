@@ -17,7 +17,9 @@ export const UnownedProviders: React.FC<ChildProps> = ({unownedServices, handleA
     console.log('in useEffect of UnownedProviders: ', unownedServices);
   }, [unownedServices])
   
+  console.log('UnownedProviders rendered');
   return (
+    
   <Container
     sx={{
       display: 'flex',
