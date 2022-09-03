@@ -96,17 +96,6 @@ router.put('/user/removeFollowed', (req: Request, res: Response) => {
     })
 });
 
-//TODO: retrieve owned services list
-router.get('/user/services', async (req: Request, res: Response) => {
-  try {
-    let result = await controllers.retrieveServices(req.body.userName);
-    res.status(200).send(result);
-  } catch (error) {
-    res.status(400).send(error);
-    console.log('failed GET /services', error);
-  }
-})
-
 //TODO: update owned services list
 router.put('/user/services', async (req: Request, res: Response) => {
   try {

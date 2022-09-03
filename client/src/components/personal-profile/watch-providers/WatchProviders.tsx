@@ -19,6 +19,9 @@ const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
+let owned: string[] = [];
+let unowned: string[] = [];
+
 export const WatchProviders = ({userName}: {userName: string}) => {
 
   const allServices: string[] = ['Netflix', 'Hulu', 'Disney+', 'Prime Video', 'HBO Max'];
@@ -36,18 +39,17 @@ export const WatchProviders = ({userName}: {userName: string}) => {
       }
     };
     let result = await axios(options);
-    let owned = result.data.ownedServices;
-    setOwnedServices(owned);
     
-    let unOwned: string[] = [];
+    owned = result.data.ownedServices;
+    setOwnedServices(owned);
     
     allServices.forEach((service) => {
       if (owned.indexOf(service) === -1) {
-        unOwned.push(service);
+        unowned.push(service);
       }
     })
     
-    setUnownedServices(unOwned);
+    setUnownedServices(unowned);
   }
   
   useEffect(() => {
@@ -56,39 +58,53 @@ export const WatchProviders = ({userName}: {userName: string}) => {
     retrieveServices(userName);
   }, [])
   
-  
-  // const [ownedServices, setOwnedServices] = React.useState([
-  //   { key: 0, label: 'Netflix' },
-  //   { key: 1, label: 'Hulu' },
-  //   { key: 2, label: 'Disney+' },
-  // ]);
-  
-  // const [unownedServices, setUnownedServices] = React.useState([
-  //   { key: 3, label: 'HBO Max' },
-  //   { key: 4, label: 'Prime Video' },
-  // ]);
-  
-  
-  
-  // useEffect(() => {
-
-  // })
-  
-
-  // const handleDelete = (servicesToDelete: any) => () => {
-  //   console.log('servicesToDelete: ', servicesToDelete);
-  //   setOwnedServices((services) => services.filter((service) => service.key !== servicesToDelete.key));
-  //   console.log(ownedServices);
-  // };
-  
-  const handleDelete = (servicesToDelete: any) => () => {
-    // console.log('servicesToDelete: ', servicesToDelete);
+  const handleDelete = (service: any) => () => {
+    
+    let index: number = ownedServices.indexOf(service);
+    
+    let removed: string = ownedServices[index];
+    
+    owned.splice(index, 1)
+    setOwnedServices(owned);
+    unowned.push(removed);
+    setUnownedServices(unowned);
+    
+    let options = {
+      method: 'put',
+      url: 'http://localhost:8080/videoDB/user/services',
+      data: {
+        userName: userName,
+        services: owned
+      }
+    }
+    
+    axios(options)
   };
   
-  
+  const handleAdd = (service: any) => () => {
+    
+    let index: number = unownedServices.indexOf(service);
+    
+    let added: string = unownedServices[index];
+    
+    unownedServices.splice(index, 1)
+    setUnownedServices(unownedServices);
+    ownedServices.push(added);
+    setOwnedServices(ownedServices);
+    
+    let options = {
+      method: 'put',
+      url: 'http://localhost:8080/videoDB/user/services',
+      data: {
+        userName: userName,
+        services: owned
+      }
+    }
+    
+    axios(options)
+  };
   
   const OwnedProviders = () => {
-    // console.log('ownedServices: ', ownedServices)
     return (
       <Container
         sx={{
@@ -117,12 +133,6 @@ export const WatchProviders = ({userName}: {userName: string}) => {
     )
   }
   
-  
-  
-  const handleAdd = (serviceToAdd: any) => {
-    
-  }
-  
   const UnownedProviders = () => {
     return (
     <Container
@@ -142,7 +152,7 @@ export const WatchProviders = ({userName}: {userName: string}) => {
           <ListItem key={i}>
             <Chip
               label={service}
-              onDelete={handleDelete(service)}
+              onDelete={handleAdd(service)}
               deleteIcon={<AddCircleOutlineOutlinedIcon />}
             />
           </ListItem>
