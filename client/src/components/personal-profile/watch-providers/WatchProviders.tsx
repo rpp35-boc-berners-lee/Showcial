@@ -1,23 +1,13 @@
 import React, { useEffect } from 'react';
 import './WatchProviders.scss';
-// import OwnedServices from '../owned-services/OwnedServes';
-// import UnownedServices from '../unowned-services/UnownedServices';
+import { OwnedProviders } from '../owned-providerss/OwnedProviders';
+import { UnownedProviders } from '../unowned-providers/UnownedProviders';
 import { styled, Chip, Paper, Container, Divider } from '@mui/material';
 // import Chip from '@mui/material/Chip';
 // import Paper from '@mui/material/Paper';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import axios from 'axios';
-
-
-// interface Services {
-//   key: number;
-//   label: string;
-// }
-
-const ListItem = styled('li')(({ theme }) => ({
-  margin: theme.spacing(0.5),
-}));
 
 let owned: string[] = [];
 let unowned: string[] = [];
@@ -53,10 +43,8 @@ export const WatchProviders = ({userName}: {userName: string}) => {
   }
   
   useEffect(() => {
-    console.log('Owned: ', ownedServices);
-    console.log('Unowned: ', unownedServices);
     retrieveServices(userName);
-  }, [])
+  }, [])  
   
   const handleDelete = (service: any) => () => {
     
@@ -64,10 +52,13 @@ export const WatchProviders = ({userName}: {userName: string}) => {
     
     let removed: string = ownedServices[index];
     
-    owned.splice(index, 1)
-    setOwnedServices(owned);
-    unowned.push(removed);
-    setUnownedServices(unowned);
+    ownedServices.splice(index, 1)
+    setOwnedServices(ownedServices);
+    
+    console.log('ownedServices: ', ownedServices);
+    unownedServices.push(removed);
+    setUnownedServices(unownedServices);
+    console.log('unownedServices: ', unownedServices);
     
     let options = {
       method: 'put',
@@ -89,8 +80,11 @@ export const WatchProviders = ({userName}: {userName: string}) => {
     
     unownedServices.splice(index, 1)
     setUnownedServices(unownedServices);
+    
+    console.log('unownedServices: ', unownedServices);
     ownedServices.push(added);
     setOwnedServices(ownedServices);
+    console.log('ownedServices: ', ownedServices);
     
     let options = {
       method: 'put',
@@ -103,70 +97,12 @@ export const WatchProviders = ({userName}: {userName: string}) => {
     
     axios(options)
   };
-  
-  const OwnedProviders = () => {
-    return (
-      <Container
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
-          listStyle: 'none',
-          p: 0.5,
-          m: 0,
-        }}
-        component="ul"
-    >
-      {ownedServices.map((service, i) => {
-        console.log('Owned Providers: ', service);
-        return (
-          <ListItem key={i}>
-            <Chip
-              label={service}
-              onDelete={handleDelete(service)}
-              deleteIcon={<RemoveCircleOutlineIcon />}
-            />
-          </ListItem>
-        );
-      })}
-    </Container>
-    )
-  }
-  
-  const UnownedProviders = () => {
-    return (
-    <Container
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        listStyle: 'none',
-        p: 0.5,
-        m: 0,
-      }}
-      component="ul"
-    >
-      {unownedServices.map((service, i) => {
-        console.log('Unowned Providers: ', service);
-        return (
-          <ListItem key={i}>
-            <Chip
-              label={service}
-              onDelete={handleAdd(service)}
-              deleteIcon={<AddCircleOutlineOutlinedIcon />}
-            />
-          </ListItem>
-        );
-      })}
-    </Container>
-    )
-  }
 
   return (
     <Paper>
-      <OwnedProviders />
+      <OwnedProviders ownedServices={ownedServices} handleDelete={handleDelete} />
       <Divider variant="middle"/>
-      <UnownedProviders />
+      <UnownedProviders unownedServices={unownedServices} handleAdd={handleAdd} />
     </Paper>
     
   );
