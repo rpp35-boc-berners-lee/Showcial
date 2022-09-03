@@ -15,36 +15,40 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { CarouselList } from './homepage_components/carousel/Carousel'
-import { Recommendations } from './homepage_components/recommendations/Recommendations'
-import { TrendingVideos } from '../shared/trending-videos/TrendingVideos'
+import { CarouselList } from './homepage_components/carousel/Carousel';
+import { Recommendations } from './homepage_components/recommendations/Recommendations';
+import { TrendingVideos } from '../shared/trending-videos/TrendingVideos';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-
+import {useAuth} from '../../hooks/useAuth';
 interface MouseEvent {
-  target: {
-    id: string
-  }
+   target: {
+      id: string;
+   };
 }
 export function Homepage() {
+  const auth = useAuth();
+  console.log('auth:', auth);
+   const [watchList, setWatchList] = useState([]);
+   // temporary username
+   const [userName, setUserName] = useState<string>('Nourse41');
+   const [query, setQuery] = useState<string>('');
+   const [searchResults, setSearchResults] = useState<
+      APIResponse | undefined
+   >();
+   const [page, setPage] = useState<number>(1);
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const [topTV, setTopTV] = useState<APIResponse | undefined>();
   const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
   const [topMovie, setTopMovie] = useState<APIResponse | undefined>();
   const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
-  const [watchList, setWatchList] = useState([]);
   // temporary username
-  const [userName, setUserName] = useState<string>('JamesFranco');
-  const [query, setQuery] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
-  const [page, setPage] = useState<number>(1);
-  const [selectedVideo, setSelectedVideo] = useState();
+
   const [mediaType, setMediaType] = useState('Movie');
 
-  useEffect(() => {
-    fetchAPI();
-  }, [])
+   useEffect(() => {
+      fetchAPI();
+   }, []);
 
   useEffect(() => {
     setSearchResults(undefined);
@@ -68,14 +72,14 @@ export function Homepage() {
     updateWatchList();
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  }
+   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setQuery(e.target.value);
+   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    getSearchAPI();
-  }
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      getSearchAPI();
+   };
 
   const handleNextPage = async () => {
     if (page !== searchResults?.total_pages) {
