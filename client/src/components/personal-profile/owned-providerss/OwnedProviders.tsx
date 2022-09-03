@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled, Chip, Paper, Container, Divider } from '@mui/material';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import axios from 'axios';
+import { OwnedProviderItem } from '../owned-provider-item/OwnedProviderItem';
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -13,9 +14,12 @@ type ChildProps = {
 };
 
 export const OwnedProviders: React.FC<ChildProps> = ({ownedServices, handleDelete}) => {
-
+  // const [owned, setOwned] = useState([ownedServices])
   
-
+  useEffect(() => {
+    console.log('in useEffect of OwnedProviders: ', ownedServices)
+  }, [ownedServices])
+  
   return (
     <Container
       sx={{
@@ -31,13 +35,7 @@ export const OwnedProviders: React.FC<ChildProps> = ({ownedServices, handleDelet
     {ownedServices.map((service, i) => {
       console.log('ownedServices in child component', ownedServices)
       return (
-        <ListItem key={i}>
-          <Chip
-            label={service}
-            onDelete={handleDelete(service)}
-            deleteIcon={<RemoveCircleOutlineIcon />}
-          />
-        </ListItem>
+       <OwnedProviderItem service={service} key={i} handleDelete={handleDelete} />
       );
     })}
   </Container>

@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled, Chip, Paper, Container, Divider } from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import axios from 'axios';
+import { UnownedProviderItem } from '../unowned-provider-item/UnownedProviderItem';
 
-const ListItem = styled('li')(({ theme }) => ({
-  margin: theme.spacing(0.5),
-}));
 
 type ChildProps = {
   unownedServices: string[];
@@ -13,7 +11,11 @@ type ChildProps = {
 };
 
 export const UnownedProviders: React.FC<ChildProps> = ({unownedServices, handleAdd}) => {
+  // const [unowned, setUnowned] = useState(unownedServices);
   
+  useEffect(() => {
+    console.log('in useEffect of UnownedProviders: ', unownedServices);
+  }, [unownedServices])
   
   return (
   <Container
@@ -29,13 +31,7 @@ export const UnownedProviders: React.FC<ChildProps> = ({unownedServices, handleA
   >
     {unownedServices.map((service, i) => {
       return (
-        <ListItem key={i}>
-          <Chip
-            label={service}
-            onDelete={handleAdd(service)}
-            deleteIcon={<AddCircleOutlineOutlinedIcon />}
-          />
-        </ListItem>
+        <UnownedProviderItem service={service} key={i} handleAdd={handleAdd} />
       );
     })}
   </Container>
