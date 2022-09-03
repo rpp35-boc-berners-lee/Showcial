@@ -1,26 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import './FollowingList.scss';
+import React from 'react';
 import { FollowingItem } from '../following-item/FollowingItem';
-import { Box, Paper, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
+import './FollowingList.scss';
 
-export const FollowingList = ({userName}: {userName: string}) => {
-  const [followingList, setFollowingList] = useState<any>([])
-
-  useEffect(() => {
-    fetchFollowingList();
-  },[])
-
-  function fetchFollowingList () {
-    axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
-      .then((results: any) => {
-        setFollowingList(results.data.followingList);
-      })
-      .catch((error) => {
-        console.log('fetchFollowingList() Failed', error);
-      })
-  }
-
+export const FollowingList = (props: any) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid
@@ -28,13 +11,16 @@ export const FollowingList = ({userName}: {userName: string}) => {
         spacing={{ xs: 1, md: 2, xl: 3 }}
         columns={{ xs: 1, sm: 8, md: 12 }}
       >
-        {followingList.map((followedUserName: any, index: any) => {
+        {props.followingList.map((followedUserName: any, index: any) => {
           return (
-            <Grid
-              item xs={2} sm={4} md={4}
-              key={index}
-            >
-              {FollowingItem(followedUserName, index, userName)}
+            <Grid item xs={2} sm={4} md={4} key={index}>
+              <FollowingItem
+                followedUserName={followedUserName}
+                key={index}
+                userName={props.userName}
+                setValue={props.setValue}
+                setFolloweeData={props.setFolloweeData}
+              />
             </Grid>
             );
           })}

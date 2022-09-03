@@ -1,31 +1,15 @@
-import React, { SyntheticEvent } from 'react';
-import { Paper, Card, CardMedia, CardContent, CardHeader, Typography, Shadows, Divider, Button } from '@mui/material';
-import { experimentalStyled as styled } from '@mui/material/styles';
+import React from 'react';
+import { Card, CardContent, CardHeader, Divider, Button } from '@mui/material';
 import axios from 'axios';
 
-// make an onClick function for username that makes axios request for users data and passes it to for-follower page
-
-export const FollowingItem = (userName: string, index: number, parentUserName: string) => {
-
-   async function fetchForFollowerData (userName: string) {
-     await axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
-         .then((results: any) => {
-            console.log(results.data);
-            return results.data;
-         })
-         .catch((error) => {
-            console.log('fetchForFollowerData() Failed', error);
-         });
-   }
-
-   function removeFollower (userName: any) {
+export const FollowingItem = (props: any) => {
+   function removeFollower (userName: string, value: string) {
       axios.put<any>('http://localhost:8080/videoDB/user/removeFollowed', {
-            userName: parentUserName,
-            value: userName
+            userName: userName,
+            value: value
          })
          .then((results: any) => {
-            //! change button to undo/update list/
-            console.log(`removeFollower(${userName}) Success`, results);
+            console.log(`removeFollower(${props.userName}) Success`, results);
          })
          .catch((error) => {
             console.log('removeFollower() Failed', error);
@@ -37,21 +21,22 @@ export const FollowingItem = (userName: string, index: number, parentUserName: s
          <CardHeader
             style={{ cursor: 'pointer', textAlign: 'center'}}
             onClick={(event: any) => {
-               console.log(fetchForFollowerData(event.target.innerText));
+               props.setFolloweeData(props.followedUserName);
+               props.setValue(2);
             }}
-           title={userName}
+           title={props.followedUserName}
          />
          <Divider/>
          <CardContent
             style={{textAlign: 'center'}}
          >
             <Button
-               className='unfollowButton'
+               className='button'
                variant='contained'
                fullWidth
                color='secondary'
                onClick={(event: any) => {
-                  removeFollower(userName);
+                  removeFollower(props.userName, props.followedUserName);
                   event.target.innerText = 'REMOVED';
                }}
             >Remove</Button>

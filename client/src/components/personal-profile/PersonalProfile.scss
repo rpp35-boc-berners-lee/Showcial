@@ -6,7 +6,7 @@
   margin: 2rem;
 }
 
-.unfollowButton {
+.button {
   gap: .5rem;
   border: 1px solid black;
   border-radius: 5px;
@@ -16,6 +16,11 @@
   font-size: 14px;
   margin-top: 2rem;
   cursor: pointer;
+}
+
+.divider {
+  padding: 7px 14px;
+
 }
 
 .followerSearchBar {
