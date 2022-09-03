@@ -1,3 +1,5 @@
+import { FollowingList } from "../../../client/src/components/personal-profile/following-list/FollowingList";
+
 const models = require('../models/index.ts');
 
 type UserData = {
@@ -38,8 +40,8 @@ const addUser = (userData: UserData) => {
     });
 };
 
-const findUser = (userName: any) => {
-  return models.UserTable.findOne({userName})
+const findUser = async (userName: any) => {
+  return await models.UserTable.findOne({userName})
     .then((results: any) => {
       return results;
     })
@@ -89,7 +91,56 @@ const removeFromWatchedList = async (userName: any, videoID: number) => {
       console.log(`Error removing videoID ${videoID} from ${userName}'s watched list: ${error}`)
     })
 }
+//TODO: add videoID to recommended list
+const addToRecommended = async (userName: any, videoID: number) => {
+  return await models.UserTable.find({ userName })
+    .then(async (results: any) => {
+      if (results[0].recommendedVideos.indexOf(videoID) === -1) {
+        await models.UserTable.update({ userName }, { $push: { recommendedVideos: videoID }})
+        console.log(`Success updating ${userName}'s recommended list with videoID ${videoID}`)
+      } else {
+        console.log('Video already exists in user recommended list');
+      }
+    })
+    .catch((error: any) => {
+      console.log(`Error updating ${userName}'s recommended list with videoID ${videoID}: ${error}`)
+    })
+}
+//TODO: remove videoID from recommended list
+const removeFromRecommended = async (userName: any, videoID: number) => {
+  return await models.UserTable.find({ userName })
+    .then(async (results: any) => {
+      if (results[0].recommendedVideos.indexOf(videoID) !== -1) {
+        await models.UserTable.update({ userName }, { $pullAll: { recommendedVideos: videoID }})
+        console.log(`Success removing videoID ${videoID} from ${userName}'s recommendedVideos list`)
+      } else {
+        console.log('Video was never in user watch list');
+      }
+    })
+    .catch((error: any) => {
+      console.log(`Error removing videoID ${videoID} from ${userName}'s recommendedVideos list: ${error}`)
+    })
+}
+//TODO: retrieve owned services
+const retrieveServices = async (userName: string) => {
+  try {
+    let data = await  models.UserTable.find({ userName })
+    return data[0].ownedServices;
+  } catch (error) {
+    console.log(`Error retrieving owned services for user ${userName}: ${error}`);
+  }
+}
+//TODO: update owned services
+const updateServices = async (userName: string, services: string[]) => {
+    try {
+      await models.UserTable.updateOne({ userName }, {$set: {ownedServices: services }})
+      console.log('successfully updated services')
+    } catch (error) {
+      console.log(`Error updating owned services ${services} for user ${userName}: ${error}`)
+    }
+}
 
+// update user document w/ options
 const updateUser = (userName: string, prop: string, value: any) => {
   return findUser(userName)
     .then((foundUser: any) => {
@@ -147,6 +198,30 @@ const addVideo = (videoData: any) => {
 //!=============== RATINGS TABLE ================//
 //!==============================================//
 
+// This controller isused to retrieve all activity for a certain user
+const retrieveActivities = async (userName: string) => {
+  try {
+    let activities = await models.RatingsTable.find({userName: userName}).sort({created_at: 1});
+    return activities;
+  } catch (error) {
+    console.log(`Error retrieving activities for user ${userName}: ${error}`);
+  }
+}
+
+// This controller is used to retrieve feed that is generated from following list of a user
+const retrieveFeed = async (userName: string) => {
+  try {
+    let user = await findUser(userName);
+    let followingList = user.followingList;
+
+    let feed = await models.RatingsTable.find({userName: {$in: followingList}}).sort({created_at: 1});
+    return feed;
+  } catch (error) {
+    console.log(`Error retrieving feed for user ${userName}: ${error}`);
+  }
+
+}
+
 const addRating = (ratingData: any) => {
   const newRating = models.RatingsTable({
     videoName: ratingData.videoName,
@@ -174,8 +249,14 @@ export default {
   findAllUsers,
   updateUser,
   addVideo,
+  addToRecommended,
+  removeFromRecommended,
   addRating,
   deleteUser,
   addToWatchedList,
-  removeFromWatchedList
+  removeFromWatchedList,
+  retrieveServices,
+  updateServices,
+  retrieveActivities,
+  retrieveFeed
 }

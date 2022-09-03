@@ -4,3 +4,6 @@
 client/dist
 /config
 .pem
+/package-lock.json
+
+
