@@ -20,14 +20,15 @@ import { Recommendations } from './homepage_components/recommendations/Recommend
 import { TrendingVideos } from '../shared/trending-videos/TrendingVideos';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
+import {useAuth} from '../../hooks/useAuth';
 interface MouseEvent {
    target: {
       id: string;
    };
 }
 export function Homepage() {
-
+  const auth = useAuth();
+  console.log('auth:', auth);
    const [watchList, setWatchList] = useState([]);
    // temporary username
    const [userName, setUserName] = useState<string>('Nourse41');
