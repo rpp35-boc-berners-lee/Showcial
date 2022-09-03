@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { FollowingItem } from '../following-item/FollowingItem';
-import { Paper, Card, CardMedia, CardContent, CardHeader, Typography, Shadows, Divider, Button } from '@mui/material';
+import {Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button } from '@mui/material';
 
 
 // create button that sets index value back to 1 or 2 (save previous value)??
 
 export const ForFollower = (props: any) => {
-  // get follower data
   const [forFollowerData, setForFollowerData] = useState<any>(undefined);
 
   async function fetchForFollowerData (userName: string) {
@@ -21,20 +19,74 @@ export const ForFollower = (props: any) => {
         });
   }
 
+  function removeFollower () {
+    axios.put('http://localhost:8080/videoDB/user/removeFollowed', {
+      username: props.userName,
+      value: props.followeeData
+    })
+    .then(() => {
+      console.log('removeFollower SUCCESS')
+    })
+    .catch((error) => {
+      console.log('removeFollower FAILED', error)
+    });
+  }
+
+  function addFollower () {
+    axios.put('http://localhost:8080/videoDB/user/removeFollowed', {
+      username: props.userName,
+      value: props.followeeData
+    })
+    .then(() => {
+      console.log('addFollower SUCCESS')
+    })
+    .catch((error) => {
+      console.log('addFollower FAILED', error)
+    });
+  }
+
   useEffect(() => {
-    console.log(fetchForFollowerData(props.followeeData));
+    // setForFollowerData(fetchForFollowerData(props.followeeData));
   }, [])
 
   // check if followee is currently followed by owner account & render add/remove friend button
-
+  let followingButton = undefined;
+  let followingStatus = props.followingList.includes(props.followeeData);
+  if (followingStatus)  {
+    followingButton = (
+      <Button
+        className='backButton'
+        variant='contained'
+        fullWidth
+        onClick={removeFollower}
+      >
+        Unfollow
+      </Button>
+    );
+  } else {
+    followingButton = (
+      <Button
+        className='button'
+        variant='contained'
+        fullWidth
+        onClick={addFollower}
+      >
+        Follow
+      </Button>
+    );
+  }
 
   return (
     <>
-      <div> For-Follower</div>
-      <div>{props.followeeData}</div>
-      <div>{forFollowerData}</div>
+    <Card>
+      <CardHeader
+        title={props.followeeData}
+        style={{textAlign: 'center'}}
+      />
+      {followingButton}
+      <Divider className='divider'/>
       <Button
-          className='backButton'
+          className='button'
           variant='contained'
           fullWidth
           color='secondary'
@@ -44,6 +96,7 @@ export const ForFollower = (props: any) => {
       >
         Back
       </Button>
+    </Card>
     </>
   );
 };

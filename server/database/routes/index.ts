@@ -66,6 +66,7 @@ router.delete('/user', (req: Request, res: Response) => {
     })
 });
 
+//TODO: add userName to following list
 router.put('/user/addFollowed', (req: Request, res: Response) => {
   return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
     .then(() => {
@@ -80,17 +81,17 @@ router.put('/user/addFollowed', (req: Request, res: Response) => {
     })
 });
 
-//TODO: add userID to following list
-//TODO: remove userID from following list
+
+//TODO: remove userName from following list
 router.put('/user/removeFollowed', (req: Request, res: Response) => {
   return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
-    .then(() => {
-      console.log(`/user/removeFollowed: Success removing ${req.body.value} to following list`);
-      res.status(204);
+    .then((results) => {
+      console.log(`/user/removeFollowed: Success removing ${req.body.value} from following list`, results);
+      res.status(204).send(results);
       res.end();
     })
     .catch((error: any) => {
-      console.log(`/user/removeFollowed: Error removing ${req.body.value} to following list`, error);
+      console.log(`/user/removeFollowed: Error removing ${req.body.value} from following list`, error);
       res.status(400).send(error);
       res.end();
     })

@@ -6,14 +6,13 @@ import axios from 'axios';
 // make an onClick function for username that makes axios request for users data and passes it to for-follower page
 
 export const FollowingItem = (props: any) => {
-   function removeFollower (userName: any) {
+   function removeFollower () {
       axios.put<any>('http://localhost:8080/videoDB/user/removeFollowed', {
-            userName: props.followedUserName,
-            value: userName
+            userName: props.userName,
+            value: props.followedUserName
          })
          .then((results: any) => {
-            //! change button to undo/update list/
-            console.log(`removeFollower(${userName}) Success`, results);
+            console.log(`removeFollower(${props.userName}) Success`, results);
          })
          .catch((error) => {
             console.log('removeFollower() Failed', error);
@@ -35,12 +34,12 @@ export const FollowingItem = (props: any) => {
             style={{textAlign: 'center'}}
          >
             <Button
-               className='unfollowButton'
+               className='button'
                variant='contained'
                fullWidth
                color='secondary'
                onClick={(event: any) => {
-                  removeFollower(props.followedUserName);
+                  removeFollower();
                   event.target.innerText = 'REMOVED';
                }}
             >Remove</Button>
