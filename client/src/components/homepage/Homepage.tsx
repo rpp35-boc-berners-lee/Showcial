@@ -20,30 +20,43 @@ import { Recommendations } from './homepage_components/recommendations/Recommend
 import { TrendingOrRecommendedVideos } from './homepage_components/trending-videos/TrendingVideos'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-
+import {useAuth} from '../../hooks/useAuth';
 interface MouseEvent {
-  target: {
-    id: string
-  }
+   target: {
+      id: string;
+   };
 }
 export function Homepage() {
+  const auth = useAuth();
+  console.log('auth:', auth);
+   const [watchList, setWatchList] = useState([]);
+   // temporary username
+   const [userName, setUserName] = useState<string>('Nourse41');
+   const [query, setQuery] = useState<string>('');
+   const [searchResults, setSearchResults] = useState<
+      APIResponse | undefined
+   >();
+   const [page, setPage] = useState<number>(1);
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const [topTV, setTopTV] = useState<APIResponse | undefined>();
   const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
   const [topMovie, setTopMovie] = useState<APIResponse | undefined>();
   const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
-  const [watchList, setWatchList] = useState([]);
   // temporary username
-  const [userName, setUserName] = useState<string>('Nourse41');
-  const [query, setQuery] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
-  const [page, setPage] = useState<number>(1);
+
   const [mediaType, setMediaType] = useState('Movie');
 
+   useEffect(() => {
+      fetchAPI();
+   }, []);
+
   useEffect(() => {
-    fetchAPI();
-  }, [])
+    setSearchResults(undefined);
+  }, [query === ''])
+
+  useEffect(() => {
+    getSearchAPI();
+  }, [page])
 
   const fetchAPI = async () => {
     let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
@@ -56,23 +69,17 @@ export function Homepage() {
     setTopMovie(movie_top.data);
     let movie_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/popular`);
     setTrendingMovie(movie_trending.data);
-    // let user_data = await axios.get(`http://localhost:8080/videoDB/findUser?userName=${userName}`);
-    // setWatchList(watch_list.data.watchedVideos)
+    updateWatchList();
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setQuery(e.target.value);
-  }
+   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setQuery(e.target.value);
+   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    getSearchAPI();
-  }
-
-  const getSearchAPI = async () => {
-    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${query}/${page}`);
-    setSearchResults(search.data);
-  }
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      getSearchAPI();
+   };
 
   const handleNextPage = async () => {
     if (page !== searchResults?.total_pages) {
@@ -85,6 +92,11 @@ export function Homepage() {
       setPage(page - 1)
     }
   }
+
+  const getSearchAPI = async () => {
+    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${query}/${page}`);
+    setSearchResults(search.data);
+  }
   const handleMediaTypeChange = (event: SelectChangeEvent) => {
     setMediaType(event.target.value as string);
   };
@@ -92,34 +104,36 @@ export function Homepage() {
     setSearchResults(undefined);
   }, [query === ''])
 
-  useEffect(() => {
-    getSearchAPI();
-  }, [page])
+
+  const updateWatchList = async () => {
+    let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
+    setWatchList(watch_list.data.watchedVideos);
+  }
 
   return (
-    <>
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
-        <form onSubmit={handleSubmit}>
-          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-            <InputLabel htmlFor="search-adornment">Search</InputLabel>
-            <OutlinedInput
-              id="search-adornment"
-              onChange={handleChange}
-              endAdornment={
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              }
-              label="search"
-            />
-          </FormControl>
-        </form>
-      </Box>
-      {searchResults !== undefined && query !== ''
-        ?
-        <div>
-          <Typography>SEARCH RESULTS</Typography>
-          <Stack spacing={2} direction="row">
+      <>
+        <Box sx={{ '& > :not(style)': { m: 1 } }}>
+          <form onSubmit={handleSubmit}>
+            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+              <InputLabel htmlFor="search-adornment">Search a show...</InputLabel>
+              <OutlinedInput
+                id="search-adornment"
+                onChange={handleChange}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <SearchIcon/>
+                  </InputAdornment>
+                }
+                label="search"
+              />
+            </FormControl>
+          </form>
+        </Box>
+        {searchResults !== undefined && query !== ''
+          ?
+          <div>
+            <Typography>SEARCH RESULTS</Typography>
+            <Stack spacing={2} direction="row">
             {page < searchResults?.total_pages ?
               <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
             {page > 1 ?
@@ -158,10 +172,10 @@ export function Homepage() {
           <TrendingOrRecommendedVideos mediaType={mediaType} trendingOrRecommended={'trending'}/>
           {/* {trendingMovie !== undefined ?
               <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
-          {topTV !== undefined ?
-            <YourWatchList watchList={topTV.results} config={config} /> : null}
-        </>
-      }
+              {topTV !== undefined ?
+              <YourWatchList watchList={watchList} config={config}/>: null}
+            </>
+        }
     </>
   );
 }

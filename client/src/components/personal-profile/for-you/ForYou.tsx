@@ -5,7 +5,7 @@ import { PersonalFeed } from '.././personal-feed/PersonalFeed';
 
 
 export const ForYou = ({userName}: {userName: string}) => {
-  
+
   return (
      <div>
        <Grid container spacing={2} className='personal-profile'>

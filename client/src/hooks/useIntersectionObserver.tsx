@@ -9,19 +9,19 @@ import { useEffect, useState } from 'react';
  * @returns boolean
  */
 
-export const useIntersectionObserver = (reference) => {
+export const useIntersectionObserver = (reference: any) => {
    const [isVisible, setIsVisible] = useState(false);
 
    useEffect(() => {
       //callback function that does something when item becomes visible
-      const handleIntersect = (entries, observer) => {
+      const handleIntersect = (entries: any, observer: any) => {
          //entries is array of items being observed
          if (entries[0].isIntersecting) {
             setTimeout(() => {
                setIsVisible(true);
                observer.unobserve(entries[0].target);
                observer.disconnect();
-            }, '100');
+            }, 100);
          }
       };
       const observer = new IntersectionObserver(handleIntersect);

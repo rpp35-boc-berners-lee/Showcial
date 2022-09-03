@@ -1,10 +1,10 @@
 import React, { useState, useEffect }  from 'react';
 import { SearchItem } from '../FollowerSearchBar/searchItem/searchItem';
 import axios from 'axios';
-import { TextField } from '@mui/material';
+import { TextField, Box, InputAdornment } from '@mui/material';
 
-export const FollowerSearchBar = (allFollowers: any) => {
-  const [userList, setUserList] = React.useState([]);
+export const FollowerSearchBar = (props: any) => {
+  const [userList, setUserList] = useState([]);
   const [matchedUserList, setMatchedUserList] = useState<any>([]);
   const [shownSearchItems, setShownSearchItems] = useState<any>(undefined);
 
@@ -14,7 +14,13 @@ export const FollowerSearchBar = (allFollowers: any) => {
 
   useEffect(() => {
     setShownSearchItems(matchedUserList.map((followee: any, index: number) => {
-      return SearchItem(followee, index);
+      return (
+        <SearchItem
+          followee={followee}
+          index={index}
+          setValue={props.setValue}
+          setFolloweeData={props.setFolloweeData}
+        />);
     }));
   }, [matchedUserList])
 
@@ -43,11 +49,10 @@ export const FollowerSearchBar = (allFollowers: any) => {
 
   return (
     <div>
-      <TextField
+      <TextField sx={{ m: 1, width: '25ch' }} variant="outlined"
         className='followerSearchBar'
         fullWidth
         label="Search a user..."
-        variant="standard"
         onChange={handleChange}
       />
       <>
