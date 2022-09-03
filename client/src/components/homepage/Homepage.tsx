@@ -111,29 +111,29 @@ export function Homepage() {
   }
 
   return (
-    <>
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
-        <form onSubmit={handleSubmit}>
-          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-            <InputLabel htmlFor="search-adornment">Search</InputLabel>
-            <OutlinedInput
-              id="search-adornment"
-              onChange={handleChange}
-              endAdornment={
-                <InputAdornment position="end">
-                  <SearchIcon />
-                </InputAdornment>
-              }
-              label="search"
-            />
-          </FormControl>
-        </form>
-      </Box>
-      {searchResults !== undefined && query !== ''
-        ?
-        <div>
-          <Typography>SEARCH RESULTS</Typography>
-          <Stack spacing={2} direction="row">
+      <>
+        <Box sx={{ '& > :not(style)': { m: 1 } }}>
+          <form onSubmit={handleSubmit}>
+            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+              <InputLabel htmlFor="search-adornment">Search a show...</InputLabel>
+              <OutlinedInput
+                id="search-adornment"
+                onChange={handleChange}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <SearchIcon/>
+                  </InputAdornment>
+                }
+                label="search"
+              />
+            </FormControl>
+          </form>
+        </Box>
+        {searchResults !== undefined && query !== ''
+          ?
+          <div>
+            <Typography>SEARCH RESULTS</Typography>
+            <Stack spacing={2} direction="row">
             {page < searchResults?.total_pages ?
               <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
             {page > 1 ?
