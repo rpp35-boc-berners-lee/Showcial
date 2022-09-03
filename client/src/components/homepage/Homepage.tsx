@@ -42,6 +42,14 @@ export function Homepage() {
     fetchAPI();
   }, [])
 
+  useEffect(() => {
+    setSearchResults(undefined);
+  }, [query === ''])
+
+  useEffect(() => {
+    getSearchAPI();
+  }, [page])
+
   const fetchAPI = async () => {
     let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
     setConfig(config.data);
@@ -65,11 +73,6 @@ export function Homepage() {
     getSearchAPI();
   }
 
-  const getSearchAPI = async () => {
-    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${query}/${page}`);
-    setSearchResults(search.data);
-  }
-
   const handleNextPage = async () => {
     if (page !== searchResults?.total_pages) {
       setPage(page + 1)
@@ -82,13 +85,11 @@ export function Homepage() {
     }
   }
 
-  useEffect(() => {
-    setSearchResults(undefined);
-  }, [query === ''])
+  const getSearchAPI = async () => {
+    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${query}/${page}`);
+    setSearchResults(search.data);
+  }
 
-  useEffect(() => {
-    getSearchAPI();
-  }, [page])
 
   const updateWatchList = async () => {
     let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
@@ -141,7 +142,7 @@ export function Homepage() {
               {/* {trendingMovie !== undefined ?
               <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
               {topTV !== undefined ?
-              <YourWatchList watchList={topTV.results} config={config}/>: null}
+              <YourWatchList watchList={watchList} config={config}/>: null}
             </>
         }
     </>

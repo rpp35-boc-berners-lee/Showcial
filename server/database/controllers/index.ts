@@ -72,7 +72,7 @@ const addToWatchedList = async (userName: any, video: any) => {
         }
       }
       if (!exists) {
-        await models.UserTable.update({ userName }, { $push: { watchedVideos: { [video.id]: video }}})
+        await models.UserTable.update({ userName }, { $push: { watchedVideos: video }})
         console.log(`Success updating ${userName}'s watched list with videoID ${video.id}`)
       } else {
         console.log('Video already exists in user watch list');

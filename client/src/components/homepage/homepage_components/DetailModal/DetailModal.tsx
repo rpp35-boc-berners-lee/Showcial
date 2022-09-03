@@ -45,7 +45,7 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
   const [ recommendedUsers, SetRecommendedUsers ] = useState([]);
   const [ platform, SetPlatform ] = useState([])
   const [ movieDetail, setMovieDetail ] = (vedio);
-  const [ mediaType, setMediaType ] = useState('movie');
+  const [ mediaType, setMediaType ] = useState('tv');
 
   // temporary username until we get username from passport
   const userName = 'JamesFranco';
@@ -71,14 +71,13 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
   const addToWatchList = async () => {
     let movieDetail = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${vedio.id}`);
     movieDetail.data.media_type = mediaType;
-    movieDetail.data.watchProviders = getWatchProviders();
+    movieDetail.data.watchProviders = await getWatchProviders();
     await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, video: movieDetail.data });
   }
 
   const getWatchProviders = async () => {
     let watchProviders = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${vedio.id}/watch/providers`);
-    console.log(watchProviders.data.results.US);
-    return watchProviders.data.results.US;
+    return watchProviders.data.results['US'];
   }
 
   return (<ReactModal
