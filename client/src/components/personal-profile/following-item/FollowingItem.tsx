@@ -1,15 +1,12 @@
-import React, { SyntheticEvent } from 'react';
-import { Paper, Card, CardMedia, CardContent, CardHeader, Typography, Shadows, Divider, Button } from '@mui/material';
-import { experimentalStyled as styled } from '@mui/material/styles';
+import React from 'react';
+import { Card, CardContent, CardHeader, Divider, Button } from '@mui/material';
 import axios from 'axios';
 
-// make an onClick function for username that makes axios request for users data and passes it to for-follower page
-
 export const FollowingItem = (props: any) => {
-   function removeFollower () {
+   function removeFollower (userName: string, value: string) {
       axios.put<any>('http://localhost:8080/videoDB/user/removeFollowed', {
-            userName: props.userName,
-            value: props.followedUserName
+            userName: userName,
+            value: value
          })
          .then((results: any) => {
             console.log(`removeFollower(${props.userName}) Success`, results);
@@ -39,7 +36,7 @@ export const FollowingItem = (props: any) => {
                fullWidth
                color='secondary'
                onClick={(event: any) => {
-                  removeFollower();
+                  removeFollower(props.userName, props.followedUserName);
                   event.target.innerText = 'REMOVED';
                }}
             >Remove</Button>

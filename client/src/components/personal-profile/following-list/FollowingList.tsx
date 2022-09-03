@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import './FollowingList.scss';
+import React from 'react';
 import { FollowingItem } from '../following-item/FollowingItem';
-import { Box, Paper, Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
+import './FollowingList.scss';
 
 export const FollowingList = (props: any) => {
   return (

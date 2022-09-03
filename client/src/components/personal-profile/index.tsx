@@ -18,7 +18,7 @@ import SelectSearch from 'react-select-search';
 
 export const PersonalProfile = () => {
   const [value, setValue] = React.useState(1);
-  const [userName, setUserName] = useState<string>('Nourse41'); //! switch to current signed in user
+  const [userName, setUserName] = useState<any>('Nourse41'); //! switch to current signed in user
   const [followeeData, setFolloweeData] = useState<any>(undefined)
   const [followingList, setFollowingList] = useState<any>([]) //! create hook for user's data and pass to followingList as prop
 
@@ -64,7 +64,7 @@ export const PersonalProfile = () => {
   } else if (currentOption === 1) {
     followerSearchBar = (<FollowerSearchBar setValue={setValue} setFolloweeData={setFolloweeData}/>);
     selectBar = (<SelectBar />);
-    component = (<ForYou />);
+    component = (<ForYou userName={userName} />);
   } else if (currentOption === 2) {
     component = (<ForFollower setValue={setValue} userName={userName} followeeData={followeeData} followingList={followingList}/>);
   }

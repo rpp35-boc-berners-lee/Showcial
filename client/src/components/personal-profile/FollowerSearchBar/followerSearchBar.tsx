@@ -4,7 +4,7 @@ import axios from 'axios';
 import { TextField } from '@mui/material';
 
 export const FollowerSearchBar = (props: any) => {
-  const [userList, setUserList] = React.useState([]); // move to index.tsx and use as prop --> to
+  const [userList, setUserList] = useState([]);
   const [matchedUserList, setMatchedUserList] = useState<any>([]);
   const [shownSearchItems, setShownSearchItems] = useState<any>(undefined);
 
@@ -52,7 +52,7 @@ export const FollowerSearchBar = (props: any) => {
       <TextField
         className='followerSearchBar'
         fullWidth
-        label="Search to find more followers..."
+        label="Search a user..."
         variant="standard"
         onChange={handleChange}
       />

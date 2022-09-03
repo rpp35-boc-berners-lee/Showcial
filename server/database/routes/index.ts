@@ -97,17 +97,6 @@ router.put('/user/removeFollowed', (req: Request, res: Response) => {
     })
 });
 
-//TODO: retrieve owned services list
-router.get('/user/services', async (req: Request, res: Response) => {
-  try {
-    let result = await controllers.retrieveServices(req.body.userName);
-    res.status(200).send(result);
-  } catch (error) {
-    res.status(400).send(error);
-    console.log('failed GET /services', error);
-  }
-})
-
 //TODO: update owned services list
 router.put('/user/services', async (req: Request, res: Response) => {
   try {
@@ -157,7 +146,33 @@ router.post('/removeFromWatchedList', async (req: Request, res: Response) => {
     })
 });
 //TODO: add videoID to recommended list
+router.post('/addToRecommended', async (req: Request, res: Response) => {
+  let query = req.query as unknown as Query;
+  await controllers.addToRecommended(query.userName, Number(query.videoID))
+    .then(() => {
+      res.sendStatus(201)
+    })
+    .catch((error: any) => {
+      console.log('failed to add recommend', error)
+      res.status(400).send(error);
+      res.end();
+    })
+});
 //TODO: remove videoID from recommended list
+router.post('/addToRecommended', async (req: Request, res: Response) => {
+  let query = req.query as unknown as Query;
+  await controllers.removeFromRecommended(query.userName, Number(query.videoID))
+    .then(() => {
+      res.sendStatus(201)
+    })
+    .catch((error: any) => {
+      console.log('failed to remove recommend', error)
+      res.status(400).send(error);
+      res.end();
+    })
+});
+//TODO: add service to owned list
+//TODO: remove service from owned list
 
 //!==============================================//
 //!================ VIDEO TABLE =================//

@@ -1,10 +1,9 @@
-import React, { useState, useEffect }  from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Card, CardContent } from '@mui/material';
 
 export const SearchItem = (props: any) => {
   return (
-    <Card style={{cursor: 'pointer'}} key={props.index} onClick={(event: any) => {
+    <Card style={{cursor: 'pointer'}} key={props.index} onClick={() => {
       props.setFolloweeData(props.followee);
       props.setValue(2);
     }}>
