@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './PersonalProfile.scss';
 import { ForYou } from './for-you/ForYou';
 import { FollowingList } from './following-list/FollowingList';
-import { FollowerSearchBar } from './followerSearchBar/followerSearchBar';
+import { FollowerSearchBar } from './FollowerSearchBar/followerSearchBar';
 import axios from 'axios';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -54,7 +54,7 @@ export const PersonalProfile = () => {
     <div>
       <FollowerSearchBar/>
       <SelectBar />
-      {currentOption === 1 ? <ForYou /> : <FollowingList />}
+      {currentOption === 1 ? <ForYou userName={userName} /> : <FollowingList userName={userName} />}
     </div>
   );
 };

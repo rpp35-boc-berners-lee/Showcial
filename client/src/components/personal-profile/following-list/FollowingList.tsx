@@ -4,9 +4,8 @@ import './FollowingList.scss';
 import { FollowingItem } from '../following-item/FollowingItem';
 import { Box, Paper, Grid } from '@mui/material';
 
-export const FollowingList = () => {
+export const FollowingList = ({userName}: {userName: string}) => {
   const [followingList, setFollowingList] = useState<any>([])
-  const [userName, setUserName] = useState<string>('Nourse41'); //! switch to current signed in user
 
   useEffect(() => {
     fetchFollowingList();

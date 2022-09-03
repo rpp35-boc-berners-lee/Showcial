@@ -46,7 +46,7 @@ export const FollowerSearchBar = (allFollowers: any) => {
       <TextField
         className='followerSearchBar'
         fullWidth
-        label="Search to find more followers..."
+        label="Search a user..."
         variant="standard"
         onChange={handleChange}
       />
