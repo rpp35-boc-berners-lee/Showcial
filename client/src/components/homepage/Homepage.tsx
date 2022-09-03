@@ -18,6 +18,9 @@ import Typography from '@mui/material/Typography';
 import { CarouselList } from './homepage_components/carousel/Carousel'
 import { Recommendations } from './homepage_components/recommendations/Recommendations'
 import { TrendingVideos } from '../shared/trending-videos/TrendingVideos'
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 
 interface MouseEvent {
   target: {
@@ -36,6 +39,7 @@ export function Homepage() {
   const [query, setQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
   const [page, setPage] = useState<number>(1);
+  const [mediaType, setMediaType] = useState('Movie');
 
   useEffect(() => {
     fetchAPI();
@@ -81,7 +85,9 @@ export function Homepage() {
       setPage(page - 1)
     }
   }
-
+  const handleMediaTypeChange = (event: SelectChangeEvent) => {
+    setMediaType(event.target.value as string);
+  };
   useEffect(() => {
     setSearchResults(undefined);
   }, [query === ''])
@@ -91,54 +97,71 @@ export function Homepage() {
   }, [page])
 
   return (
-      <>
-        <Box sx={{ '& > :not(style)': { m: 1 } }}>
-          <form onSubmit={handleSubmit}>
-            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-              <InputLabel htmlFor="search-adornment">Search</InputLabel>
-              <OutlinedInput
-                id="search-adornment"
-                onChange={handleChange}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <SearchIcon/>
-                  </InputAdornment>
-                }
-                label="search"
-              />
+    <>
+      <Box sx={{ '& > :not(style)': { m: 1 } }}>
+        <form onSubmit={handleSubmit}>
+          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+            <InputLabel htmlFor="search-adornment">Search</InputLabel>
+            <OutlinedInput
+              id="search-adornment"
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+              label="search"
+            />
+          </FormControl>
+        </form>
+      </Box>
+      {searchResults !== undefined && query !== ''
+        ?
+        <div>
+          <Typography>SEARCH RESULTS</Typography>
+          <Stack spacing={2} direction="row">
+            {page < searchResults?.total_pages ?
+              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
+            {page > 1 ?
+              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
+          </Stack>
+          <Search searchResults={searchResults.results} config={config} />
+          <Stack spacing={2} direction="row">
+            {page < searchResults?.total_pages ?
+              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
+            {page > 1 ?
+              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
+          </Stack>
+        </div>
+        :
+        <>
+          <h3>RECOMMENDATIONS FOR YOU</h3>
+          <Box sx={{ maxWidth: 200 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">TV or Movie</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={mediaType}
+                label="MediaType"
+                onChange={handleMediaTypeChange}
+              >
+                <MenuItem value={'Movie'}> Movie</MenuItem>
+                <MenuItem value={'TV'}>TV</MenuItem>
+              </Select>
             </FormControl>
-          </form>
-        </Box>
-        {searchResults !== undefined && query !== ''
-          ?
-          <div>
-            <Typography>SEARCH RESULTS</Typography>
-            <Stack spacing={2} direction="row">
-            {page < searchResults?.total_pages ?
-              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
-            {page > 1 ?
-              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
-            </Stack>
-            <Search searchResults={searchResults.results} config={config}/>
-            <Stack spacing={2} direction="row">
-            {page < searchResults?.total_pages ?
-              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
-            {page > 1 ?
-              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
-            </Stack>
-          </div>
-          :
-            <>
-              <h3>RECOMMENDATIONS FOR YOU</h3>
-              {topTV !== undefined ?
-              <Recommendations vedios={topTV.results} config={config}/>: null}
-              <TrendingVideos/>
-              {/* {trendingMovie !== undefined ?
+          </Box>
+          {topTV !== undefined && mediaType === 'TV' ?
+            <Recommendations vedios={topTV.results} config={config} userName={userName} /> : null}
+          {topMovie !== undefined && mediaType === 'Movie' ?
+            <Recommendations vedios={topMovie.results} config={config} userName={userName} /> : null}
+          <TrendingVideos />
+          {/* {trendingMovie !== undefined ?
               <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
-              {topTV !== undefined ?
-              <YourWatchList watchList={topTV.results} config={config}/>: null}
-            </>
-        }
+          {topTV !== undefined ?
+            <YourWatchList watchList={topTV.results} config={config} /> : null}
+        </>
+      }
     </>
   );
 }

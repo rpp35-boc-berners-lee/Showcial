@@ -28,8 +28,9 @@ interface Props {
   modalIsOpen: boolean,
   setModalIsOpen: any,
   vedio: any,
-  image: string
-  closeModal: any
+  image: string,
+  closeModal: any,
+  userName: string
 }
 const customStyles = {
   content: {
@@ -41,7 +42,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
   },
 };
-export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal }) => {
+export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal, userName }) => {
   const [recommendedUsers, SetRecommendedUsers] = useState([]);
   const [platform, SetPlatform] = useState([])
   const[movieDetail, setMovieDetail] = (vedio);
