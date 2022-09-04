@@ -72,7 +72,7 @@ const AboutPage = () => {
                </Grid>
             </Grid>
             <Features />
-            <TrendingVideos />
+            {/* <TrendingVideos /> */}
          </div>
       </>
    );

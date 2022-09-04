@@ -20,31 +20,34 @@ import { Recommendations } from './homepage_components/recommendations/Recommend
 import { TrendingOrRecommendedVideos } from './homepage_components/trending-videos/TrendingVideos'
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import {useAuth} from '../../hooks/useAuth';
+import { VideoDetails } from '../shared/VideoDetails';
+import { useAuth } from '../../hooks/useAuth';
 interface MouseEvent {
    target: {
       id: string;
    };
 }
+
 export function Homepage() {
   // const auth = useAuth();
   // console.log('auth:', auth);
-   const [watchList, setWatchList] = useState([]);
-   // temporary username
-   const [userName, setUserName] = useState<string>('JamesFranco');
-   const [query, setQuery] = useState<string>('');
-   const [searchResults, setSearchResults] = useState<
-      APIResponse | undefined
-   >();
-   const [page, setPage] = useState<number>(1);
+  const [watchList, setWatchList] = useState();
+  // temporary username
+  const [userName, setUserName] = useState<string>('JamesFranco');
+  const [query, setQuery] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
+  const [page, setPage] = useState<number>(1);
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const [topTV, setTopTV] = useState<APIResponse | undefined>();
   const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
   const [topMovie, setTopMovie] = useState<APIResponse | undefined>();
   const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
+  const [selectedId, setSelectedId] = useState<number>(0)
+  const [selectedMediaType, setSelectedMediaType] = useState<string>('')
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [mediaType, setMediaType] = useState('movie');
   // temporary username
 
-  const [mediaType, setMediaType] = useState('Movie');
 
    useEffect(() => {
       fetchAPI();
@@ -100,6 +103,7 @@ export function Homepage() {
   const handleMediaTypeChange = (event: SelectChangeEvent) => {
     setMediaType(event.target.value as string);
   };
+
   useEffect(() => {
     setSearchResults(undefined);
   }, [query === ''])
@@ -110,72 +114,79 @@ export function Homepage() {
     setWatchList(watch_list.data.watchedVideos);
   }
 
+  const getSelected = (id: number, type: string) => {
+    setSelectedId(id);
+    setSelectedMediaType(type);
+    setOpenModal(!openModal);
+  }
+
   return (
-      <>
-        <Box sx={{ '& > :not(style)': { m: 1 } }}>
-          <form onSubmit={handleSubmit}>
-            <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-              <InputLabel htmlFor="search-adornment">Search a show...</InputLabel>
-              <OutlinedInput
-                id="search-adornment"
-                onChange={handleChange}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <SearchIcon/>
-                  </InputAdornment>
-                }
-                label="search"
-              />
-            </FormControl>
-          </form>
-        </Box>
-        {searchResults !== undefined && query !== ''
-          ?
-          <div>
-            <Typography>SEARCH RESULTS</Typography>
-            <Stack spacing={2} direction="row">
-            {page < searchResults?.total_pages ?
-              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
-            {page > 1 ?
-              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
-          </Stack>
-          <Search searchResults={searchResults.results} config={config} />
+    <div id='homepage'>
+      {openModal ? <VideoDetails mediaType={selectedMediaType} id={selectedId} config={config} open={openModal} close={setOpenModal} /> : null}
+      <Box sx={{ '& > :not(style)': { m: 1 } }}>
+        <form onSubmit={handleSubmit}>
+          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+            <InputLabel htmlFor="search-adornment">Search a show...</InputLabel>
+            <OutlinedInput
+              id="search-adornment"
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end">
+                  <SearchIcon/>
+                </InputAdornment>
+              }
+              label="search"
+            />
+          </FormControl>
+        </form>
+      </Box>
+      {searchResults !== undefined && query !== ''
+        ?
+        <div>
+          <Typography>SEARCH RESULTS</Typography>
           <Stack spacing={2} direction="row">
             {page < searchResults?.total_pages ?
               <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
             {page > 1 ?
               <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
           </Stack>
-        </div>
-        :
-        <>
-          <h3>RECOMMENDATIONS FOR YOU</h3>
-          <Box sx={{ maxWidth: 200 }}>
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">TV or Movie</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={mediaType}
-                label="MediaType"
-                onChange={handleMediaTypeChange}
-              >
-                <MenuItem value={'Movie'}> Movie</MenuItem>
-                <MenuItem value={'TV'}>TV</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-          {topTV !== undefined && mediaType === 'TV' ?
-            <Recommendations vedios={topTV.results} config={config} userName={userName} /> : null}
-          {topMovie !== undefined && mediaType === 'Movie' ?
-            <Recommendations vedios={topMovie.results} config={config} userName={userName} /> : null}
-          <TrendingOrRecommendedVideos mediaType={mediaType} trendingOrRecommended={'trending'}/>
-          {/* {trendingMovie !== undefined ?
-              <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
-              {topTV !== undefined ?
-              <YourWatchList watchList={watchList} config={config}/>: null}
-            </>
-        }
-    </>
+          <Search searchResults={searchResults.results} config={config}/>
+          <Stack spacing={2} direction="row">
+            {page < searchResults?.total_pages ?
+              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
+            {page > 1 ?
+              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
+          </Stack>
+      </div>
+      :
+      <>
+        <h3>RECOMMENDATIONS FOR YOU</h3>
+        <Box sx={{ maxWidth: 200 }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">TV or Movie</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={mediaType}
+              label="MediaType"
+              onChange={handleMediaTypeChange}
+            >
+              <MenuItem value={'movie'}> Movie</MenuItem>
+              <MenuItem value={'tv'}>TV</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        {topTV !== undefined && mediaType === 'tv' ?
+          <Recommendations vedios={topTV.results} config={config} userName={userName} mediaType={mediaType} /> : null}
+        {topMovie !== undefined && mediaType === 'movie' ?
+          <Recommendations vedios={topMovie.results} config={config} userName={userName} mediaType={mediaType} /> : null}
+        <TrendingVideos getSelected={getSelected}/>
+        {/* {trendingMovie !== undefined ?
+            <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
+        {watchList !== undefined ?
+          <YourWatchList watchList={watchList} config={config} getSelected={getSelected}/>: null}
+        </>
+      }
+    </div>
   );
 }
