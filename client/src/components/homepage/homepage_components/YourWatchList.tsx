@@ -13,10 +13,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { DetailModal } from '../../../components/homepage/homepage_components/DetailModal/DetailModal';
 
 type ChildProps = {
   watchList: any;
   config: any;
+  getSelected: (id: number, type: string) => void;
 }
 
 type Video = {
@@ -25,9 +27,10 @@ type Video = {
   name: string;
   id: number;
   original_title: string;
+  media_type: string;
 }
 
-export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
+export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelected }) => {
   const [displayedVideos, setDisplayedVideos] = useState([]);
   const [numDisplayed, setNumDisplayed] = useState(0);
   const [maxRowCards, setMaxRowCards] = useState(0);
@@ -36,19 +39,16 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
   const [sortType, setSortType] = useState('');
   const [sortedList, setSortedList] = useState([]);
 
-
   useEffect(() => {
     let box = document.querySelector('.MuiGrid-container');
-    // let card = document.querySelector('.MuiCard-root');
     if (box !== null) {
-      let maxWidthCards = Math.floor(box.clientWidth / 300) - 1;
+      let maxWidthCards = Math.floor(box.clientWidth / 300);
       setMaxRowCards(maxWidthCards);
       setNumDisplayed(numDisplayed + maxWidthCards);
     }
   }, []);
 
   useEffect(() => {
-    // console.log(watchList);
     if (numDisplayed > watchList.length) {
       setNumDisplayed(watchList.length)
     }
@@ -62,19 +62,6 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
   const handleSortType = (event: SelectChangeEvent) => {
     setSortType(event.target.value as string);
   };
-
-  // async function getWatchProviders() {
-  //   let newWatchList = await axios.get<any>(`http://localhost:8080/tmdb/movie/popular`, {
-  //     params: watchList
-  //   })
-  // }
-
-  // const handleSort = () => {
-  //   let sorted = watchList.slice();
-  //   sorted.sort((a, b) => {
-
-  //   })
-  // }
 
    return (
     <div>
@@ -112,15 +99,17 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config }) => {
       </div>
       <Box sx={{ width: '100%' }}>
         <Grid container spacing={4} justifyContent='center'>
-          {displayedVideos.map((video: Video) => {
+          {displayedVideos.map((video: Video, i: number) => {
             return (
-              <Grid item xs={0} key={video.id}>
+              <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
                 <VideoCard
                   base_url={config.images.base_url}
                   backdrop_sizes={config.images.backdrop_sizes}
                   backdrop_path={video.backdrop_path}
                   name={video.name || video.original_title}
                   id={video.id}
+                  mediaType={video.media_type}
+                  getSelected={getSelected}
                 />
               </Grid>
             )

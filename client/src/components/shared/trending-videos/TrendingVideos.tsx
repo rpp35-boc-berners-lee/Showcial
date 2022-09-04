@@ -125,6 +125,7 @@ export const TrendingVideos = () => {
                            imageUrl={imageUrl}
                            imageSize={imageSize}
                            id={movie.id}
+                           mediaType={'movie'}
                         />
                      ))}
                   </Grid>
