@@ -143,6 +143,7 @@ export function Homepage() {
       {searchResults !== undefined && query !== ''
         ?
         <div>
+          {openModal ? <VideoDetails mediaType={selectedMediaType} id={selectedId} config={config} open={openModal} close={setOpenModal} /> : null}
           <Typography>SEARCH RESULTS</Typography>
           <Stack spacing={2} direction="row">
             {page < searchResults?.total_pages ?
@@ -150,7 +151,7 @@ export function Homepage() {
             {page > 1 ?
               <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
           </Stack>
-          <Search searchResults={searchResults.results} config={config}/>
+          <Search searchResults={searchResults.results} config={config} getSelected={getSelected}/>
           <Stack spacing={2} direction="row">
             {page < searchResults?.total_pages ?
               <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}

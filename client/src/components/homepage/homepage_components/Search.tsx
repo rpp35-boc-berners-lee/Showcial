@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 type ChildProps = {
   searchResults: any;
   config: any;
+  getSelected?: (id: number, type: string) => void;
 }
 
 type Video = {
@@ -17,7 +18,7 @@ type Video = {
   media_type: string;
 }
 
-export const Search:React.FC<ChildProps> = ({ searchResults, config }) => {
+export const Search:React.FC<ChildProps> = ({ searchResults, config, getSelected }) => {
   const [displayedVideos, setDisplayedVideos] = useState([]);
 
   useEffect(() => {
@@ -39,6 +40,7 @@ export const Search:React.FC<ChildProps> = ({ searchResults, config }) => {
                     name={video.name || video.original_title}
                     id={video.id}
                     mediaType={video.media_type}
+                    getSelected={getSelected}
                   />
                 </Grid>
               )
