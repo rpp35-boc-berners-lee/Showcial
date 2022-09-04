@@ -13,7 +13,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { DetailModal } from '../../../components/homepage/homepage_components/DetailModal/DetailModal';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 type ChildProps = {
   watchList: any;
@@ -63,10 +63,34 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
     setSortType(event.target.value as string);
   };
 
+  const handleReset = () => {
+    setFilterType('');
+    setSortType('');
+    setDisplayedVideos(watchList);
+  }
+
+  const sort = (array: any) => {
+    let copy = array.slice();
+    let sorted = copy.sort((a: any, b: any) => {
+      if (a[sortType] < b[sortType]) {
+        return -1
+      }
+      if (a[sortType] > b[sortType]) {
+        return 1
+      }
+      if (a[sortType] === b[sortType]) {
+        return 0
+      }
+    })
+    return sorted
+  }
+
+  // const filter = ()
+
    return (
     <div>
+      <Typography>YOUR WATCH LIST</Typography>
       <div>
-        <Typography>YOUR WATCH LIST</Typography>
         <FormControl sx={{ m: 1, width: '10%' }} size='small'>
           <InputLabel id="filter">Filter</InputLabel>
           <Select
@@ -96,6 +120,13 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
             <MenuItem value={'vote_average'}>Ratings</MenuItem>
           </Select>
         </FormControl>
+        {filterType !== '' || sortType !== ''
+          ?
+          <Button sx={{ m: 1, width: '10%' }} size='small' variant="outlined" startIcon={<RestartAltIcon />} onClick={handleReset}>
+            Reset
+          </Button>
+          : null
+        }
       </div>
       <Box sx={{ width: '100%' }}>
         <Grid container spacing={4} justifyContent='center'>
