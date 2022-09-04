@@ -27,11 +27,11 @@ interface MouseEvent {
    };
 }
 export function Homepage() {
-  const auth = useAuth();
-  console.log('auth:', auth);
+  // const auth = useAuth();
+  // console.log('auth:', auth);
    const [watchList, setWatchList] = useState([]);
    // temporary username
-   const [userName, setUserName] = useState<string>('Nourse41');
+   const [userName, setUserName] = useState<string>('JamesFranco');
    const [query, setQuery] = useState<string>('');
    const [searchResults, setSearchResults] = useState<
       APIResponse | undefined

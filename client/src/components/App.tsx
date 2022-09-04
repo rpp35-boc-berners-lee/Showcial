@@ -16,18 +16,14 @@ export const App = () => {
             <Route path='/personal/' element={<PersonalProfile />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='/' element={
-               <ProvideAuth>
-               <Homepage />
-               </ProvideAuth>
-               } />
+            <Route path='/' element={<Homepage />} />
 
             <Route
                path='/'
                element={
-                  <ProvideAuth>
+                  // <ProvideAuth>
                      <Homepage />
-                  </ProvideAuth>
+                  // </ProvideAuth>
                }
             />
             <Route path='/about' element={<AboutPage />} />

@@ -5,11 +5,11 @@ const bcrypt = require('bcryptjs');
 var passport = require('passport');
 const { findUser, addUser } = require('../database/controllers/index');
 
-const checkAuth = (req: any, res: Response, next: any) => {
-  if (!req.session.user) {
-    res.redirect('/signin');
-  } else next();
-}
+// const checkAuth = (req: any, res: Response, next: any) => {
+//   if (!req.session.user) {
+//     res.redirect('/signin');
+//   } else next();
+// }
 
 type userData = {
   userName: string;

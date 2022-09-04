@@ -19,7 +19,7 @@ export default function Signup() {
             })
             .then((res) => {
                console.log('signup res', res);
-               // navigate('/home')
+               navigate('/')
             })
             .catch((err) => {
                console.error(err);
@@ -32,7 +32,7 @@ export default function Signup() {
    };
 
    const guestLogin = () => {
-      navigate('/home');
+      navigate('/');
    };
 
    const [values, setValues] = useState({

@@ -3,7 +3,7 @@ import { Modal, Button, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import GoogleIcon from '@mui/icons-material/Google';
-import { SignalWifiStatusbarConnectedNoInternet4Sharp } from '@mui/icons-material';
+
 
 export default function Signin() {
    const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function Signin() {
          .then((res) => {
             console.log('status', res);
             if (res.status === 201) {
-               navigate('/home');
+               navigate('/');
             }
          })
          .catch((err) => {
