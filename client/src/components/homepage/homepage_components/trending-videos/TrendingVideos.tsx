@@ -27,6 +27,7 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended}: 
    const [currentIndex, setCurrentIndex] = useState<number>(0);
    const [activeMovies, setActiveMovies] = useState<PopularMovie[] | []>([]);
    useEffect(() => {
+      let url = trendingOrRecommended === 'trending'? `http://localhost:8080/tmdb/${mediaType}/popular` : 
       axios
          .get(`http://localhost:8080/tmdb/${mediaType}/popular`)
          .then((response) => {
