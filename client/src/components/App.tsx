@@ -24,9 +24,9 @@ export const App = () => {
             {/* <Route
                path='/home'
                element={
-                  <ProvideAuth>
+                  // <ProvideAuth>
                      <Homepage />
-                  </ProvideAuth>
+                  // </ProvideAuth>
                }
             /> */}
             <Route path='/about' element={<AboutPage />} />

@@ -20,7 +20,11 @@ type PopularMovie = {
    vote_count: number;
 };
 
-export const TrendingVideos = () => {
+type Props = {
+   getSelected?: (id: number, type: string) => void;
+}
+
+export const TrendingVideos: React.FC<Props> = ({ getSelected }) => {
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);
    const [imageUrl, setImageUrl] = useState<string>('');
    const [imageSize, setImageSize] = useState<string[]>(['']);
@@ -125,6 +129,8 @@ export const TrendingVideos = () => {
                            imageUrl={imageUrl}
                            imageSize={imageSize}
                            id={movie.id}
+                           mediaType={'movie'}
+                           getSelected={getSelected}
                         />
                      ))}
                   </Grid>
