@@ -63,6 +63,10 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
     handleFilterAndSort();
   }, [sortType]);
 
+  useEffect(() => {
+    setDisplayedVideos(alterList.slice(0, numDisplayed));
+  }, [alterList])
+
   const handleFilterType = (event: SelectChangeEvent) => {
     setFilterType(event.target.value as string);
   };
@@ -74,7 +78,8 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
   const handleReset = () => {
     setFilterType('');
     setSortType('');
-    setDisplayedVideos(watchList);
+    setAlterList(watchList);
+    setNumDisplayed(numDisplayed + maxRowCards);
   }
 
   const sort = (array: any) => {
@@ -98,7 +103,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
     let filtered = copy.filter((video: any) => {
       if (video.watchProviders.flatrate !== undefined) {
         let services = video.watchProviders.flatrate;
-        for (var i = 0; i < services.length - 1; i++) {
+        for (var i = 0; i < services.length; i++) {
           if (services[i].provider_name.includes(filterType)) {
             return true
           }
@@ -110,14 +115,14 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
   }
 
   const handleFilterAndSort = () => {
-    let newWatchList = alterList.slice();
-    if (filterType !== '') {
-      newWatchList = filter(newWatchList);
-    }
+    let newWatchList = watchList.slice();
     if (sortType !== '') {
       newWatchList = sort(newWatchList);
     }
-    setDisplayedVideos(newWatchList);
+    if (filterType !== '') {
+      newWatchList = filter(newWatchList);
+    }
+    setAlterList(newWatchList);
   }
 
    return (
@@ -182,7 +187,8 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
       </Box>
       <Stack spacing={2} direction="row">
         {displayedVideos.length < watchList.length ?
-          <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={() => setNumDisplayed(numDisplayed + maxRowCards)}>SHOW MORE</Button> : null}
+          <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={() =>
+          setNumDisplayed((numDisplayed + maxRowCards) > alterList.length ? alterList.length : (numDisplayed + maxRowCards))}>SHOW MORE</Button> : null}
         {displayedVideos.length > maxRowCards ?
           <Button variant="text" startIcon={<ExpandLessIcon />} onClick={() =>
             setNumDisplayed((numDisplayed - maxRowCards < maxRowCards) ? maxRowCards : (numDisplayed - maxRowCards))}>SHOW LESS</Button> : null}
