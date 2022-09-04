@@ -180,7 +180,7 @@ export function Homepage() {
           <Recommendations vedios={topTV.results} config={config} userName={userName} mediaType={mediaType} /> : null}
         {topMovie !== undefined && mediaType === 'movie' ?
           <Recommendations vedios={topMovie.results} config={config} userName={userName} mediaType={mediaType} /> : null}
-        <TrendingVideos />
+        <TrendingVideos getSelected={getSelected}/>
         {/* {trendingMovie !== undefined ?
             <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
         {watchList !== undefined ?

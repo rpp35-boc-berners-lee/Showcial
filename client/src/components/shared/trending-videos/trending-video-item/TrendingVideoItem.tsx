@@ -11,6 +11,7 @@ interface Props {
    itemIndex: number;
    id: number;
    mediaType: string;
+   getSelected?: (id: number, type: string) => void;
 }
 
 export const TrendingVideoItem = ({
@@ -20,6 +21,7 @@ export const TrendingVideoItem = ({
    imageSize,
    id,
    mediaType,
+   getSelected
 }: Props) => {
    return (
       <>
@@ -43,6 +45,7 @@ export const TrendingVideoItem = ({
                name={title}
                id={id}
                mediaType={mediaType}
+               getSelected={getSelected}
             />
          </Grid>
       </>
