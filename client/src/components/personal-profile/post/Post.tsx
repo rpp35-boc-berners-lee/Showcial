@@ -1,5 +1,11 @@
 import React from 'react';
 import { Card, CardMedia, CardContent, CardHeader, Typography, Divider, Rating, Avatar, Stack } from '@mui/material';
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en' // English
+
+TimeAgo.addDefaultLocale(en)
+// Create formatter (English).
+const timeAgo = new TimeAgo('en-US')
 
 const feedData =  {
   "_id": "6310387418463778253e0a6b",
@@ -21,7 +27,6 @@ const upperCaseReducer = (string: string) => {
 };
 
 export const Post = (props: any) => {
-  console.log('feedData', feedData);
   return (
      <div>
       <Card>
@@ -29,10 +34,10 @@ export const Post = (props: any) => {
         <Avatar>{upperCaseReducer(feedData.userName)}</Avatar>
         <CardHeader
           title={feedData.userName}
-          subheader={feedData.created_at}
+          subheader={timeAgo.format(new Date(feedData.created_at))}
         />
       </Stack>
-      <Divider/>
+      <Divider variant="middle"/>
         <CardHeader
           title={feedData.videoName}
           subheader={feedData.comments}
