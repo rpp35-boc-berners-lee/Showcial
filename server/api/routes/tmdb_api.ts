@@ -70,14 +70,13 @@ router.get('/search/:search/:page', async (req: Request, res: Response) => {
    res.send(await tmdb.getSearchResults(params.search, params.page));
 });
 
-router.get('/tv/:search/:page', async (req: Request, res: Response) => {
-   let params = req.params as unknown as Params;
-   res.send(await tmdb.getTVSearchResults(params.search, params.page));
+// TRENDING
+router.get('/trending/tv', async (req: Request, res: Response) => {
+   res.send(await tmdb.getTVTrending());
 });
 
-router.get('/movie/:search/:page', async (req: Request, res: Response) => {
-   let params = req.params as unknown as Params;
-   res.send(await tmdb.getMovieSearchResults(params.search, params.page));
+router.get('/trending/movie', async (req: Request, res: Response) => {
+   res.send(await tmdb.getMovieTrending());
 });
 
 export default router;

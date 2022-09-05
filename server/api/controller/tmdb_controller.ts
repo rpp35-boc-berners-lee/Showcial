@@ -79,15 +79,15 @@ let getSearchResults = async (query: string, page: number) => {
     })
 }
 
-let getTVSearchResults = async (query: string, page: number) => {
-  return await axios.get(`https://api.themoviedb.org/3/search/tv?query=${query}&page=${page}`, config)
+let getTVTrending = async () => {
+  return await axios.get(`https://api.themoviedb.org/3/trending/tv/week`, config)
     .then(results => {
       return results.data;
     })
 }
 
-let getMovieSearchResults = async (query: string, page: number) => {
-  return await axios.get(`https://api.themoviedb.org/3/search/movie?query=${query}&page=${page}`, config)
+let getMovieTrending = async () => {
+  return await axios.get(`https://api.themoviedb.org/3/trending/movie/week`, config)
     .then(results => {
       return results.data;
     })
@@ -104,6 +104,6 @@ export default {
   getMovieWatchProviders,
   getConfig,
   getSearchResults,
-  getTVSearchResults,
-  getMovieSearchResults
+  getTVTrending,
+  getMovieTrending
 };

@@ -61,6 +61,14 @@ export function Homepage() {
     getSearchAPI();
   }, [page])
 
+  useEffect(() => {
+    getSearchAPI();
+  }, [mediaType])
+
+  useEffect(() => {
+    setSearchResults(undefined);
+  }, [query === ''])
+
   const fetchAPI = async () => {
     let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
     setConfig(config.data);
@@ -90,6 +98,10 @@ export function Homepage() {
     }
   }
 
+  const handleMediaTypeChange = (event: SelectChangeEvent) => {
+    setMediaType(event.target.value as string);
+  };
+
   const handlePreviousPage = async () => {
     if (page !== 1) {
       setPage(page - 1)
@@ -100,19 +112,6 @@ export function Homepage() {
     let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/${mediaType}/${query}/${page}`);
     setSearchResults(search.data);
   }
-
-  const handleMediaTypeChange = (event: SelectChangeEvent) => {
-    setMediaType(event.target.value as string);
-  };
-
-  useEffect(() => {
-    getSearchAPI();
-  }, [mediaType])
-
-  useEffect(() => {
-    setSearchResults(undefined);
-  }, [query === ''])
-
 
   const updateWatchList = async () => {
     let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
@@ -201,7 +200,7 @@ export function Homepage() {
           <Recommendations vedios={topTV.results} config={config} userName={userName} mediaType={mediaType} /> : null}
         {topMovie !== undefined && mediaType === 'movie' ?
           <Recommendations vedios={topMovie.results} config={config} userName={userName} mediaType={mediaType} /> : null}
-        <TrendingVideos getSelected={getSelected}/>
+        <TrendingVideos getSelected={getSelected} mediaType={mediaType}/>
         {/* {trendingMovie !== undefined ?
             <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
         {watchList !== undefined ?
