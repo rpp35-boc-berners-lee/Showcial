@@ -90,7 +90,7 @@ router.put('/user/addFollowed', (req: Request, res: Response) => {
 
 router.put('/user/removeFollowed', (req: Request, res: Response) => {
   return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
-    .then((results) => {
+    .then((results: any) => {
       console.log(`/user/removeFollowed: Success removing ${req.body.value} from following list`, results);
       res.status(204).send(results);
       res.end();
@@ -112,6 +112,20 @@ router.put('/user/services', async (req: Request, res: Response) => {
     console.log('failed PUT /user/services', error)
   }
 })
+
+//TODO: retrieve individual feed
+router.get('/user/individualFeed', (req: Request, res: Response) => {
+  console.log('userName', req.body.userName);
+  return controllers.retrieveActivities(req.body.userName)
+    .then((results: any) => {
+      res.status(200).send(results);
+    })
+    .catch((error: any) => {
+      res.status(400).send(error);
+      console.log('failed PUT /user/individualFeed', error)
+    });
+})
+
 
 //TODO: retrieve personal feed
 router.get('/user/feed', async (req: Request, res: Response) => {
@@ -136,6 +150,7 @@ router.post('/user/addToWatchedList', async (req: Request, res: Response) => {
       res.end();
     })
 });
+
 //TODO: remove video from watched list
 router.post('/user/removeFromWatchedList', async (req: Request, res: Response) => {
   await controllers.removeFromWatchedList(req.body.userName, req.body.videoId)
@@ -148,6 +163,7 @@ router.post('/user/removeFromWatchedList', async (req: Request, res: Response) =
       res.end();
     })
 });
+
 //TODO: add videoID to recommended list
 router.post('/addToRecommended', async (req: Request, res: Response) => {
   let query = req.query as unknown as Query;
@@ -161,6 +177,7 @@ router.post('/addToRecommended', async (req: Request, res: Response) => {
       res.end();
     })
 });
+
 //TODO: remove videoID from recommended list
 router.post('/addToRecommended', async (req: Request, res: Response) => {
   let query = req.query as unknown as Query;

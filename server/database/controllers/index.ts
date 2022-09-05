@@ -277,6 +277,7 @@ const addRating = (ratingData: any) => {
       userName: ratingData.userName,
       userRating: ratingData.userRating,
       created_at: new Date(),
+      image: ratingData.image,
       comments: ratingData.comments,
    });
    return newRating

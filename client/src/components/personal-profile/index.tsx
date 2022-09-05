@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './PersonalProfile.scss';
 import { ForYou } from './for-you/ForYou';
 import { FollowingList } from './following-list/FollowingList';
-import { FollowerSearchBar } from './FollowerSearchBar/followerSearchBar';
+import { FollowerSearchBar } from './followerSearchBar/followerSearchBar';
 import { ForFollower } from './for-follower/ForFollower';
 import axios from 'axios';
 import Tabs from '@mui/material/Tabs';
