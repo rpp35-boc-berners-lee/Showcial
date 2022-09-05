@@ -90,9 +90,9 @@ router.put('/user/addFollowed', (req: Request, res: Response) => {
 
 router.put('/user/removeFollowed', (req: Request, res: Response) => {
   return controllers.updateUser(req.body.userName, 'followingList', req.body.value)
-    .then((results: any) => {
-      console.log(`/user/removeFollowed: Success removing ${req.body.value} from following list`, results);
-      res.status(204).send(results);
+    .then(() => {
+      console.log(`/user/removeFollowed: Success removing ${req.body.value} from following list`);
+      res.status(204);
       res.end();
     })
     .catch((error: any) => {

@@ -185,7 +185,7 @@ const updateServices = async (userName: string, services: string[]) => {
 };
 
 // update user document w/ options
-const updateUser = (userName: string, prop: string, value: any) => {
+const updateUser = (userName: any, prop: any, value: any) => {
    return findUser(userName)
       .then((foundUser: any) => {
          const foundIndex = foundUser[prop].indexOf(value);

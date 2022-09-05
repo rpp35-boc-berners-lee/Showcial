@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { PersonalFeed } from '../personal-feed/PersonalFeed';
+import { IndividualFeed } from '../individual-feed/individualFeed';
 import {Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button } from '@mui/material';
 
 
@@ -87,7 +87,7 @@ export const ForFollower = (props: any) => {
       >
         Back
       </Button>
-      <PersonalFeed />
+      <IndividualFeed userFeed={userFeed} />
     </Card>
     </>
   );
