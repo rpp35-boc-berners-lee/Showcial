@@ -97,12 +97,17 @@ export function Homepage() {
   }
 
   const getSearchAPI = async () => {
-    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${query}/${page}`);
+    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/${mediaType}/${query}/${page}`);
     setSearchResults(search.data);
   }
+
   const handleMediaTypeChange = (event: SelectChangeEvent) => {
     setMediaType(event.target.value as string);
   };
+
+  useEffect(() => {
+    getSearchAPI();
+  }, [mediaType])
 
   useEffect(() => {
     setSearchResults(undefined);
@@ -145,13 +150,28 @@ export function Homepage() {
         <div>
           {openModal ? <VideoDetails mediaType={selectedMediaType} id={selectedId} config={config} open={openModal} close={setOpenModal} /> : null}
           <Typography>SEARCH RESULTS</Typography>
+          <Box sx={{ maxWidth: 200 }}>
+            <FormControl fullWidth>
+              <InputLabel id="tv-movie-filter">Filter By</InputLabel>
+              <Select
+                labelId="tv-movie-filter"
+                id="tv-movie-select"
+                value={mediaType}
+                label="MediaType"
+                onChange={handleMediaTypeChange}
+              >
+                <MenuItem value={'movie'}> Movie</MenuItem>
+                <MenuItem value={'tv'}>TV</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
           <Stack spacing={2} direction="row">
             {page < searchResults?.total_pages ?
               <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
             {page > 1 ?
               <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
           </Stack>
-          <Search searchResults={searchResults.results} config={config} getSelected={getSelected}/>
+          <Search searchResults={searchResults.results} config={config} getSelected={getSelected} mediaType={mediaType}/>
           <Stack spacing={2} direction="row">
             {page < searchResults?.total_pages ?
               <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
@@ -164,10 +184,10 @@ export function Homepage() {
         <h3>RECOMMENDATIONS FOR YOU</h3>
         <Box sx={{ maxWidth: 200 }}>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">TV or Movie</InputLabel>
+            <InputLabel id="tv-movie-filter">TV or Movie</InputLabel>
             <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
+              labelId="tv-movie-filter"
+              id="tv-movie-select"
               value={mediaType}
               label="MediaType"
               onChange={handleMediaTypeChange}
