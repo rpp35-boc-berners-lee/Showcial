@@ -1,6 +1,17 @@
 import React from 'react';
 import { Card, CardMedia, CardContent, CardHeader, Typography } from '@mui/material';
 
+
+/*
+    {
+        "_id": "6310387418463778253e0a74",
+        "videoName": "Supernatural",
+        "userName": "GracefulMackerel",
+        "userRating": 8.6,
+        "created_at": "2022-08-31T17:28:10.979Z"
+    }
+*/
+
 export const Post = () => {
   return (
      <div>

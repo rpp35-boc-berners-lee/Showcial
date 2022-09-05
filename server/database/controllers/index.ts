@@ -245,7 +245,7 @@ const addVideo = (videoData: any) => {
 //!==============================================//
 
 // This controller isused to retrieve all activity for a certain user
-const retrieveActivities = async (userName: string) => {
+const retrieveActivities = async (userName: any) => {
    try {
       let activities = await models.RatingsTable.find({
          userName: userName,

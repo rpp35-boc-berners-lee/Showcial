@@ -115,8 +115,9 @@ router.put('/user/services', async (req: Request, res: Response) => {
 
 //TODO: retrieve individual feed
 router.get('/user/individualFeed', (req: Request, res: Response) => {
-  console.log('userName', req.body.userName);
-  return controllers.retrieveActivities(req.body.userName)
+  console.log('userName', req.query.userName);
+  console.log('params', req.params);
+  return controllers.retrieveActivities(req.query.userName)
     .then((results: any) => {
       res.status(200).send(results);
     })

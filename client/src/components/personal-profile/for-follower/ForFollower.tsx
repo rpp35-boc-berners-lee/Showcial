@@ -7,17 +7,21 @@ import {Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button } fro
 // create button that sets index value back to 1 or 2 (save previous value)??
 
 export const ForFollower = (props: any) => {
-  const [forFollowerData, setForFollowerData] = useState<any>(undefined);
+  const [userFeed, setUserFeed] = useState<any>([]);
 
-  async function fetchForFollowerData (userName: string) {
-    await axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
-        .then((results: any) => {
-           console.log(results.data);
-           return results.data;
-        })
-        .catch((error) => {
-           console.log('fetchForFollowerData() Failed', error);
-        });
+  useEffect(() => {
+    fetchUserFeed();
+  },[]);
+
+  function fetchUserFeed () {
+   axios.get('http://localhost:8080/videoDB/user/individualFeed', {params: {userName: props.followeeData}})
+      .then((results) => {
+        console.log('fetchUserFeed() Success: ', results.data);
+        setUserFeed(results.data);
+      })
+      .catch((error: any) => {
+        console.log('fetchUserFeed() Failed: ', error);
+      })
   }
 
   function removeFollower () {
@@ -34,7 +38,7 @@ export const ForFollower = (props: any) => {
   }
 
   function addFollower () {
-    axios.put('http://localhost:8080/videoDB/user/removeFollowed', {
+    axios.put('http://localhost:8080/videoDB/user/addFollowed', {
       username: props.userName,
       value: props.followeeData
     })
@@ -46,32 +50,18 @@ export const ForFollower = (props: any) => {
     });
   }
 
-  useEffect(() => {
-    // setForFollowerData(fetchForFollowerData(props.followeeData));
-  }, [])
-
   // check if followee is currently followed by owner account & render add/remove friend button
   let followingButton = undefined;
   let followingStatus = props.followingList.includes(props.followeeData);
   if (followingStatus)  {
     followingButton = (
-      <Button
-        className='backButton'
-        variant='contained'
-        fullWidth
-        onClick={removeFollower}
-      >
+      <Button className='backButton' variant='contained' fullWidth onClick={removeFollower}>
         Unfollow
       </Button>
     );
   } else {
     followingButton = (
-      <Button
-        className='button'
-        variant='contained'
-        fullWidth
-        onClick={addFollower}
-      >
+      <Button className='button' variant='contained' fullWidth onClick={addFollower}>
         Follow
       </Button>
     );

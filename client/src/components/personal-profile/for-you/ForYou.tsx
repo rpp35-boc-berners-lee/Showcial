@@ -13,7 +13,7 @@ export const ForYou = ({userName}: {userName: string}) => {
            <Paper><WatchProviders userName={userName} /></Paper>
          </Grid>
          <Grid item xs={12} sm={12} md={9} className='personal-feed'>
-           <PersonalFeed />
+           <PersonalFeed userName={userName}/>
          </Grid>
        </Grid>
      </div>

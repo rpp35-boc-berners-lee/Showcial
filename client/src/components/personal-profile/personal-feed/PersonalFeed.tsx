@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import { Post } from '../post/Post';
 import { Stack } from '@mui/material';
 
-export const PersonalFeed = () => {
+export const PersonalFeed = (props: any) => {
    return (
       <div>
         <Stack spacing={2}>
@@ -11,7 +12,7 @@ export const PersonalFeed = () => {
          <Post />
          <Post />
         </Stack>
-         
+
       </div>
    );
 };
