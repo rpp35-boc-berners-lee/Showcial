@@ -12,7 +12,6 @@ import AssistantPhotoOutlinedIcon from '@mui/icons-material/AssistantPhotoOutlin
 
 export const PersonalProfile = () => {
   const [value, setValue] = React.useState(1);
-  const [previousValue, setPreviousValue] = React.useState(1);
   const [userName, setUserName] = useState<any>('Nourse41'); //! switch to current signed in user
   const [followeeData, setFolloweeData] = useState<any>(undefined);
   const [followingList, setFollowingList] = useState<any>([]);
@@ -57,19 +56,19 @@ export const PersonalProfile = () => {
   let selectBar = undefined;
   let component = undefined;
   if (currentOption === 0) {
-    followerSearchBar = (<FollowerSearchBar value={value} setValue={setValue} setFolloweeData={setFolloweeData} setPreviousValue={setPreviousValue}/>);
+    followerSearchBar = (<FollowerSearchBar setValue={setValue} setFolloweeData={setFolloweeData}/>);
     selectBar = (<SelectBar />);
     component = (<FollowingList setValue={setValue} userName={userName} setFolloweeData={setFolloweeData} followingList={followingList}/>);
   } else if (currentOption === 1) {
-    followerSearchBar = (<FollowerSearchBar value={value} setValue={setValue} setFolloweeData={setFolloweeData} setPreviousValue={setPreviousValue}/>);
+    followerSearchBar = (<FollowerSearchBar setValue={setValue} setFolloweeData={setFolloweeData}/>);
     selectBar = (<SelectBar />);
     component = (<ForYou userName={userName}/>);
   } else if (currentOption === 2) {
-    component = (<ForFollower previousValue={previousValue} setValue={setValue} userName={userName} followeeData={followeeData} followingList={followingList}/>);
+    component = (<ForFollower setValue={setValue} userName={userName} followeeData={followeeData} followingList={followingList}/>);
   }
 
   return (
-    <div>
+    <div className="personalProfile">
       {followerSearchBar}
       {selectBar}
       {component}

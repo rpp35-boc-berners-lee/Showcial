@@ -9,12 +9,12 @@ const upperCaseReducer = (string: string) => {
 
 export const SearchItem = (props: any) => {
   return (
-    <Card style={{cursor: 'pointer'}} key={props.index} sx={{ m: 1, width: '25ch' }} onClick={() => {
-      props.setFolloweeData(props.followee);
-      props.setPreviousValue(props.value)
-      props.setValue(2);
-    }}>
-      <Stack direction="row" spacing={1} justifyContent="left" alignItems="center">
+    <Card style={{cursor: 'pointer'}} key={props.index} sx={{ m: 1, width: '25ch' }}>
+      <Stack direction="row" spacing={1} justifyContent="left" alignItems="center" onClick={() => {
+        console.log('clicked')
+        props.setFolloweeData(props.followee);
+        props.setValue(2);
+      }}>
         <Avatar>{upperCaseReducer(props.followee)}</Avatar>
         <CardContent>{props.followee}</CardContent>
       </Stack>

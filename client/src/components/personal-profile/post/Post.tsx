@@ -32,7 +32,7 @@ export const Post = (props: any) => {
 
   return (
     <Card className="post" sx={{ boxShadow: 12 }}>
-      <Stack direction="row" spacing={1} justifyContent="center" alignItems="center">
+      <Stack direction="row" spacing={1} justifyContent="left" alignItems="center">
         <Avatar>{upperCaseReducer(postData.userName)}</Avatar>
         <CardHeader
           title={postData.userName}
@@ -40,12 +40,14 @@ export const Post = (props: any) => {
         />
       </Stack>
       <Divider variant="middle"/>
-      <Stack direction="row" spacing={1} justifyContent="center" alignItems="center">
+      <Stack direction="row" spacing={1} alignItems="center" justifyContent="left">
         <CardHeader
         title={postData.videoName}
         subheader={postData.comments}
         />
-        <Rating name="videoRating" value={(postData.userRating / 2)} readOnly />
+        <CardContent>
+          <Rating name="videoRating" value={(postData.userRating / 2)} readOnly />
+        </CardContent>
       </Stack>
       <CardMedia
         height='180'

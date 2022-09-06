@@ -107,7 +107,7 @@ export const ForFollower = (props: any) => {
             fullWidth
             color='secondary'
             onClick={() => {
-              props.setValue(props.previousValue);
+              props.setValue(1);
             }}
         >
           Back
