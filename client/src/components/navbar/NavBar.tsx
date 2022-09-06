@@ -13,7 +13,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const pages = ['Sign in', 'Sign up'];
+const pages = ['About', 'Sign in', 'Sign up'];
 const loggedInPages = ['About', 'Log out'];
 
 const ResponsiveAppBar = () => {
@@ -55,14 +55,15 @@ const ResponsiveAppBar = () => {
    const handleNavigate = (page: string) => {
       if (page === 'Sign in') {
          navigate('/signin');
-      }
-      if (page === 'Sign up') {
+      } else if (page === 'Sign up') {
          navigate('/signup');
+      } else {
+         navigate('/about');
       }
    };
 
    return (
-      <AppBar position='static'>
+      <AppBar position='static' color='secondary'>
          <Container maxWidth='xl'>
             <Toolbar disableGutters>
                <Typography
