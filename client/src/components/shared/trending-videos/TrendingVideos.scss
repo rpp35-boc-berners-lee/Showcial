@@ -1,29 +1,44 @@
 @use '../../../index.scss' as *;
 
-.trending-videos-container {
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
+.outer-container {
+   @include set-size(100%);
+   @include flex-center();
 
-   img {
-      @include cover-background();
-      height: auto;
+   .slider-arrow {
+      opacity: 0.4;
+   }
+   .slider-arrow-disabled {
+      opacity: 0;
+   }
+   .slider-arrow:hover {
+      opacity: 1;
+   }
+
+   .slider-container {
+      width: 90%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      #slider {
+         @include set-size(100%);
+         overflow-x: scroll;
+         white-space: nowrap;
+         scroll-behavior: smooth;
+         scrollbar-width: none;
+         .slider-card {
+            @include devices(mobile) {
+               @include set-size(auto, 300px);
+            }
+            @include set-size(auto);
+            display: inline-block;
+            margin: 0 5px;
+         }
+      }
    }
 }
 
-.inactive {
-   display: hidden;
-}
-.item-inner-container {
-   display: flex;
-   align-items: center;
-   flex-direction: column;
-   justify-content: center;
-   gap: 1rem;
-   padding-top: 1rem;
-}
-@keyframes slideLeft {
-}
-
-@keyframes slideRight {
+//disable the scrollbar
+#slider::-webkit-scrollbar {
+   display: none;
 }

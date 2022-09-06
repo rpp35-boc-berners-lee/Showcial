@@ -41,15 +41,12 @@ function useProvideAuth() {
          .get('/api/auth/checkAuthStatus')
          .then((response) => {
             if (response.status === 200) {
-               console.log('response:', response);
                setUser(response.data);
                setIsLoggedIn(true);
             }
          })
          .catch((err) => {
             setIsLoggedIn(false);
-            console.log('err', err);
-            // navigate('/signin', {replace: true});
          });
    }, []);
 
