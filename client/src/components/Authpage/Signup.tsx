@@ -12,7 +12,7 @@ export default function Signup() {
       //checks Passwords match
       if (values.password === values.verifyPassword) {
          axios
-            .post('http://localhost:8080/auth/signup', {
+            .post('http://localhost:8080/api/auth/signup', {
                params: {
                   userName: values.userName,
                   email: values.email,

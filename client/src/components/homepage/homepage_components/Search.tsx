@@ -38,6 +38,7 @@ export const Search:React.FC<ChildProps> = ({ searchResults, config }) => {
                     backdrop_path={video.backdrop_path}
                     name={video.name || video.original_title}
                     id={video.id}
+                    mediaType={video.media_type}
                   />
                 </Grid>
               )

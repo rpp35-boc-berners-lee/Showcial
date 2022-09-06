@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import compression from 'compression';
 import api_router from './api/routes/tmdb_api';
 import videoDB_router from './database/routes/index';
-import { router as authRouter } from './authentication/routes/auth';
+import { router as authRouter } from './authentication/auth';
 import cors from 'cors';
 const passport = require('passport');
 var session = require('express-session');
