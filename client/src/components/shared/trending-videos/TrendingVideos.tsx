@@ -68,7 +68,9 @@ export const TrendingVideos: React.FC<Props> = ({ getSelected }: Props) => {
       if (sliderRef.current) {
          let currentPosition = sliderRef.current.scrollLeft - 310;
          sliderRef.current.scrollLeft = currentPosition;
-         setScrollPosition(currentPosition);
+         currentPosition < 0
+            ? setScrollPosition(0)
+            : setScrollPosition(currentPosition);
       }
    };
 
