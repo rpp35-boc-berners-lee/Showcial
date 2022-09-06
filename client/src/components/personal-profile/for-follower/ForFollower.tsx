@@ -3,12 +3,7 @@ import axios from 'axios';
 import { IndividualFeed } from '../individual-feed/individualFeed';
 import {Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button } from '@mui/material';
 
-
-// create button that sets index value back to 1 or 2 (save previous value)??
-
 export const ForFollower = (props: any) => {
-  console.log('props.followeeData', props.followeeData)
-  console.log('props.userName', props.userName)
   const [userFeed, setUserFeed] = useState<any>([]);
 
   useEffect(() => {
@@ -27,9 +22,6 @@ export const ForFollower = (props: any) => {
   }
 
   function removeFollower (username: string, value: string) {
-    console.log('username', username);
-    console.log('value', value)
-
     axios.put('http://localhost:8080/videoDB/user/removeFollowed', {
       userName: username,
       value: value
@@ -43,9 +35,6 @@ export const ForFollower = (props: any) => {
   }
 
   function addFollower (username: string, value: string) {
-    console.log('username', username);
-    console.log('value', value)
-
     axios.put('http://localhost:8080/videoDB/user/addFollowed', {
       userName: username,
       value: value
@@ -58,7 +47,6 @@ export const ForFollower = (props: any) => {
     });
   }
 
-  // check if followee is currently followed by owner account & render add/remove friend button
   let followingButton = undefined;
   let followingStatus = props.followingList.includes(props.followeeData);
   if (followingStatus)  {
@@ -89,7 +77,6 @@ export const ForFollower = (props: any) => {
         style={{textAlign: 'center'}}
       />
       {followingButton}
-      <Divider className='divider'/>
       <Button
           className='button'
           variant='contained'
@@ -101,6 +88,7 @@ export const ForFollower = (props: any) => {
       >
         Back
       </Button>
+      {/* <Divider className='divider'/> */}
       <IndividualFeed userFeed={userFeed} />
     </Card>
     </>
