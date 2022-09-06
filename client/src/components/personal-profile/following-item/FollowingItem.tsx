@@ -55,11 +55,11 @@ export const FollowingItem = (props: any) => {
          })
    }
 
-// <Avatar {...stringAvatar(props.followedUserName)} /> //! --> for random color badges (not working)
+// <Avatar {...stringAvatar('Kent Dodds')} /> //! --> for random color badges (not working)
 
    return (
       <Card className='followedCard' sx={{ boxShadow: 12 }}>
-         <Stack direction="row" spacing={1} justifyContent="center" alignItems="center">
+         <Stack direction="row" spacing={1}   justifyContent="center" alignItems="center">
             <Avatar className="Avatar">{upperCaseReducer(props.followedUserName)}</Avatar>
             <CardHeader
                style={{ cursor: 'pointer', textAlign: 'center'}}

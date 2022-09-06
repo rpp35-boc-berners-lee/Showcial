@@ -28,8 +28,7 @@ const upperCaseReducer = (string: string) => {
 
 export const Post = (props: any) => {
   return (
-     <div>
-      <Card>
+    <Card className="post" sx={{ boxShadow: 12 }}>
       <Stack direction="row" spacing={1} justifyContent="center" alignItems="center">
         <Avatar>{upperCaseReducer(feedData.userName)}</Avatar>
         <CardHeader
@@ -38,15 +37,14 @@ export const Post = (props: any) => {
         />
       </Stack>
       <Divider variant="middle"/>
+      <Stack direction="row" spacing={1} justifyContent="center" alignItems="center">
         <CardHeader
-          title={feedData.videoName}
-          subheader={feedData.comments}
+        title={feedData.videoName}
+        subheader={feedData.comments}
         />
-        <CardContent>
-          <Rating name="videoRating" value={feedData.userRating/2} readOnly />
-        </CardContent>
-        <CardMedia className='post-image' src='' />
-      </Card>
-     </div>
+        <Rating name="videoRating" value={feedData.userRating/2} readOnly />
+      </Stack>
+      <CardMedia className='post-image' src='' />
+    </Card>
   );
 };
