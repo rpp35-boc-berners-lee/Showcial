@@ -41,6 +41,8 @@ const upperCaseReducer = (string: string) => {
    };
  }
 
+// <Avatar {...stringAvatar('Kent Dodds')} /> //! --> for random color badges (not working)
+
 export const FollowingItem = (props: any) => {
    function removeFollower (userName: string, value: string) {
       axios.put<any>('http://localhost:8080/videoDB/user/removeFollowed', {
@@ -55,8 +57,6 @@ export const FollowingItem = (props: any) => {
          })
    }
 
-// <Avatar {...stringAvatar('Kent Dodds')} /> //! --> for random color badges (not working)
-
    return (
       <Card className='followedCard' sx={{ boxShadow: 12 }}>
          <Stack direction="row" spacing={1}   justifyContent="center" alignItems="center">
@@ -67,13 +67,11 @@ export const FollowingItem = (props: any) => {
                   props.setFolloweeData(props.followedUserName);
                   props.setValue(2);
                }}
-            title={props.followedUserName}
+               title={props.followedUserName}
             />
          </Stack>
          <Divider/>
-         <CardContent
-            style={{textAlign: 'center'}}
-         >
+         <CardContent style={{textAlign: 'center'}}>
             <Button
                className='button'
                variant='contained'

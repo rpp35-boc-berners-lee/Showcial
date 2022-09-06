@@ -204,7 +204,7 @@ const updateUser = (userName: any, prop: any, value: any) => {
             });
       })
       .catch((error: any) => {
-         console.log(`Error updating ${userName} with ${prop}: ${value}`);
+         console.log(`Error updating ${userName} with ${prop}: ${value}`, error);
       });
 };
 

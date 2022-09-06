@@ -60,7 +60,7 @@ export const PersonalProfile = () => {
   if (currentOption === 0) {
     followerSearchBar = (<FollowerSearchBar setValue={setValue} setFolloweeData={setFolloweeData}/>);
     selectBar = (<SelectBar />);
-    component = (<FollowingList setValue={setValue} setFolloweeData={setFolloweeData} followingList={followingList}/>);
+    component = (<FollowingList setValue={setValue} userName={userName} setFolloweeData={setFolloweeData} followingList={followingList}/>);
   } else if (currentOption === 1) {
     followerSearchBar = (<FollowerSearchBar setValue={setValue} setFolloweeData={setFolloweeData}/>);
     selectBar = (<SelectBar />);

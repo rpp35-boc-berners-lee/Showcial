@@ -7,6 +7,8 @@ import {Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button } fro
 // create button that sets index value back to 1 or 2 (save previous value)??
 
 export const ForFollower = (props: any) => {
+  console.log('props.followeeData', props.followeeData)
+  console.log('props.userName', props.userName)
   const [userFeed, setUserFeed] = useState<any>([]);
 
   useEffect(() => {
@@ -24,10 +26,13 @@ export const ForFollower = (props: any) => {
       })
   }
 
-  function removeFollower () {
+  function removeFollower (username: string, value: string) {
+    console.log('username', username);
+    console.log('value', value)
+
     axios.put('http://localhost:8080/videoDB/user/removeFollowed', {
-      username: props.userName,
-      value: props.followeeData
+      userName: username,
+      value: value
     })
     .then(() => {
       console.log('removeFollower SUCCESS')
@@ -37,10 +42,13 @@ export const ForFollower = (props: any) => {
     });
   }
 
-  function addFollower () {
+  function addFollower (username: string, value: string) {
+    console.log('username', username);
+    console.log('value', value)
+
     axios.put('http://localhost:8080/videoDB/user/addFollowed', {
-      username: props.userName,
-      value: props.followeeData
+      userName: username,
+      value: value
     })
     .then(() => {
       console.log('addFollower SUCCESS')
@@ -55,13 +63,19 @@ export const ForFollower = (props: any) => {
   let followingStatus = props.followingList.includes(props.followeeData);
   if (followingStatus)  {
     followingButton = (
-      <Button className='backButton' variant='contained' fullWidth onClick={removeFollower}>
+      <Button className='backButton' variant='contained' fullWidth onClick={(event: any) => {
+        removeFollower(props.userName, props.followeeData);
+        event.target.innerText = 'UNFOLLOWED';
+      }}>
         Unfollow
       </Button>
     );
   } else {
     followingButton = (
-      <Button className='button' variant='contained' fullWidth onClick={addFollower}>
+      <Button className='button' variant='contained' fullWidth onClick={(event: any) => {
+        addFollower(props.userName, props.followeeData);
+        event.target.innerText = 'FOLLOWED';
+      }}>
         Follow
       </Button>
     );
