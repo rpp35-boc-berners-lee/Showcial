@@ -1,12 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { IndividualFeed } from '../individual-feed/individualFeed';
-import {Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button } from '@mui/material';
+import { Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button, Stack, Avatar } from '@mui/material';
+
+const upperCaseReducer = (string: string) => {
+  return string.split('').reduce((pV, cV) => {
+    return (cV === cV.toUpperCase()) ? pV += cV : pV;
+  }, '')
+};
 
 export const ForFollower = (props: any) => {
   const [userFeed, setUserFeed] = useState<any>([]);
   const [recommendedList, setRecommendedList] = useState<any>([]);
-  const [watchList, setWatchList] = useState<any>([]);''
+  const [watchList, setWatchList] = useState<any>([]);
 
   useEffect(() => {
     fetchUserFeed();
@@ -86,22 +92,27 @@ export const ForFollower = (props: any) => {
   return (
     <>
     <Card>
-      <CardHeader
-        title={props.followeeData}
-        style={{textAlign: 'center'}}
-      />
-      {followingButton}
-      <Button
-          className='button'
-          variant='contained'
-          fullWidth
-          color='secondary'
-          onClick={() => {
-            props.setValue(1);
-          }}
-      >
-        Back
-      </Button>
+      <Stack direction="row" spacing={1}   justifyContent="center" alignItems="center">
+      <Avatar className="Avatar">{upperCaseReducer(props.followeeData)}</Avatar>
+        <CardHeader
+          title={props.followeeData}
+          style={{textAlign: 'center'}}
+        />
+      </Stack>
+      <Stack spacing={2} className="individualFeed">
+        {followingButton}
+        <Button
+            className='button'
+            variant='contained'
+            fullWidth
+            color='secondary'
+            onClick={() => {
+              props.setValue(props.previousValue);
+            }}
+        >
+          Back
+        </Button>
+      </Stack>
       <IndividualFeed userFeed={userFeed} />
     </Card>
     </>

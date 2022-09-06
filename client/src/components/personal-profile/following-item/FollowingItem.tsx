@@ -59,14 +59,15 @@ export const FollowingItem = (props: any) => {
 
    return (
       <Card className='followedCard' sx={{ boxShadow: 12 }}>
-         <Stack direction="row" spacing={1}   justifyContent="center" alignItems="center">
+         <Stack direction="row" spacing={1} justifyContent="center" alignItems="center" style={{ cursor: 'pointer' }}
+            onClick={(event: any) => {
+              props.setFolloweeData(props.followedUserName);
+              props.setValue(2);
+           }}
+         >
             <Avatar className="Avatar">{upperCaseReducer(props.followedUserName)}</Avatar>
             <CardHeader
                style={{ cursor: 'pointer', textAlign: 'center'}}
-               onClick={(event: any) => {
-                  props.setFolloweeData(props.followedUserName);
-                  props.setValue(2);
-               }}
                title={props.followedUserName}
             />
          </Stack>
@@ -81,16 +82,10 @@ export const FollowingItem = (props: any) => {
                   removeFollower(props.userName, props.followedUserName);
                   event.target.innerText = 'REMOVED';
                }}
-            >Remove</Button>
+            >
+               Remove
+            </Button>
          </CardContent>
       </Card>
    );
 };
-
-// export const FollowingItem = styled(Paper)(({ theme }) => ({
-//    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-//    ...theme.typography.body2,
-//    padding: theme.spacing(2),
-//    textAlign: 'center',
-//    color: theme.palette.text.secondary,
-//  }));
