@@ -22,7 +22,7 @@ type PopularMovie = {
 
 type Props = {
    getSelected?: (id: number, type: string) => void;
-}
+};
 
 export const TrendingVideos: React.FC<Props> = ({ getSelected }) => {
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);

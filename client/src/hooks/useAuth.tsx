@@ -36,7 +36,7 @@ function useProvideAuth() {
    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
    useEffect(() => {
-      console.log('here in use effect useauth')
+      console.log('here in use effect useauth');
       axios
          .get('/api/auth/checkAuthStatus')
          .then((response) => {

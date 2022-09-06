@@ -21,7 +21,7 @@ export const TrendingVideoItem = ({
    imageSize,
    id,
    mediaType,
-   getSelected
+   getSelected,
 }: Props) => {
    return (
       <>
