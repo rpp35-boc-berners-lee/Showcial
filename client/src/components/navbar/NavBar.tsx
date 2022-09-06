@@ -14,6 +14,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const pages = ['Sign in', 'Sign up'];
+const loggedInPages = ['About', 'Log out'];
 
 const ResponsiveAppBar = () => {
    const auth = useAuth();
@@ -39,6 +40,14 @@ const ResponsiveAppBar = () => {
       setAnchorElNav(null);
    };
 
+   const handleCloseNavMenuLoggedIn = (page: string) => {
+      setAnchorElNav(null);
+      if (page === 'About') {
+         navigate('/about', { replace: true });
+      } else {
+         auth.signout();
+      }
+   };
    const handleCloseUserMenu = () => {
       setAnchorElUser(null);
    };
@@ -104,28 +113,24 @@ const ResponsiveAppBar = () => {
                         display: { xs: 'block', md: 'none' },
                      }}
                   >
-                     {auth.isLoggedIn === false ? (
-                        pages.map((page) => (
-                           <MenuItem key={page} onClick={handleCloseNavMenu}>
-                              <Typography textAlign='center'>{page}</Typography>
-                           </MenuItem>
-                        ))
-                     ) : (
-                        <>
-                           <MenuItem
-                              onClick={() =>
-                                 navigate('/about', { replace: true })
-                              }
-                           >
-                              <Typography textAlign='center'>About</Typography>
-                           </MenuItem>
-                           <MenuItem onClick={() => auth.signout()}>
-                              <Typography textAlign='center'>
-                                 Log out
-                              </Typography>
-                           </MenuItem>
-                        </>
-                     )}
+                     {auth.isLoggedIn === false
+                        ? pages.map((page) => (
+                             <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <Typography textAlign='center'>
+                                   {page}
+                                </Typography>
+                             </MenuItem>
+                          ))
+                        : loggedInPages.map((page) => (
+                             <MenuItem
+                                key={page}
+                                onClick={() => handleCloseNavMenuLoggedIn(page)}
+                             >
+                                <Typography textAlign='center'>
+                                   {page}
+                                </Typography>
+                             </MenuItem>
+                          ))}
                   </Menu>
                </Box>
                {/* END MOBILE */}
@@ -183,6 +188,7 @@ const ResponsiveAppBar = () => {
                      <Button
                         sx={{ my: 2, color: 'white', display: 'block' }}
                         variant='text'
+                        onClick={() => navigate('about', { replace: true })}
                      >
                         About
                      </Button>

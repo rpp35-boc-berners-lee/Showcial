@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Grid } from '@mui/material';
+import { Slide, Grid } from '@mui/material';
 import { VideoCard } from '../../VideoCard';
 
 interface Props {
@@ -25,29 +25,31 @@ export const TrendingVideoItem = ({
 }: Props) => {
    return (
       <>
-         <Grid
-            item
-            xs={4}
-            sm={3}
-            md={6}
-            lg={4}
-            xl={4}
-            sx={{
-               display: 'flex',
-               justifyContent: 'center',
-               maxWidth: '300px',
-            }}
-         >
-            <VideoCard
-               base_url={imageUrl}
-               backdrop_sizes={imageSize}
-               backdrop_path={image}
-               name={title}
-               id={id}
-               mediaType={mediaType}
-               getSelected={getSelected}
-            />
-         </Grid>
+         <Slide direction='right' in={true}>
+            <Grid
+               item
+               xs={4}
+               sm={3}
+               md={6}
+               lg={4}
+               xl={4}
+               sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  maxWidth: '300px',
+               }}
+            >
+               <VideoCard
+                  base_url={imageUrl}
+                  backdrop_sizes={imageSize}
+                  backdrop_path={image}
+                  name={title}
+                  id={id}
+                  mediaType={mediaType}
+                  getSelected={getSelected}
+               />
+            </Grid>
+         </Slide>
       </>
    );
 };
