@@ -5,10 +5,24 @@ import {Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button } fro
 
 export const ForFollower = (props: any) => {
   const [userFeed, setUserFeed] = useState<any>([]);
+  const [recommendedList, setRecommendedList] = useState<any>([]);
+  const [watchList, setWatchList] = useState<any>([]);''
 
   useEffect(() => {
     fetchUserFeed();
+    fetchUserData();
   },[]);
+
+  function fetchUserData () {
+    axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName: props.followeeData}})
+      .then((results: any) => {
+        setRecommendedList(results.data.watchedVideos);
+        setWatchList(results.data.recommendedVideos)
+      })
+      .catch((error: any) => {
+        console.log('ForFollower/fetchUserData Failed: ', error)
+      })
+  }
 
   function fetchUserFeed () {
    axios.get('http://localhost:8080/videoDB/user/individualFeed', {params: {userName: props.followeeData}})

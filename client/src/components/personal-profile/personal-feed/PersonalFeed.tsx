@@ -13,7 +13,6 @@ export const PersonalFeed = (props: any) => {
    function fetchUserFeed () {
      axios.get('http://localhost:8080/videoDB/user/feed', {params: {userName: props.userName}})
        .then((results) => {
-         console.log('fetchUserFeed() Success: ', results.data);
          setUserFeed(results.data);
        })
        .catch((error: any) => {
@@ -22,18 +21,15 @@ export const PersonalFeed = (props: any) => {
    }
 
    return (
-      <div>
-        <Stack spacing={2}>
-          {userFeed.map((feedData: any, index: number) => {
-            return (
-               <Post
-                 feedData={feedData}
-                 key={index}
-               />
-            );
-          })}
-        </Stack>
-
-      </div>
+      <Stack spacing={2} className="personalFeed">
+         {userFeed.map((feedData: any, index: number) => {
+         return (
+            <Post
+               feedData={feedData}
+               key={index}
+            />
+         );
+         })}
+      </Stack>
    );
 };

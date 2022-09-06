@@ -9,27 +9,25 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import AssistantPhotoOutlinedIcon from '@mui/icons-material/AssistantPhotoOutlined';
-import SelectSearch from 'react-select-search';
-
-//! "for-followed" page is conditionally rendered using currentOption value --> how to set from child component??
-  // create hook for friends profile data & pass to SearchBar/FollowingList
-  //  pass setValue hook to SearchBar/FollowingList/ForFollower components
-  // create condition to render "for-follower" page if value === 3
 
 export const PersonalProfile = () => {
   const [value, setValue] = React.useState(1);
   const [userName, setUserName] = useState<any>('Nourse41'); //! switch to current signed in user
-  const [followeeData, setFolloweeData] = useState<any>(undefined)
-  const [followingList, setFollowingList] = useState<any>([]) //! create hook for user's data and pass to followingList as prop
+  const [followeeData, setFolloweeData] = useState<any>(undefined);
+  const [followingList, setFollowingList] = useState<any>([]);
+  const [recommendedList, setRecommendedList] = useState<any>([]);
+  const [watchList, setWatchList] = useState<any>([]);''
 
   useEffect(() => {
-    fetchFollowingList();
+    fetchUserData();
   },[])
 
-  function fetchFollowingList () {
+  function fetchUserData () {
     axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
       .then((results: any) => {
         setFollowingList(results.data.followingList);
+        setRecommendedList(results.data.watchedVideos);
+        setWatchList(results.data.recommendedVideos)
       })
       .catch((error) => {
         console.log('fetchFollowingList() Failed', error);
