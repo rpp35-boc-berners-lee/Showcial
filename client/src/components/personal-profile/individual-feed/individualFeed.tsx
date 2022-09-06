@@ -6,7 +6,7 @@ import { Stack } from '@mui/material';
 export const IndividualFeed = (props: any) => {
    return (
       <div>
-        <Stack spacing={2}>
+        <Stack spacing={2} className="individualFeed">
            {props.userFeed.map((feedData: any, index: number) => {
              return <Post feedData={feedData} key={index} />
            })}

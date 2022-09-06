@@ -131,7 +131,7 @@ router.get('/user/individualFeed', (req: Request, res: Response) => {
 //TODO: retrieve personal feed
 router.get('/user/feed', async (req: Request, res: Response) => {
   try {
-    let result = await controllers.retrieveFeed(req.body.userName);
+    let result = await controllers.retrieveFeed(req.query.userName);
     res.status(200).send(result);
   } catch (error) {
     res.status(400).send(error);

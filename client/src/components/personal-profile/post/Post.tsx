@@ -2,28 +2,16 @@ import React, {useState, useEffect} from 'react';
 import { Card, CardMedia, CardContent, CardHeader, Typography, Divider, Rating, Avatar, Stack } from '@mui/material';
 
 // import TimeAgo functionality
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
-TimeAgo.addDefaultLocale(en)
-const timeAgo = new TimeAgo('en-US')
-
-const feedData =  {
-  "_id": "6310387418463778253e0a6b",
-  "videoName": "La La Land",
-  "userName": "SmilingPanda",
-  "userRating": 7.8,
-  "created_at": "2022-08-31T17:37:10.979Z",
-  "comments": "Love the music!"
-};
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+import { ZoomInMapSharp } from '@mui/icons-material';
+TimeAgo.addDefaultLocale(en);
+const timeAgo = new TimeAgo('en-US');
 
 const upperCaseReducer = (string: string) => {
-  let result = '';
-  for (var i = 0; i < string.length; i++) {
-      if (string[i] === string[i].toUpperCase()) {
-          result += string[i];
-      }
-  }
-  return result;
+  return string.split('').reduce((pV, cV) => {
+    return (cV === cV.toUpperCase()) ? pV += cV : pV;
+  }, '')
 };
 
 export const Post = (props: any) => {
@@ -57,12 +45,13 @@ export const Post = (props: any) => {
         title={postData.videoName}
         subheader={postData.comments}
         />
-        <Rating name="videoRating" value={postData.userRating/2} readOnly />
+        <Rating name="videoRating" value={(postData.userRating / 2)} readOnly />
       </Stack>
       <CardMedia
+        height='180'
         component='img'
         className='post-image'
-         image={postData.image !== undefined ? postData.image : 'http://bertsrentals.com/wp-content/uploads/2017/08/300x300-placeholder.jpg'}
+        image={postData.image !== undefined ? postData.image : 'http://bertsrentals.com/wp-content/uploads/2017/08/300x300-placeholder.jpg'}
       />
     </Card>
   );

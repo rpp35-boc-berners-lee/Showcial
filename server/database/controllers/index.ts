@@ -257,7 +257,7 @@ const retrieveActivities = async (userName: any) => {
 };
 
 // This controller is used to retrieve feed that is generated from following list of a user
-const retrieveFeed = async (userName: string) => {
+const retrieveFeed = async (userName: any) => {
    try {
       let user = await findUser(userName);
       let followingList = user.followingList;

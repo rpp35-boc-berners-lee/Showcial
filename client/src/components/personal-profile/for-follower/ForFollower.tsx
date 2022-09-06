@@ -51,7 +51,7 @@ export const ForFollower = (props: any) => {
   let followingStatus = props.followingList.includes(props.followeeData);
   if (followingStatus)  {
     followingButton = (
-      <Button className='backButton' variant='contained' fullWidth onClick={(event: any) => {
+      <Button className='button' variant='contained' fullWidth onClick={(event: any) => {
         removeFollower(props.userName, props.followeeData);
         event.target.innerText = 'UNFOLLOWED';
       }}>
@@ -88,7 +88,6 @@ export const ForFollower = (props: any) => {
       >
         Back
       </Button>
-      {/* <Divider className='divider'/> */}
       <IndividualFeed userFeed={userFeed} />
     </Card>
     </>
