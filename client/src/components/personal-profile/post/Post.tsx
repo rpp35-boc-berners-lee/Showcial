@@ -42,7 +42,6 @@ export const Post = (props: any) => {
     }
   })
 
-  console.log('type === ' , typeof postData , postData);
   return (
     <Card className="post" sx={{ boxShadow: 12 }}>
       <Stack direction="row" spacing={1} justifyContent="center" alignItems="center">
@@ -60,7 +59,11 @@ export const Post = (props: any) => {
         />
         <Rating name="videoRating" value={postData.userRating/2} readOnly />
       </Stack>
-      <CardMedia className='post-image' src='' />
+      <CardMedia
+        component='img'
+        className='post-image'
+         image={postData.image !== undefined ? postData.image : 'http://bertsrentals.com/wp-content/uploads/2017/08/300x300-placeholder.jpg'}
+      />
     </Card>
   );
 };
