@@ -61,7 +61,7 @@ const ResponsiveAppBar = () => {
                   variant='h6'
                   noWrap
                   component='a'
-                  href='/home'
+                  href='/'
                   sx={{
                      mr: 2,
                      display: { xs: 'none', md: 'flex' },
@@ -154,7 +154,13 @@ const ResponsiveAppBar = () => {
                      ))}
                   </Box>
                ) : 
-                        <Button variant='contained' onClick={() => auth.signout()}>Log out</Button>
+                        <div>
+                           <Button variant="contained"  href="/personal" className="profile-button" sx={{ m: 2 }}>
+                           My Account
+                           </Button>
+                           <Button variant='contained' onClick={() => auth.signout()}>Log out</Button>
+                        </div>
+                        
                }
             </Toolbar>
          </Container>

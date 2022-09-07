@@ -22,11 +22,13 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { VideoDetails } from '../shared/VideoDetails';
 import { useAuth } from '../../hooks/useAuth';
+
 interface MouseEvent {
    target: {
       id: string;
    };
 }
+
 
 export function Homepage() {
   // const auth = useAuth();
