@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './TrendingVideos.scss';
-import { TrendingVideoItem } from './trending-video-item/TrendingVideoItem';
+import { VideoCard } from '../../../shared/VideoCard';
 import axios from 'axios';
 import { Typography, Stack, Grid, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -24,8 +24,10 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended, g
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);
    const [imageUrl, setImageUrl] = useState<string>('');
    const [imageSize, setImageSize] = useState<string[]>(['']);
-   const [currentIndex, setCurrentIndex] = useState<number>(0);
-   const [activeMovies, setActiveMovies] = useState<PopularMovie[] | []>([]);
+   const [scrollPosition, setScrollPosition] = useState<number>(0);
+   const [showBtnRight, setShowBtnRight] = useState<boolean>(true);
+   const sliderRef = useRef<HTMLDivElement>(null);
+
 
    useEffect(() => {
       let url: string = trendingOrRecommended === 'trending'? `http://localhost:8080/tmdb/${mediaType}/popular` :  `http://localhost:8080/videoDB/user`
@@ -38,7 +40,6 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended, g
                   setImageUrl(config.data.images.secure_base_url);
                   setImageSize(config.data.images.backdrop_sizes);
                   setPopularMovies(response.data.results);
-                  setActiveMovies(response.data.results.slice(0, 5));
                });
          })
          .catch((err) => {
@@ -47,97 +48,82 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended, g
    }, [mediaType]);
 
    const handleSlideRight = () => {
-      console.log('currentIndex:', currentIndex);
-      let updatedIndex = currentIndex - 1;
-      let currentMovies: any;
-      if (updatedIndex === -1) {
-         currentMovies = popularMovies
-            .slice(updatedIndex)
-            .concat(popularMovies.slice(0, 5 + updatedIndex));
-         updatedIndex = popularMovies.length - 1;
-      } else if (updatedIndex >= popularMovies.length - 4) {
-         currentMovies = popularMovies
-            .slice(updatedIndex, popularMovies.length)
-            .concat(
-               popularMovies.slice(0, 5 - (popularMovies.length - updatedIndex))
-            );
-      } else {
-         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 5);
+      if (sliderRef.current) {
+         let currentPosition = sliderRef.current.scrollLeft + 310;
+         sliderRef.current.scrollLeft = currentPosition;
+         setScrollPosition(currentPosition);
+         const maxPosition =
+            sliderRef.current.scrollWidth - sliderRef.current.clientWidth;
+
+         if (currentPosition >= maxPosition) {
+            setShowBtnRight(false);
+         }
       }
-      setCurrentIndex(updatedIndex);
-      setActiveMovies(currentMovies);
    };
 
    const handleSlideLeft = () => {
-      let updatedIndex = currentIndex + 1;
-
-      if (updatedIndex >= popularMovies.length) {
-         updatedIndex = 0;
+      setShowBtnRight(true); //show btn right in case it was disabled
+      if (sliderRef.current) {
+         let currentPosition = sliderRef.current.scrollLeft - 310;
+         sliderRef.current.scrollLeft = currentPosition;
+         currentPosition < 0
+            ? setScrollPosition(0)
+            : setScrollPosition(currentPosition);
       }
-
-      let currentMovies: any;
-      if (updatedIndex >= popularMovies.length - 4) {
-         currentMovies = popularMovies
-            .slice(updatedIndex, popularMovies.length)
-            .concat(
-               popularMovies.slice(0, 5 - (popularMovies.length - updatedIndex))
-            );
-      } else {
-         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 5);
-      }
-      setCurrentIndex(updatedIndex);
-      setActiveMovies(currentMovies);
    };
 
    if (popularMovies.length > 0) {
       return (
          <>
-            <Stack
-               direction='column'
-               sx={{ height: '100%', width: '100%', pt: '2rem' }}
-            >
-               <Typography variant='h4' component='h2' align='center'>
-                  Currently Trending
-               </Typography>
-               <div className='trending-videos-container'>
+         <Typography variant='h4' component='h2' align='center' sx={{ pb: 1 }}>
+            Currently Trending
+         </Typography>
+         <div className='outer-container'>
+            {scrollPosition === 0 ? (
+               <div className='slider-arrow-disabled'>
                   <IconButton onClick={handleSlideLeft}>
                      <ArrowBackIosIcon />
                   </IconButton>
-                  <Grid
-                     wrap='wrap'
-                     direction='row'
-                     container
-                     rowSpacing={2}
-                     sx={{
-                        overflow: 'hidden',
-                        height: '260px',
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                     }}
-                     columns={{ xs: 4, sm: 6, md: 12, lg: 12, xl: 20 }}
-                  >
-                     {activeMovies.map((movie, index) => (
-                        <TrendingVideoItem
-                           itemIndex={index}
-                           currentIndex={currentIndex}
-                           key={movie.id}
-                           image={movie.backdrop_path}
-                           title={movie.title}
-                           imageUrl={imageUrl}
-                           imageSize={imageSize}
+               </div>
+            ) : (
+               <div className='slider-arrow'>
+                  <IconButton onClick={handleSlideLeft}>
+                     <ArrowBackIosIcon />
+                  </IconButton>
+               </div>
+            )}
+            <div className='slider-container'>
+               <div id='slider' ref={sliderRef}>
+                  {popularMovies.map((movie, index) => (
+                     <div className='slider-card' key={index}>
+                        <VideoCard
+                           base_url={imageUrl}
+                           backdrop_sizes={imageSize}
+                           backdrop_path={movie.backdrop_path}
+                           name={movie.title}
                            id={movie.id}
-                           mediaType={mediaType}
+                           mediaType={mediaType || 'movie'}
                            getSelected={getSelected}
                         />
-                     ))}
-                  </Grid>
+                     </div>
+                  ))}
+               </div>
+            </div>
+            {showBtnRight ? (
+               <div className='slider-arrow'>
                   <IconButton onClick={handleSlideRight}>
                      <ArrowForwardIosIcon />
                   </IconButton>
                </div>
-            </Stack>
-         </>
+            ) : (
+               <div className='slider-arrow-disabled'>
+                  <IconButton onClick={handleSlideRight}>
+                     <ArrowForwardIosIcon />
+                  </IconButton>
+               </div>
+            )}
+         </div>
+      </>
       );
    } else {
       return null;

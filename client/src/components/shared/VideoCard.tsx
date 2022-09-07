@@ -1,4 +1,4 @@
-import React ,{ useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './VideoCard.scss';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -23,16 +23,24 @@ export const VideoCard: React.FC<ChildProps> = ({
    name,
    id,
    mediaType,
-   getSelected
+   getSelected,
 }) => {
    // const [displayModal, setDisplayModal] = useState(false);
-   const image = backdrop_path !== null
-      ? `${base_url}${backdrop_sizes[0]}${backdrop_path}`
-      : 'http://bertsrentals.com/wp-content/uploads/2017/08/300x300-placeholder.jpg';
+   const image =
+      backdrop_path !== null
+         ? `${base_url}${backdrop_sizes[0]}${backdrop_path}`
+         : 'http://bertsrentals.com/wp-content/uploads/2017/08/300x300-placeholder.jpg';
 
    return (
       <>
-         <Card sx={{ minWidth: 300, maxWidth: 300 }} onClick={getSelected ? () => getSelected(id, mediaType) : () => console.log(id)}>
+         <Card
+            sx={{ minWidth: 300, maxWidth: 300 }}
+            onClick={
+               getSelected
+                  ? () => getSelected(id, mediaType)
+                  : () => console.log(id)
+            }
+         >
             <CardMedia
                component='img'
                height='169'

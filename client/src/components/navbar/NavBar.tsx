@@ -13,11 +13,12 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const pages = ['Sign in', 'Sign up'];
+const pages = ['About', 'Sign in', 'Sign up'];
+const loggedInPages = ['About', 'Log out'];
 
 const ResponsiveAppBar = () => {
    const auth = useAuth();
-  console.log('auth:', auth);
+   console.log('auth:', auth);
 
    const navigate = useNavigate();
    const location = useLocation();
@@ -39,6 +40,14 @@ const ResponsiveAppBar = () => {
       setAnchorElNav(null);
    };
 
+   const handleCloseNavMenuLoggedIn = (page: string) => {
+      setAnchorElNav(null);
+      if (page === 'About') {
+         navigate('/about', { replace: true });
+      } else {
+         auth.signout();
+      }
+   };
    const handleCloseUserMenu = () => {
       setAnchorElUser(null);
    };
@@ -46,22 +55,22 @@ const ResponsiveAppBar = () => {
    const handleNavigate = (page: string) => {
       if (page === 'Sign in') {
          navigate('/signin');
-      }
-      if (page === 'Sign up') {
+      } else if (page === 'Sign up') {
          navigate('/signup');
+      } else {
+         navigate('/about');
       }
    };
 
-
    return (
-      <AppBar position='static'>
+      <AppBar position='static' color='secondary'>
          <Container maxWidth='xl'>
             <Toolbar disableGutters>
                <Typography
                   variant='h6'
                   noWrap
                   component='a'
-                  href='/home'
+                  href='/'
                   sx={{
                      mr: 2,
                      display: { xs: 'none', md: 'flex' },
@@ -75,7 +84,7 @@ const ResponsiveAppBar = () => {
                >
                   Showcial
                </Typography>
-
+               {/* MOBILE ONLY */}
                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                   <IconButton
                      size='large'
@@ -105,19 +114,32 @@ const ResponsiveAppBar = () => {
                         display: { xs: 'block', md: 'none' },
                      }}
                   >
-                     {pages.map((page) => (
-                        <MenuItem key={page} onClick={handleCloseNavMenu}>
-                           <Typography textAlign='center'>{page}</Typography>
-                        </MenuItem>
-                     ))}
+                     {auth.isLoggedIn === false
+                        ? pages.map((page) => (
+                             <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <Typography textAlign='center'>
+                                   {page}
+                                </Typography>
+                             </MenuItem>
+                          ))
+                        : loggedInPages.map((page) => (
+                             <MenuItem
+                                key={page}
+                                onClick={() => handleCloseNavMenuLoggedIn(page)}
+                             >
+                                <Typography textAlign='center'>
+                                   {page}
+                                </Typography>
+                             </MenuItem>
+                          ))}
                   </Menu>
                </Box>
-
+               {/* END MOBILE */}
                <Typography
                   variant='h5'
                   noWrap
                   component='a'
-                  href=''
+                  href='/'
                   sx={{
                      mr: 2,
                      display: { xs: 'flex', md: 'none' },
@@ -145,7 +167,7 @@ const ResponsiveAppBar = () => {
                      {pages.map((page) => (
                         <Button
                            key={page}
-                           variant='contained'
+                           variant='text'
                            onClick={() => handleNavigate(page)}
                            sx={{ my: 2, color: 'white', display: 'block' }}
                         >
@@ -153,9 +175,33 @@ const ResponsiveAppBar = () => {
                         </Button>
                      ))}
                   </Box>
-               ) : 
-                        <Button variant='contained' onClick={() => auth.signout()}>Log out</Button>
-               }
+               ) : (
+                  <Box
+                     sx={{
+                        flexGrow: 1,
+                        display: { xs: 'none', md: 'flex' },
+                        gap: 2,
+                        ml: 'auto',
+                        float: 'right',
+                        alignSelf: 'flex-end',
+                     }}
+                  >
+                     <Button
+                        sx={{ my: 2, color: 'white', display: 'block' }}
+                        variant='text'
+                        onClick={() => navigate('about', { replace: true })}
+                     >
+                        About
+                     </Button>
+                     <Button
+                        sx={{ my: 2, color: 'white', display: 'block' }}
+                        variant='text'
+                        onClick={() => auth.signout()}
+                     >
+                        Log out
+                     </Button>
+                  </Box>
+               )}
             </Toolbar>
          </Container>
       </AppBar>
