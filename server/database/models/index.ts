@@ -50,6 +50,7 @@ const ratingsTableSchema = mongoose.Schema({
   userName: String,
   userRating: Number,
   created_at: Date,
+  image: String,
   comments: String // optional
 });
 const RatingsTable = mongoose.model('ratingsTable', ratingsTableSchema);

@@ -70,4 +70,13 @@ router.get('/search/:search/:page', async (req: Request, res: Response) => {
    res.send(await tmdb.getSearchResults(params.search, params.page));
 });
 
+// TRENDING
+router.get('/trending/tv', async (req: Request, res: Response) => {
+   res.send(await tmdb.getTVTrending());
+});
+
+router.get('/trending/movie', async (req: Request, res: Response) => {
+   res.send(await tmdb.getMovieTrending());
+});
+
 export default router;
