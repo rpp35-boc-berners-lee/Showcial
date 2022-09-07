@@ -20,16 +20,17 @@ type PopularMovie = {
    vote_count: number;
 };
 
-export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended}: {mediaType: string; trendingOrRecommended: string}) => {
+export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended, getSelected}: {mediaType: string; trendingOrRecommended: string, getSelected: (id: number, type: string) => void;}) => {
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);
    const [imageUrl, setImageUrl] = useState<string>('');
    const [imageSize, setImageSize] = useState<string[]>(['']);
    const [currentIndex, setCurrentIndex] = useState<number>(0);
    const [activeMovies, setActiveMovies] = useState<PopularMovie[] | []>([]);
+
    useEffect(() => {
-      let url = trendingOrRecommended === 'trending'? `http://localhost:8080/tmdb/${mediaType}/popular` : 
+      let url: string = trendingOrRecommended === 'trending'? `http://localhost:8080/tmdb/${mediaType}/popular` :  `http://localhost:8080/videoDB/user`
       axios
-         .get(`http://localhost:8080/tmdb/${mediaType}/popular`)
+         .get(url)
          .then((response) => {
             axios
                .get('http://localhost:8080/tmdb/configuration')
@@ -37,7 +38,7 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended}: 
                   setImageUrl(config.data.images.secure_base_url);
                   setImageSize(config.data.images.backdrop_sizes);
                   setPopularMovies(response.data.results);
-                  setActiveMovies(response.data.results.slice(0, 6));
+                  setActiveMovies(response.data.results.slice(0, 5));
                });
          })
          .catch((err) => {
@@ -52,16 +53,16 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended}: 
       if (updatedIndex === -1) {
          currentMovies = popularMovies
             .slice(updatedIndex)
-            .concat(popularMovies.slice(0, 7 + updatedIndex));
+            .concat(popularMovies.slice(0, 5 + updatedIndex));
          updatedIndex = popularMovies.length - 1;
-      } else if (updatedIndex >= popularMovies.length - 6) {
+      } else if (updatedIndex >= popularMovies.length - 4) {
          currentMovies = popularMovies
             .slice(updatedIndex, popularMovies.length)
             .concat(
-               popularMovies.slice(0, 7 - (popularMovies.length - updatedIndex))
+               popularMovies.slice(0, 5 - (popularMovies.length - updatedIndex))
             );
       } else {
-         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 7);
+         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 5);
       }
       setCurrentIndex(updatedIndex);
       setActiveMovies(currentMovies);
@@ -75,14 +76,14 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended}: 
       }
 
       let currentMovies: any;
-      if (updatedIndex >= popularMovies.length - 6) {
+      if (updatedIndex >= popularMovies.length - 4) {
          currentMovies = popularMovies
             .slice(updatedIndex, popularMovies.length)
             .concat(
-               popularMovies.slice(0, 7 - (popularMovies.length - updatedIndex))
+               popularMovies.slice(0, 5 - (popularMovies.length - updatedIndex))
             );
       } else {
-         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 7);
+         currentMovies = popularMovies.slice(updatedIndex, updatedIndex + 5);
       }
       setCurrentIndex(updatedIndex);
       setActiveMovies(currentMovies);
@@ -126,6 +127,8 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended}: 
                            imageUrl={imageUrl}
                            imageSize={imageSize}
                            id={movie.id}
+                           mediaType={mediaType}
+                           getSelected={getSelected}
                         />
                      ))}
                   </Grid>

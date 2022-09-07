@@ -15,13 +15,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { CarouselList } from './homepage_components/carousel/Carousel'
-import { Recommendations } from './homepage_components/recommendations/Recommendations'
-import { TrendingOrRecommendedVideos } from './homepage_components/trending-videos/TrendingVideos'
+import { CarouselList } from './homepage_components/carousel/Carousel';
+import { Recommendations } from './homepage_components/recommendations/Recommendations';
+import { TrendingVideos } from '../shared/trending-videos/TrendingVideos';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { VideoDetails } from '../shared/VideoDetails';
 import { useAuth } from '../../hooks/useAuth';
+import { TrendingOrRecommendedVideos } from './homepage_components/trending/TrendingVideos'
 interface MouseEvent {
    target: {
       id: string;
@@ -177,10 +178,11 @@ export function Homepage() {
           </FormControl>
         </Box>
         {topTV !== undefined && mediaType === 'tv' ?
-          <Recommendations vedios={topTV.results} config={config} userName={userName} mediaType={mediaType} /> : null}
+          <Recommendations vedios={topTV.results} config={config} userName={userName} mediaType={mediaType} getSelected={getSelected} /> : null}
         {topMovie !== undefined && mediaType === 'movie' ?
-          <Recommendations vedios={topMovie.results} config={config} userName={userName} mediaType={mediaType} /> : null}
-        <TrendingVideos getSelected={getSelected}/>
+          <Recommendations vedios={topMovie.results} config={config} userName={userName} mediaType={mediaType} getSelected={getSelected}/> : null}
+        {/* <TrendingVideos getSelected={getSelected}/> */}
+        <TrendingOrRecommendedVideos mediaType={mediaType} trendingOrRecommended={'trending'} getSelected={getSelected}/>
         {/* {trendingMovie !== undefined ?
             <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
         {watchList !== undefined ?
