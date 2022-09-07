@@ -10,30 +10,28 @@ import { ProvideAuth } from '../hooks/useAuth';
 export const App = () => {
    return (
       <>
+      <ProvideAuth>
          <NavBar />
          <Routes>
             {/* <Route path='/' element={<Template />} /> */}
+            <Route path='/' element={
+               <Homepage />
+               } />
             <Route path='/personal/' element={<PersonalProfile />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='/' element={
-               // <ProvideAuth>
-               // <Homepage />
-               // </ProvideAuth>
-               <Homepage />
-               } />
 
-            <Route
+            {/* <Route
                path='/home'
                element={
                   // <ProvideAuth>
-                  //    <Homepage />
+                     <Homepage />
                   // </ProvideAuth>
-                  <Homepage />
                }
-            />
+            /> */}
             <Route path='/about' element={<AboutPage />} />
          </Routes>
+         </ProvideAuth>
       </>
    );
 };

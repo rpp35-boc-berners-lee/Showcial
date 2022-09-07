@@ -10,6 +10,8 @@ interface Props {
    currentIndex: number;
    itemIndex: number;
    id: number;
+   mediaType: string;
+   getSelected?: (id: number, type: string) => void;
 }
 
 export const TrendingVideoItem = ({
@@ -17,7 +19,9 @@ export const TrendingVideoItem = ({
    title,
    imageUrl,
    imageSize,
-   id
+   id,
+   mediaType,
+   getSelected
 }: Props) => {
    return (
       <>
@@ -40,6 +44,8 @@ export const TrendingVideoItem = ({
                backdrop_path={image}
                name={title}
                id={id}
+               mediaType={mediaType}
+               getSelected={getSelected}
             />
          </Grid>
       </>

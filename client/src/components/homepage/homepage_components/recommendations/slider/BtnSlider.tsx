@@ -9,7 +9,7 @@ type ChildProps = {
 }
 
 export const BtnSlider: React.FC<ChildProps> = ({direction,  moveSlide}) => {
-  console.log(direction, moveSlide);
+  // console.log(direction, moveSlide);
   return (
     <button
       onClick={moveSlide}
