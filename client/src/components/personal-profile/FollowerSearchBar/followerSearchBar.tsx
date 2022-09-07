@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SearchItem } from '../FollowerSearchBar/searchItem/searchItem';
+import { SearchItem } from './searchItem/searchItem';
 import axios from 'axios';
 import { TextField, Box, InputAdornment } from '@mui/material';
 
@@ -18,7 +18,7 @@ export const FollowerSearchBar = (props: any) => {
             return (
                <SearchItem
                   followee={followee}
-                  index={index}
+                  key={index}
                   setValue={props.setValue}
                   setFolloweeData={props.setFolloweeData}
                />

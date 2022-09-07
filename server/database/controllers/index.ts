@@ -185,7 +185,7 @@ const updateServices = async (userName: string, services: string[]) => {
 };
 
 // update user document w/ options
-const updateUser = (userName: string, prop: string, value: any) => {
+const updateUser = (userName: any, prop: any, value: any) => {
    return findUser(userName)
       .then((foundUser: any) => {
          const foundIndex = foundUser[prop].indexOf(value);
@@ -204,7 +204,10 @@ const updateUser = (userName: string, prop: string, value: any) => {
             });
       })
       .catch((error: any) => {
-         console.log(`Error updating ${userName} with ${prop}: ${value}`);
+         console.log(
+            `Error updating ${userName} with ${prop}: ${value}`,
+            error
+         );
       });
 };
 
@@ -245,7 +248,7 @@ const addVideo = (videoData: any) => {
 //!==============================================//
 
 // This controller isused to retrieve all activity for a certain user
-const retrieveActivities = async (userName: string) => {
+const retrieveActivities = async (userName: any) => {
    try {
       let activities = await models.RatingsTable.find({
          userName: userName,
@@ -257,7 +260,7 @@ const retrieveActivities = async (userName: string) => {
 };
 
 // This controller is used to retrieve feed that is generated from following list of a user
-const retrieveFeed = async (userName: string) => {
+const retrieveFeed = async (userName: any) => {
    try {
       let user = await findUser(userName);
       let followingList = user.followingList;
@@ -277,6 +280,7 @@ const addRating = (ratingData: any) => {
       userName: ratingData.userName,
       userRating: ratingData.userRating,
       created_at: new Date(),
+      image: ratingData.image,
       comments: ratingData.comments,
    });
    return newRating

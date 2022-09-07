@@ -106,12 +106,11 @@ router.put('/user/addFollowed', (req: Request, res: Response) => {
 router.put('/user/removeFollowed', (req: Request, res: Response) => {
    return controllers
       .updateUser(req.body.userName, 'followingList', req.body.value)
-      .then((results: any) => {
+      .then(() => {
          console.log(
-            `/user/removeFollowed: Success removing ${req.body.value} from following list`,
-            results
+            `/user/removeFollowed: Success removing ${req.body.value} from following list`
          );
-         res.status(204).send(results);
+         res.status(204);
          res.end();
       })
       .catch((error: any) => {
@@ -135,10 +134,25 @@ router.put('/user/services', async (req: Request, res: Response) => {
    }
 });
 
+//TODO: retrieve individual feed
+router.get('/user/individualFeed', (req: Request, res: Response) => {
+   console.log('userName', req.query.userName);
+   console.log('params', req.params);
+   return controllers
+      .retrieveActivities(req.query.userName)
+      .then((results: any) => {
+         res.status(200).send(results);
+      })
+      .catch((error: any) => {
+         res.status(400).send(error);
+         console.log('failed PUT /user/individualFeed', error);
+      });
+});
+
 //TODO: retrieve personal feed
 router.get('/user/feed', async (req: Request, res: Response) => {
    try {
-      let result = await controllers.retrieveFeed(req.body.userName);
+      let result = await controllers.retrieveFeed(req.query.userName);
       res.status(200).send(result);
    } catch (error) {
       res.status(400).send(error);
@@ -159,6 +173,7 @@ router.post('/user/addToWatchedList', async (req: Request, res: Response) => {
          res.end();
       });
 });
+
 //TODO: remove video from watched list
 router.post(
    '/user/removeFromWatchedList',
@@ -175,6 +190,7 @@ router.post(
          });
    }
 );
+
 //TODO: add videoID to recommended list
 router.post('/addToRecommended', async (req: Request, res: Response) => {
    let query = req.query as unknown as Query;
@@ -189,6 +205,7 @@ router.post('/addToRecommended', async (req: Request, res: Response) => {
          res.end();
       });
 });
+
 //TODO: remove videoID from recommended list
 router.post('/addToRecommended', async (req: Request, res: Response) => {
    let query = req.query as unknown as Query;
