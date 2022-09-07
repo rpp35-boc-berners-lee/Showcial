@@ -1,6 +1,27 @@
+@use '../../index.scss' as *;
 
+#signuptitle{
+  position: relative;
+  top: 30px;
+}
+
+.signuppaper {
+  position: relative;
+  left: 33%;
+  top: 80px;
+  width: 33%;
+  padding: 2px;
+  @include devices(mobile) {
+   display: flex;
+   justify-content: center;
+   width: 75%;
+   left: 12.5%;
+   top: 30px;
+  };
+  }
 
 .Authform {
   display: flex;
   justify-content: center;
+  margin: 5%;
 }
