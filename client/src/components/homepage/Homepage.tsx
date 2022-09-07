@@ -27,8 +27,8 @@ interface MouseEvent {
    };
 }
 export function Homepage() {
-  const auth = useAuth();
-  console.log('auth:', auth);
+  // const auth = useAuth();
+  // console.log('auth:', auth);
    const [watchList, setWatchList] = useState([]);
    // temporary username
    const [userName, setUserName] = useState<string>('Nourse41');
