@@ -10,17 +10,20 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useAuth } from '../../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const pages = ['Sign in', 'Sign up'];
 
 const ResponsiveAppBar = () => {
+   const auth = useAuth();
+  console.log('auth:', auth);
+
    const navigate = useNavigate();
    const location = useLocation();
    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
       null
    );
-   console.log('location:', location);
    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
       null
    );
@@ -48,6 +51,7 @@ const ResponsiveAppBar = () => {
          navigate('/signup');
       }
    };
+
 
    return (
       <AppBar position='static'>
@@ -127,7 +131,7 @@ const ResponsiveAppBar = () => {
                >
                   Showcial
                </Typography>
-               {location.pathname !== '/about' && location.pathname !== '/personal' ? (
+               {auth.isLoggedIn === false ? (
                   <Box
                      sx={{
                         flexGrow: 1,
@@ -149,7 +153,9 @@ const ResponsiveAppBar = () => {
                         </Button>
                      ))}
                   </Box>
-               ) : null}
+               ) : 
+                        <Button variant='contained' onClick={() => auth.signout()}>Log out</Button>
+               }
             </Toolbar>
          </Container>
       </AppBar>

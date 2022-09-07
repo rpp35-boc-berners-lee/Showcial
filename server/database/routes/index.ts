@@ -102,6 +102,7 @@ router.put('/user/removeFollowed', (req: Request, res: Response) => {
     })
 });
 
+
 //TODO: update owned services list
 router.put('/user/services', async (req: Request, res: Response) => {
   try {

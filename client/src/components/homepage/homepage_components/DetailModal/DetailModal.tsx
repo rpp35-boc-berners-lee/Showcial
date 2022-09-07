@@ -42,98 +42,99 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
   },
 };
+
+ReactModal.setAppElement('#root');
+
 export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal }) => {
-  const [ recommendedUsers, SetRecommendedUsers ] = useState([]);
-  const [ platform, SetPlatform ] = useState([])
-  const [ movieDetail, setMovieDetail ] = (vedio);
-  const [ mediaType, setMediaType ] = useState('movie');
+  const [recommendedUsers, SetRecommendedUsers] = useState([]);
+  const [platform, SetPlatform] = useState([])
+  // const [ movieDetail, setMovieDetail ] = useState(vedio);
+  // const [ mediaType, setMediaType ] = useState('movie');
 
   // temporary username until we get username from passport
   const userName = 'JamesFranco';
 
   //not working well
-  const fetchAll = async () => {
-    const Detail = await axios({
-      url: 'https://api.themoviedb.org/3/movie',
-      params: {
-        api_key: process.env.TOKEN,
-        id: vedio.id
-      }
-  })
-  setMovieDetail(Detail);
-  console.log('this movie is', movieDetail);
-  }
+  // const fetchAll = async () => {
+  //   let videoDetail = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${vedio.id}`);
+  //   videoDetail.data.media_type = mediaType;
+  //   videoDetail.data.watchProviders = await getWatchProviders();
+  //   setMovieDetail(videoDetail.data);
+  // }
   // it only console.log at the 1st rendering, need fix
-  useEffect(() => {
-    fetchAll();
-    console.log('this movie is', movieDetail);
-  }, [])
+  // useEffect(() => {
+  //   fetchAll();
+  //   console.log('this movie is', movieDetail);
+  // }, [])
 
   const addToWatchList = async () => {
-    let movieDetail = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${vedio.id}`);
-    movieDetail.data.media_type = mediaType;
-    movieDetail.data.watchProviders = await getWatchProviders();
-    await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, video: movieDetail.data });
+    await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, vedio });
   }
 
-  const getWatchProviders = async () => {
-    let watchProviders = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${vedio.id}/watch/providers`);
-    return watchProviders.data.results['US'];
-  }
+  useEffect(() => {
+    console.log(vedio, 'in DetailModal');
+  }, [])
 
-  return (<ReactModal
-    isOpen={modalIsOpen}
-    onRequestClose={closeModal}
-    style={customStyles}
-    contentLabel="Example Modal"
-  >
+  // const getWatchProviders = async () => {
+  //   let watchProviders = await axios.get(`http://localhost:8080/tmdb/${vedio.media_type}/${vedio.id}/watch/providers`);
+  //   return watchProviders.data.results['US'];
+  // }
 
-    <Card sx={{ maxWidth: 800 }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="close">
-            <HighlightOffIcon onClick={closeModal} />
-          </IconButton>
-        }
-        title={vedio.name}
-        subheader={`Released: ${vedio.first_air_date}`}
-      />
-      <CardMedia
-        component="img"
-        height="660"
-        image={image}
-        alt="Paella dish"
-      />
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton>
-          <StarBorderIcon aria-label="rate" />
-        </IconButton>
-        <IconButton onClick={addToWatchList}>
-          <AddCommentOutlinedIcon aria-label="add to recommend" />
-        </IconButton>
-      </CardActions>
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {`Genre: ${vedio.original_name}`}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {`Description: ${vedio.overview}`}
-        </Typography>
-      </CardContent>
+  return (
+    <div id='details'>
+      <ReactModal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <Card sx={{ maxWidth: 800 }}>
+          <CardHeader
+            avatar={
+              <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                R
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="close" onClick={closeModal}>
+                <HighlightOffIcon />
+              </IconButton>
+            }
+            title={vedio.name ? vedio.name : vedio.title}
+            subheader={`Released: ${vedio.first_air_date || vedio.release_date}`}
+          />
+          <CardMedia
+            component="img"
+            height="660"
+            image={image}
+            alt="Paella dish"
+          />
+          <CardActions disableSpacing>
+            <IconButton aria-label="add to favorites">
+              <FavoriteIcon />
+            </IconButton>
+            <IconButton aria-label="share">
+              <ShareIcon />
+            </IconButton>
+            <IconButton>
+              <StarBorderIcon aria-label="rate" />
+            </IconButton>
+            <IconButton onClick={addToWatchList}>
+              <AddCommentOutlinedIcon aria-label="add to recommend" />
+            </IconButton>
+          </CardActions>
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              {`Genre: ${vedio.genres[0].name}`}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {`Description: ${vedio.overview}`}
+            </Typography>
+          </CardContent>
 
-    </Card>
-  </ReactModal>
+        </Card>
+      </ReactModal>
+    </div>
   )
 }
 

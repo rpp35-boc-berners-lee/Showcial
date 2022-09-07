@@ -3,9 +3,10 @@ import {Slider} from './slider/Slider';
 import List from './list/List'
 
 type ChildProps = {
-  vedios: any,
-  config: any,
-  userName: string
+  vedios: any;
+  config: any;
+  userName: string;
+  mediaType: string;
 }
 
 type Video = {
@@ -15,12 +16,12 @@ type Video = {
   id: number;
 }
 
-export const Recommendations: React.FC<ChildProps> = ({vedios,  config, userName}) => {
-  console.log(vedios);
-  console.log(config);
+export const Recommendations: React.FC<ChildProps> = ({vedios,  config, userName, mediaType}) => {
+  // console.log(vedios);
+  // console.log(config);
   return (
     <div>
-      <Slider vedios={vedios} config={config} userName={userName}/>
+      <Slider vedios={vedios} config={config} userName={userName} mediaType={mediaType} />
       <List />
     </div>)
 }

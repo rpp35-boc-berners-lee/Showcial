@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 type Props = {
    vedioList: any;
    config: any;
+   mediaType: string;
 };
 
 type Video = {
@@ -26,7 +27,7 @@ const breakPoints = [
   { width: 1200, itemsToShow: 4 }
 ];
 
-export const CarouselList: React.FC<Props> = ({ vedioList, config }) => {
+export const CarouselList: React.FC<Props> = ({ vedioList, config, mediaType }) => {
    return (
       <div>
          {/* <Carousel> */}
@@ -39,6 +40,7 @@ export const CarouselList: React.FC<Props> = ({ vedioList, config }) => {
                      backdrop_path={video.backdrop_path}
                      name={video.name || video.original_title}
                      id={video.id}
+                     mediaType={mediaType}
                   />
                </Paper>
             );

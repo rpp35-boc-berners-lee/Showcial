@@ -7,14 +7,15 @@ import React, {
 } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { replace } from 'cypress/types/lodash';
 
 interface AuthProvider {
-   username: string;
+   user: null | string;
    isLoggedIn: boolean;
-   signout: null | (() => void);
+   signout: any;
 }
 const authContext = createContext<AuthProvider>({
-   username: '',
+   user: null,
    isLoggedIn: false,
    signout: null,
 });
@@ -31,24 +32,24 @@ export const useAuth = () => {
 //this is the custom hook passed to our Provider that will handle all our authentication state and create the authentication object
 function useProvideAuth() {
    const navigate = useNavigate();
-   const [username, setUsername] = useState<string>('');
+   const [user, setUser] = useState<string>('');
    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
    useEffect(() => {
-      console.log('here in use effect auth context');
+      console.log('here in use effect useauth')
       axios
          .get('/api/auth/checkAuthStatus')
          .then((response) => {
             if (response.status === 200) {
                console.log('response:', response);
-               setUsername(response.data);
+               setUser(response.data);
                setIsLoggedIn(true);
             }
          })
          .catch((err) => {
             setIsLoggedIn(false);
             console.log('err', err);
-            navigate('/signin');
+            // navigate('/signin', {replace: true});
          });
    }, []);
 
@@ -56,13 +57,15 @@ function useProvideAuth() {
       try {
          await axios.get('/api/auth/logout');
          navigate('/signin');
+         setIsLoggedIn(false);
+         setUser('');
       } catch (err) {
          console.log('err:', err);
       }
    };
    //now return an object that contains all of our newly created state so it can be accessed when calling our hook
    return {
-      username,
+      user,
       isLoggedIn,
       signout,
    };

@@ -20,7 +20,12 @@ type PopularMovie = {
    vote_count: number;
 };
 
-export const TrendingVideos = () => {
+type Props = {
+   getSelected?: (id: number, type: string) => void;
+   mediaType?: string;
+}
+
+export const TrendingVideos: React.FC<Props> = ({ getSelected, mediaType }) => {
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);
    const [imageUrl, setImageUrl] = useState<string>('');
    const [imageSize, setImageSize] = useState<string[]>(['']);
@@ -28,7 +33,7 @@ export const TrendingVideos = () => {
    const [activeMovies, setActiveMovies] = useState<PopularMovie[] | []>([]);
    useEffect(() => {
       axios
-         .get('http://localhost:8080/tmdb/movie/popular')
+         .get(`http://localhost:8080/tmdb/trending/${mediaType || 'movie'}`)
          .then((response) => {
             axios
                .get('http://localhost:8080/tmdb/configuration')
@@ -125,6 +130,8 @@ export const TrendingVideos = () => {
                            imageUrl={imageUrl}
                            imageSize={imageSize}
                            id={movie.id}
+                           mediaType={mediaType || 'movie'}
+                           getSelected={getSelected}
                         />
                      ))}
                   </Grid>
