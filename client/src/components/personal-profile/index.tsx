@@ -9,18 +9,27 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import AssistantPhotoOutlinedIcon from '@mui/icons-material/AssistantPhotoOutlined';
+import { ConfigAPI } from '../../../../types';
 
 export const PersonalProfile = () => {
    const [value, setValue] = React.useState(1);
-   const [userName, setUserName] = useState<any>('Nourse41'); //! switch to current signed in user
+   const [userName, setUserName] = useState<any>('JamesFranco'); //! switch to current signed in user
    const [followeeData, setFolloweeData] = useState<any>(undefined);
    const [followingList, setFollowingList] = useState<any>([]);
    const [recommendedList, setRecommendedList] = useState<any>([]);
    const [watchList, setWatchList] = useState<any>([]);
-   ('');
+   const [config, setConfig] = useState<ConfigAPI | undefined>();
+
+   const fetchAPI = async () => {
+      let config = await axios.get<ConfigAPI>(
+         `http://localhost:8080/tmdb/configuration`
+      );
+      setConfig(config.data);
+   };
 
    useEffect(() => {
       fetchUserData();
+      fetchAPI();
    }, []);
 
    function fetchUserData() {
@@ -30,8 +39,8 @@ export const PersonalProfile = () => {
          })
          .then((results: any) => {
             setFollowingList(results.data.followingList);
-            setRecommendedList(results.data.watchedVideos);
-            setWatchList(results.data.recommendedVideos);
+            setRecommendedList(results.data.recommendedVideos);
+            setWatchList(results.data.watchedVideos);
          })
          .catch((error) => {
             console.log('fetchFollowingList() Failed', error);
@@ -88,7 +97,9 @@ export const PersonalProfile = () => {
          />
       );
       selectBar = <SelectBar />;
-      component = <ForYou userName={userName} />;
+      component = (
+         <ForYou userName={userName} watchList={watchList} config={config} />
+      );
    } else if (currentOption === 2) {
       component = (
          <ForFollower
