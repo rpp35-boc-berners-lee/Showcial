@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid, Paper } from '@mui/material';
 import { WatchProviders } from '.././watch-providers/WatchProviders'
 import { PersonalFeed } from '.././personal-feed/PersonalFeed';
-
+import { YourWatchList } from '../../homepage/homepage_components/YourWatchList';
 
 export const ForYou = ({userName}: {userName: string}) => {
 
@@ -16,6 +16,7 @@ export const ForYou = ({userName}: {userName: string}) => {
            <PersonalFeed />
          </Grid>
        </Grid>
+       {/* <YourWatchList /> */}
      </div>
   );
 };
