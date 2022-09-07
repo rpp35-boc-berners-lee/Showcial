@@ -64,6 +64,14 @@ export function Homepage() {
       getSearchAPI();
    }, [page]);
 
+   useEffect(() => {
+      getSearchAPI();
+   }, [mediaType]);
+
+   useEffect(() => {
+      setSearchResults(undefined);
+   }, [query === '']);
+
    const fetchAPI = async () => {
       let config = await axios.get<ConfigAPI>(
          `http://localhost:8080/tmdb/configuration`
@@ -189,7 +197,11 @@ export function Homepage() {
                      </Button>
                   ) : null}
                </Stack>
-               <Search searchResults={searchResults.results} config={config} />
+               <Search
+                  searchResults={searchResults.results}
+                  config={config}
+                  mediaType={mediaType}
+               />
                <Stack spacing={2} direction='row'>
                   {page < searchResults?.total_pages ? (
                      <Button

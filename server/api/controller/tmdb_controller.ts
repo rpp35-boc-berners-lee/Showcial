@@ -79,6 +79,20 @@ let getSearchResults = async (query: string, page: number) => {
     })
 }
 
+let getTVTrending = async () => {
+  return await axios.get(`https://api.themoviedb.org/3/trending/tv/week`, config)
+    .then(results => {
+      return results.data;
+    })
+}
+
+let getMovieTrending = async () => {
+  return await axios.get(`https://api.themoviedb.org/3/trending/movie/week`, config)
+    .then(results => {
+      return results.data;
+    })
+}
+
 export default {
   getTV,
   getTopTVs,
@@ -90,4 +104,6 @@ export default {
   getMovieWatchProviders,
   getConfig,
   getSearchResults,
+  getTVTrending,
+  getMovieTrending
 };
