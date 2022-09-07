@@ -10,6 +10,8 @@ type Props = {
   userName: string;
   watchList: any;
   config: any;
+  setValue: any;
+  setFolloweeData: any;
 }
 
 type Video = {
@@ -21,7 +23,7 @@ type Video = {
   media_type: string;
 }
 
-export const ForYou: React.FC<Props> = ({ userName, watchList, config }) => {
+export const ForYou: React.FC<Props> = ({ userName, watchList, config, setValue, setFolloweeData }) => {
   return (
      <div>
        <Grid container spacing={2} className='personal-profile'>
@@ -29,7 +31,11 @@ export const ForYou: React.FC<Props> = ({ userName, watchList, config }) => {
            <Paper><WatchProviders userName={userName} /></Paper>
          </Grid>
          <Grid item xs={12} sm={12} md={9} className='personal-feed'>
-           <PersonalFeed userName={userName}/>
+           <PersonalFeed
+             userName={userName}
+             setValue={setValue}
+             setFolloweeData={setFolloweeData}
+           />
          </Grid>
        </Grid>
        <Box sx={{ width: '100%' }}>

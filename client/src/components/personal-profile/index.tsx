@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './PersonalProfile.scss';
 import { ForYou } from './for-you/ForYou';
 import { FollowingList } from './following-list/FollowingList';
-import { FollowerSearchBar } from './FollowerSearchBar/followerSearchBar';
+import { FollowerSearchBar } from './followerSearchBar/followerSearchBar';
 import { ForFollower } from './for-follower/ForFollower';
 import axios from 'axios';
 import Tabs from '@mui/material/Tabs';
@@ -19,7 +19,7 @@ export const PersonalProfile = () => {
   const [recommendedList, setRecommendedList] = useState<any>([]);
   const [watchList, setWatchList] = useState<any>([]);
   const [config, setConfig] = useState<ConfigAPI | undefined>();
-  
+
   const fetchAPI = async () => {
     let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
     setConfig(config.data);
@@ -70,7 +70,7 @@ export const PersonalProfile = () => {
   } else if (currentOption === 1) {
     followerSearchBar = (<FollowerSearchBar setValue={setValue} setFolloweeData={setFolloweeData}/>);
     selectBar = (<SelectBar />);
-    component = (<ForYou userName={userName} watchList={watchList} config={config}  />);
+    component = (<ForYou userName={userName} watchList={watchList} config={config} setValue={setValue} setFolloweeData={setFolloweeData} />);
   } else if (currentOption === 2) {
     component = (<ForFollower setValue={setValue} userName={userName} followeeData={followeeData} followingList={followingList}/>);
   }

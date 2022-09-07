@@ -32,7 +32,11 @@ export const Post = (props: any) => {
 
   return (
     <Card className="post" sx={{ boxShadow: 12 }}>
-      <Stack direction="row" spacing={1} justifyContent="left" alignItems="center">
+      <Stack direction="row" spacing={1} justifyContent="left" alignItems="center" style={{cursor: 'pointer'}}
+        onClick={() => {
+          props.setFolloweeData(postData.userName);
+          props.setValue(2);
+      }}>
         <Avatar>{upperCaseReducer(postData.userName)}</Avatar>
         <CardHeader
           title={postData.userName}

@@ -27,6 +27,8 @@ export const PersonalFeed = (props: any) => {
             <Post
                feedData={feedData}
                key={index}
+               setValue={props.setValue}
+               setFolloweeData={props.setFolloweeData}
             />
          );
          })}
