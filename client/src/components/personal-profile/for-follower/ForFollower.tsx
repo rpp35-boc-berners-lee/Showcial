@@ -1,7 +1,25 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { IndividualFeed } from '../individual-feed/individualFeed';
-import { Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button, Stack, Avatar } from '@mui/material';
+import { VideoCard } from '../../shared/VideoCard';
+import { Card, CardHeader, Divider, Button, Stack, Avatar, Box, Grid, Typography } from '@mui/material';
+
+type Props = {
+  userName: string;
+  watchList: any;
+  config: any;
+  setValue: any;
+  setFolloweeData: any;
+}
+
+type Video = {
+  base_url: string;
+  backdrop_path: string;
+  name: string;
+  id: number;
+  original_title: string;
+  media_type: string;
+}
 
 const upperCaseReducer = (string: string) => {
   return string.split('').reduce((pV, cV) => {
@@ -113,7 +131,28 @@ export const ForFollower = (props: any) => {
           Back
         </Button>
       </Stack>
-      <IndividualFeed userFeed={userFeed} />
+      <IndividualFeed userFeed={userFeed}/>
+
+      <Box sx={{ width: '100%' }}>
+        <Typography>My Watch List</Typography>
+        <Grid container spacing={4} justifyContent='center'>
+          {watchList.map((video: Video, i: number) => {
+            return (
+              <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
+                <VideoCard
+                  base_url={props.config.images.base_url}
+                  backdrop_sizes={props.config.images.backdrop_sizes}
+                  backdrop_path={video.backdrop_path}
+                  name={video.name || video.original_title}
+                  id={video.id}
+                  mediaType={video.media_type}
+                />
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Box>
+
     </Card>
     </>
   );

@@ -72,7 +72,7 @@ export const PersonalProfile = () => {
     selectBar = (<SelectBar />);
     component = (<ForYou userName={userName} watchList={watchList} config={config} setValue={setValue} setFolloweeData={setFolloweeData} />);
   } else if (currentOption === 2) {
-    component = (<ForFollower setValue={setValue} userName={userName} followeeData={followeeData} followingList={followingList}/>);
+    component = (<ForFollower setValue={setValue} userName={userName} followeeData={followeeData} followingList={followingList} config={config}/>);
   }
 
   return (
