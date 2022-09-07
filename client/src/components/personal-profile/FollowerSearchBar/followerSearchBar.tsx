@@ -1,5 +1,5 @@
 import React, { useState, useEffect }  from 'react';
-import { SearchItem } from '../followerSearchBar/searchItem/searchItem';
+import { SearchItem } from '../FollowerSearchBar/searchItem/searchItem';
 import axios from 'axios';
 import { TextField, Box, InputAdornment } from '@mui/material';
 
