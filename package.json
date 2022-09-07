@@ -41,6 +41,7 @@
       "express-session": "^1.17.3",
       "fork-ts-checker-webpack-plugin": "^7.2.13",
       "generate-password": "^1.7.0",
+      "javascript-time-ago": "^2.5.7",
       "mongoose": "^6.5.2",
       "nodemon": "^2.0.16",
       "passport": "^0.6.0",

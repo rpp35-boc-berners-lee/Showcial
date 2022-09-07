@@ -17,7 +17,7 @@ export const FollowerSearchBar = (props: any) => {
       return (
         <SearchItem
           followee={followee}
-          index={index}
+          key={index}
           setValue={props.setValue}
           setFolloweeData={props.setFolloweeData}
         />);
