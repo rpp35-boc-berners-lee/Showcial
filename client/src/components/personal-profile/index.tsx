@@ -41,7 +41,7 @@ export const PersonalProfile = () => {
         console.log('fetchFollowingList() Failed', error);
       })
   }
-
+  
   let currentOption = value;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log('value: ', value);
@@ -70,9 +70,9 @@ export const PersonalProfile = () => {
   } else if (currentOption === 1) {
     followerSearchBar = (<FollowerSearchBar setValue={setValue} setFolloweeData={setFolloweeData}/>);
     selectBar = (<SelectBar />);
-    component = (<ForYou userName={userName} watchList={watchList} config={config}  />);
+    component = (<ForYou userName={userName} watchList={watchList} config={config} />);
   } else if (currentOption === 2) {
-    component = (<ForFollower setValue={setValue} userName={userName} followeeData={followeeData} followingList={followingList}/>);
+    component = (<ForFollower setValue={setValue} userName={userName} followeeData={followeeData} followingList={followingList} config={config} />);
   }
 
   return (

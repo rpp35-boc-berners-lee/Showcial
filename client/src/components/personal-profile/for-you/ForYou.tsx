@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Grid, Paper, Box, Typography } from '@mui/material';
 import { WatchProviders } from '.././watch-providers/WatchProviders'
 import { PersonalFeed } from '.././personal-feed/PersonalFeed';
-import { YourWatchList } from '../../homepage/homepage_components/YourWatchList';
 import { VideoCard } from '../../shared/VideoCard';
 
 type Props = {
