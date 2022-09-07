@@ -33,16 +33,16 @@ export function Homepage() {
   // const auth = useAuth();
   // console.log('auth:', auth);
   const [watchList, setWatchList] = useState();
-  // temporary username
-  const [userName, setUserName] = useState<string>('JamesFranco');
-  const [query, setQuery] = useState<string>('');
-  const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
-  const [page, setPage] = useState<number>(1);
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const [topTV, setTopTV] = useState<APIResponse | undefined>();
   const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
   const [topMovie, setTopMovie] = useState<APIResponse | undefined>();
   const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
+  const [userName, setUserName] = useState<string>('JamesFranco');
+  // temporary username
+  const [query, setQuery] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
+  const [page, setPage] = useState<number>(1);
   const [selectedId, setSelectedId] = useState<number>(0)
   const [selectedMediaType, setSelectedMediaType] = useState<string>('')
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -69,7 +69,7 @@ export function Homepage() {
   useEffect(() => {
     setSearchResults(undefined);
   }, [query === ''])
-
+  
   const fetchAPI = async () => {
     let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
     setConfig(config.data);
@@ -113,6 +113,7 @@ export function Homepage() {
     let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/${mediaType}/${query}/${page}`);
     setSearchResults(search.data);
   }
+  
 
   const updateWatchList = async () => {
     let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
