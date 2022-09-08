@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Typography, Stack, Grid, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { DetailModal } from '../DetailModal/DetailModal'
 
 type PopularMovie = {
    backdrop_path: string;
@@ -19,14 +20,23 @@ type PopularMovie = {
    release_date: string;
    vote_average: number;
    vote_count: number;
+   poster_path: string;
 };
 
-export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended, getSelected}: {mediaType: string; trendingOrRecommended: string, getSelected: (id: number, type: string) => void;}) => {
+type Props = {
+   mediaType: string;
+   trendingOrRecommended: string;
+   getSelected: (id: number, type: string) => void;
+}
+
+export const TrendingOrRecommendedVideos: React.FC<Props> = ({ mediaType, trendingOrRecommended, getSelected }) => {
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);
    const [imageUrl, setImageUrl] = useState<string>('');
    const [imageSize, setImageSize] = useState<string[]>(['']);
    const [scrollPosition, setScrollPosition] = useState<number>(0);
    const [showBtnRight, setShowBtnRight] = useState<boolean>(true);
+   const [modalIsOpen, setModalIsOpen] = useState(false);
+   const [currentlySelected, setCurrentlySelected] = useState();
    const sliderRef = useRef<HTMLDivElement>(null);
 
 

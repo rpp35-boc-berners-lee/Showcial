@@ -39,8 +39,8 @@ export function Homepage() {
   const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
   const [topMovie, setTopMovie] = useState<APIResponse | undefined>();
   const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
-  const [userName, setUserName] = useState<string>('JamesFranco');
   // temporary username
+  const [userName, setUserName] = useState<string>('JamesFranco');
   const [query, setQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
   const [page, setPage] = useState<number>(1);
@@ -49,8 +49,6 @@ export function Homepage() {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [mediaType, setMediaType] = useState('movie');
   const [inWatchList, setInWatchList] = useState<boolean>(false);
-  // temporary username
-
 
    useEffect(() => {
       fetchAPI();
@@ -243,11 +241,33 @@ export function Homepage() {
           </FormControl>
         </Box>
         {topTV !== undefined && mediaType === 'tv' ?
-          <Recommendations vedios={topTV.results} config={config} userName={userName} mediaType={mediaType} getSelected={getSelected} /> : null}
+          <Recommendations
+            vedios={topTV.results}
+            config={config}
+            userName={userName}
+            mediaType={mediaType}
+            getSelected={getSelected}
+            inWatchList={inWatchList}
+            setInWatchList={setInWatchList}
+            updateWatchList={updateWatchList}
+            /> : null}
         {topMovie !== undefined && mediaType === 'movie' ?
-          <Recommendations vedios={topMovie.results} config={config} userName={userName} mediaType={mediaType} getSelected={getSelected}/> : null}
+          <Recommendations
+            vedios={topMovie.results}
+            config={config}
+            userName={userName}
+            mediaType={mediaType}
+            getSelected={getSelected}
+            inWatchList={inWatchList}
+            setInWatchList={setInWatchList}
+            updateWatchList={updateWatchList}
+            /> : null}
         {/* <TrendingVideos getSelected={getSelected}/> */}
-        <TrendingOrRecommendedVideos mediaType={mediaType} trendingOrRecommended={'trending'} getSelected={getSelected}/>
+        <TrendingOrRecommendedVideos
+            mediaType={mediaType}
+            trendingOrRecommended={'trending'}
+            getSelected={getSelected}
+          />
         {/* {trendingMovie !== undefined ?
             <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
         {watchList !== undefined ?
