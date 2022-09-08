@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Grid } from '@mui/material';
-import { VideoCard } from '../../VideoCard';
+import { VideoCard } from '../../../../shared/VideoCard';
 
 interface Props {
    image: string;
@@ -10,7 +10,7 @@ interface Props {
    currentIndex: number;
    itemIndex: number;
    id: number;
-   mediaType: string;
+   mediaType: string
    getSelected?: (id: number, type: string) => void;
 }
 

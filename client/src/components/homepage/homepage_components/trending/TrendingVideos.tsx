@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './TrendingVideos.scss';
-import { VideoCard } from '../VideoCard';
+import { VideoCard } from '../../../shared/VideoCard';
 import axios from 'axios';
 import { Typography, Stack, Grid, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -20,12 +20,7 @@ type PopularMovie = {
    vote_count: number;
 };
 
-type Props = {
-   getSelected?: (id: number, type: string) => void;
-   mediaType?: string;
-};
-
-export const TrendingVideos: React.FC<Props> = ({ getSelected, mediaType }) => {
+export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended, getSelected}: {mediaType: string; trendingOrRecommended: string, getSelected: (id: number, type: string) => void;}) => {
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);
    const [imageUrl, setImageUrl] = useState<string>('');
    const [imageSize, setImageSize] = useState<string[]>(['']);
@@ -33,9 +28,11 @@ export const TrendingVideos: React.FC<Props> = ({ getSelected, mediaType }) => {
    const [showBtnRight, setShowBtnRight] = useState<boolean>(true);
    const sliderRef = useRef<HTMLDivElement>(null);
 
+
    useEffect(() => {
+      let url: string = trendingOrRecommended === 'trending'? `http://localhost:8080/tmdb/${mediaType}/popular` :  `http://localhost:8080/videoDB/user`
       axios
-         .get(`http://localhost:8080/tmdb/trending/${mediaType || 'movie'}`)
+         .get(url)
          .then((response) => {
             axios
                .get('http://localhost:8080/tmdb/configuration')
@@ -48,7 +45,7 @@ export const TrendingVideos: React.FC<Props> = ({ getSelected, mediaType }) => {
          .catch((err) => {
             console.log('err:', err);
          });
-   }, []);
+   }, [mediaType]);
 
    const handleSlideRight = () => {
       if (sliderRef.current) {
@@ -75,8 +72,9 @@ export const TrendingVideos: React.FC<Props> = ({ getSelected, mediaType }) => {
       }
    };
 
-   return (
-      <>
+   if (popularMovies.length > 0) {
+      return (
+         <>
          <Typography variant='h4' component='h2' align='center' sx={{ pb: 1 }}>
             Currently Trending
          </Typography>
@@ -126,5 +124,8 @@ export const TrendingVideos: React.FC<Props> = ({ getSelected, mediaType }) => {
             )}
          </div>
       </>
-   );
+      );
+   } else {
+      return null;
+   }
 };
