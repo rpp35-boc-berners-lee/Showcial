@@ -84,28 +84,28 @@ export default function Signup() {
                   <form className='Authform'>
                      <Stack>
                         <TextField
-                           sx={{ backgroundColor: 'white', margin: 1 }}
+                           sx={{ margin: 1 }}
                            type='text'
                            value={values.userName}
                            placeholder='User Name'
                            onChange={(e) => handleUserNameChange(e)}
                         />
                         <TextField
-                           sx={{ backgroundColor: 'white', margin: 1 }}
+                           sx={{ margin: 1 }}
                            type='email'
                            value={values.email}
                            placeholder='Email'
                            onChange={(e) => handleEmailChange(e)}
                         />
                         <TextField
-                           sx={{ backgroundColor: 'white', margin: 1 }}
+                           sx={{ margin: 1 }}
                            type='password'
                            value={values.password}
                            placeholder='Password'
                            onChange={(e) => handlePasswordChange(e)}
                         />
                         <TextField
-                           sx={{ backgroundColor: 'white', margin: 1 }}
+                           sx={{ margin: 1 }}
                            type='password'
                            value={values.verifyPassword}
                            placeholder='Verify Password'
