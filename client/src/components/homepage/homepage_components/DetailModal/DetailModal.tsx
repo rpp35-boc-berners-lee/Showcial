@@ -21,7 +21,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Height } from '@mui/icons-material';
 import ReactModal from 'react-modal';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
+import AddToQueueOutlined from '@mui/icons-material/AddToQueueOutlined';
+import RemoveFromQueueOutlined from '@mui/icons-material/RemoveFromQueueOutlined'
 import { env } from 'process';
 
 interface Props {
@@ -30,7 +31,10 @@ interface Props {
   vedio: any,
   image: string,
   closeModal: any,
-  userName: string
+  userName: string,
+  inWatchList?: boolean,
+  setInWatchList?: (bool: boolean) => void,
+  updateWatchList?: () => void,
 }
 const customStyles = {
   content: {
@@ -45,14 +49,30 @@ const customStyles = {
 
 ReactModal.setAppElement('#root');
 
-export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal }) => {
+export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal, inWatchList, setInWatchList, updateWatchList }) => {
   const [recommendedUsers, SetRecommendedUsers] = useState([]);
   const [platform, SetPlatform] = useState([])
 
   const userName = 'JamesFranco';
 
   const addToWatchList = async () => {
-    await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, vedio });
+    await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, video: vedio });
+    if (setInWatchList !== undefined) {
+      setInWatchList(true);
+    }
+    if (updateWatchList !== undefined) {
+      updateWatchList();
+    }
+  }
+
+  const removeFromWatchList = async () => {
+    await axios.post(`http://localhost:8080/videoDB/user/removeFromWatchedList`, { userName, videoId: vedio.id });
+    if (setInWatchList !== undefined) {
+      setInWatchList(false);
+    }
+    if (updateWatchList !== undefined) {
+      updateWatchList();
+    }
   }
 
   return (
@@ -67,7 +87,7 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                S
+                R
               </Avatar>
             }
             action={
@@ -94,9 +114,14 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
             <IconButton>
               <StarBorderIcon aria-label="rate" />
             </IconButton>
-            <IconButton onClick={addToWatchList}>
-              <AddCommentOutlinedIcon aria-label="add to recommend" />
-            </IconButton>
+            {inWatchList ?
+              <IconButton onClick={removeFromWatchList}>
+                <RemoveFromQueueOutlined aria-label="add to watch list" />
+              </IconButton> :
+              <IconButton onClick={addToWatchList}>
+                <AddToQueueOutlined aria-label="remove from watch list" />
+              </IconButton>
+            }
           </CardActions>
           <CardContent>
             <Typography variant="body2" color="text.secondary">
@@ -106,7 +131,6 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
               {`Description: ${vedio.overview}`}
             </Typography>
           </CardContent>
-
         </Card>
       </ReactModal>
     </div>

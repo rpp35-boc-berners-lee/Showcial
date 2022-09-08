@@ -11,6 +11,7 @@ type PopularMovie = {
    adult: boolean;
    id: number;
    title: string;
+   name: string;
    original_language: string;
    original_title: string;
    overview: string;
@@ -100,7 +101,7 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended, g
                            base_url={imageUrl}
                            backdrop_sizes={imageSize}
                            backdrop_path={movie.backdrop_path}
-                           name={movie.title}
+                           name={movie.title || movie.name}
                            id={movie.id}
                            mediaType={mediaType || 'movie'}
                            getSelected={getSelected}

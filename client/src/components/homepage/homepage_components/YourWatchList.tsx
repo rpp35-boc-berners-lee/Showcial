@@ -26,7 +26,7 @@ type Video = {
   backdrop_path: string;
   name: string;
   id: number;
-  original_title: string;
+  title: string;
   media_type: string;
 }
 
@@ -175,7 +175,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
                   base_url={config.images.base_url}
                   backdrop_sizes={config.images.backdrop_sizes}
                   backdrop_path={video.backdrop_path}
-                  name={video.name || video.original_title}
+                  name={video.name || video.title}
                   id={video.id}
                   mediaType={video.media_type}
                   getSelected={getSelected}

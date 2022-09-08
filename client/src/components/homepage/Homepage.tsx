@@ -23,6 +23,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { VideoDetails } from '../shared/VideoDetails';
 import { useAuth } from '../../hooks/useAuth';
 import { TrendingOrRecommendedVideos } from './homepage_components/trending/TrendingVideos'
+import { set } from 'cypress/types/lodash';
 interface MouseEvent {
    target: {
       id: string;
@@ -30,9 +31,9 @@ interface MouseEvent {
 }
 
 export function Homepage() {
-  // const auth = useAuth();
-  // console.log('auth:', auth);
-  const [watchList, setWatchList] = useState();
+  const auth = useAuth();
+  console.log('auth:', auth);
+  const [watchList, setWatchList] = useState<any[]>();
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const [topTV, setTopTV] = useState<APIResponse | undefined>();
   const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
@@ -47,6 +48,7 @@ export function Homepage() {
   const [selectedMediaType, setSelectedMediaType] = useState<string>('')
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [mediaType, setMediaType] = useState('movie');
+  const [inWatchList, setInWatchList] = useState<boolean>(false);
   // temporary username
 
 
@@ -69,7 +71,19 @@ export function Homepage() {
   useEffect(() => {
     setSearchResults(undefined);
   }, [query === ''])
-  
+
+  useEffect(() => {
+    if (!openModal) {
+      setInWatchList(false);
+    } else {
+      checkWatchList();
+    }
+  }, [openModal]);
+
+  useEffect(() => {
+    setSearchResults(undefined);
+  }, [query === ''])
+
   const fetchAPI = async () => {
     let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
     setConfig(config.data);
@@ -110,10 +124,10 @@ export function Homepage() {
   }
 
   const getSearchAPI = async () => {
-    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/${mediaType}/${query}/${page}`);
+    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${mediaType}/${query}/${page}`);
     setSearchResults(search.data);
   }
-  
+
 
   const updateWatchList = async () => {
     let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
@@ -126,9 +140,30 @@ export function Homepage() {
     setOpenModal(!openModal);
   }
 
+  const checkWatchList = () => {
+    if (watchList !== undefined) {
+      for (let i = 0; i < watchList.length; i++) {
+        if (watchList[i].id === selectedId) {
+          setInWatchList(true);
+          return;
+        }
+      }
+      setInWatchList(false);
+    }
+  }
+
   return (
     <div id='homepage'>
-      {openModal ? <VideoDetails mediaType={selectedMediaType} id={selectedId} config={config} open={openModal} close={setOpenModal} /> : null}
+      {openModal ? <VideoDetails
+        mediaType={selectedMediaType}
+        id={selectedId}
+        config={config}
+        open={openModal}
+        close={setOpenModal}
+        inWatchList={inWatchList}
+        setInWatchList={setInWatchList}
+        updateWatchList={updateWatchList}
+        /> : null}
       <Box sx={{ '& > :not(style)': { m: 1 } }}>
         <form onSubmit={handleSubmit}>
           <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
@@ -149,7 +184,16 @@ export function Homepage() {
       {searchResults !== undefined && query !== ''
         ?
         <div>
-          {openModal ? <VideoDetails mediaType={selectedMediaType} id={selectedId} config={config} open={openModal} close={setOpenModal} /> : null}
+          {openModal ? <VideoDetails
+            mediaType={selectedMediaType}
+            id={selectedId}
+            config={config}
+            open={openModal}
+            close={setOpenModal}
+            inWatchList={inWatchList}
+            setInWatchList={setInWatchList}
+            updateWatchList={updateWatchList}
+            /> : null}
           <Typography>SEARCH RESULTS</Typography>
           <Box sx={{ maxWidth: 200 }}>
             <FormControl fullWidth>
