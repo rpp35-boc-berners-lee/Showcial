@@ -9,15 +9,12 @@ type ChildProps = {
 };
 
 export const UnownedProviders: React.FC<ChildProps> = ({unownedServices, handleAdd}) => {
-  // const [unowned, setUnowned] = useState(unownedServices);
   
   useEffect(() => {
     console.log('in useEffect of UnownedProviders: ', unownedServices);
   }, [unownedServices])
   
-  console.log('UnownedProviders rendered');
   return (
-    
   <Container
     sx={{
       display: 'flex',
