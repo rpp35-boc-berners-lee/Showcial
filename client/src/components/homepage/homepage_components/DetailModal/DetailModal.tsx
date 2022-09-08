@@ -48,37 +48,12 @@ ReactModal.setAppElement('#root');
 export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal }) => {
   const [recommendedUsers, SetRecommendedUsers] = useState([]);
   const [platform, SetPlatform] = useState([])
-  // const [ movieDetail, setMovieDetail ] = useState(vedio);
-  // const [ mediaType, setMediaType ] = useState('movie');
 
-  // temporary username until we get username from passport
   const userName = 'JamesFranco';
-
-  //not working well
-  // const fetchAll = async () => {
-  //   let videoDetail = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${vedio.id}`);
-  //   videoDetail.data.media_type = mediaType;
-  //   videoDetail.data.watchProviders = await getWatchProviders();
-  //   setMovieDetail(videoDetail.data);
-  // }
-  // it only console.log at the 1st rendering, need fix
-  // useEffect(() => {
-  //   fetchAll();
-  //   console.log('this movie is', movieDetail);
-  // }, [])
 
   const addToWatchList = async () => {
     await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, vedio });
   }
-
-  useEffect(() => {
-    console.log(vedio, 'in DetailModal');
-  }, [])
-
-  // const getWatchProviders = async () => {
-  //   let watchProviders = await axios.get(`http://localhost:8080/tmdb/${vedio.media_type}/${vedio.id}/watch/providers`);
-  //   return watchProviders.data.results['US'];
-  // }
 
   return (
     <div id='details'>
