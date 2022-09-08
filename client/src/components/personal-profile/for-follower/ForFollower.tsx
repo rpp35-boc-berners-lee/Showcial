@@ -40,8 +40,8 @@ export const ForFollower = (props: any) => {
   function fetchUserData () {
     axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName: props.followeeData}})
       .then((results: any) => {
-        setRecommendedList(results.data.watchedVideos);
-        setWatchList(results.data.recommendedVideos)
+        setWatchList(results.data.watchedVideos)
+        setRecommendedList(results.data.recommendedVideos);
       })
       .catch((error: any) => {
         console.log('ForFollower/fetchUserData Failed: ', error)
@@ -131,7 +131,9 @@ export const ForFollower = (props: any) => {
           Back
         </Button>
       </Stack>
-      <IndividualFeed userFeed={userFeed}/>
+      <IndividualFeed
+        userFeed={userFeed}
+      />
 
       <Box sx={{ width: '100%' }}>
         <Typography>My Watch List</Typography>

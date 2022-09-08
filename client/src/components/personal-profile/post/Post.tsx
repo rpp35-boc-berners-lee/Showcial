@@ -14,7 +14,6 @@ import {
 // import TimeAgo functionality
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-import { ZoomInMapSharp } from '@mui/icons-material';
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo('en-US');
 
@@ -47,6 +46,11 @@ export const Post = (props: any) => {
             spacing={1}
             justifyContent='left'
             alignItems='center'
+            onClick={() => {
+               console.log('clicked')
+               props.setFolloweeData(postData.userName);
+               props.setValue(2);
+            }}
          >
             <Avatar>{upperCaseReducer(postData.userName)}</Avatar>
             <CardHeader
