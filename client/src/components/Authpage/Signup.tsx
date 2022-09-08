@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Modal, Button, Alert, Dialog } from '@mui/material';
+import { Button, Paper, TextField, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Signup.scss';
+import { Stack } from '@mui/system';
 
 export default function Signup() {
    const navigate = useNavigate();
@@ -19,7 +21,7 @@ export default function Signup() {
             })
             .then((res) => {
                console.log('signup res', res);
-               // navigate('/home')
+               navigate('/')
             })
             .catch((err) => {
                console.error(err);
@@ -32,7 +34,7 @@ export default function Signup() {
    };
 
    const guestLogin = () => {
-      navigate('/home');
+      navigate('/');
    };
 
    const [values, setValues] = useState({
@@ -72,41 +74,58 @@ export default function Signup() {
    };
 
    return (
-      <div>
-         <form className='Authform'>
-            <input
-               type='text'
-               value={values.userName}
-               placeholder='User Name'
-               onChange={(e) => handleUserNameChange(e)}
-            />
-            <input
-               type='text'
-               value={values.email}
-               placeholder='Email'
-               onChange={(e) => handleEmailChange(e)}
-            />
-            <input
-               type='text'
-               value={values.password}
-               placeholder='Password'
-               onChange={(e) => handlePasswordChange(e)}
-            />
-            <input
-               type='text'
-               value={values.verifyPassword}
-               placeholder='Verify Password'
-               onChange={(e) => handleVerifyPasswordChange(e)}
-            />
-            {/* include clickable icons to add "owned services" to profile */}
-            <Button variant='contained' onClick={verifySignUp}>
-               Sign Up
-            </Button>
-            <p>OR</p>
-            <Button variant='contained' onClick={guestLogin}>
-               Continue as a guest
-            </Button>
-         </form>
-      </div>
+      <div className='signup'>
+         <Typography align='center'>
+            <h1 id='signuptitle'>Let's get you signed up!!</h1>
+         </Typography>
+         <div className='signuppaper'>
+            <Paper className='papersignup' elevation={15}>
+               <form className='Authform'>
+                  <Stack>
+                     <TextField
+                        sx={{ margin: 1 }}
+                        type='text'
+                        value={values.userName}
+                        placeholder='User Name'
+                        onChange={(e) => handleUserNameChange(e)}
+                     />
+                     <TextField
+                        sx={{ margin: 1 }}
+                        type='email'
+                        value={values.email}
+                        placeholder='Email'
+                        onChange={(e) => handleEmailChange(e)}
+                     />
+                     <TextField
+                        sx={{ margin: 1 }}
+                        type='password'
+                        value={values.password}
+                        placeholder='Password'
+                        onChange={(e) => handlePasswordChange(e)}
+                     />
+                     <TextField
+                        sx={{ margin: 1 }}
+                        type='password'
+                        value={values.verifyPassword}
+                        placeholder='Verify Password'
+                        onChange={(e) => handleVerifyPasswordChange(e)}
+                     />
+                     {/* include clickable icons to add "owned services" to profile */}
+                     <Button variant='contained'
+                        sx={{ margin: 1, mb: 4 }}
+                        onClick={verifySignUp}>
+                        Sign Up
+                     </Button>
+                     <Typography align='center'>
+                        OR...
+                     </Typography>
+                     <Button variant='text' color='inherit' onClick={guestLogin}>
+                        Continue as a guest
+                     </Button>
+                  </Stack>
+               </form>
+            </Paper>
+         </div>
+      </div >
    );
 }
