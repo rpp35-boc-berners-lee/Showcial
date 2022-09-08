@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { styled, Chip, Paper, Container, Divider } from '@mui/material';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import axios from 'axios';
+import { Container } from '@mui/material';
 import { UnownedProviderItem } from '../unowned-provider-item/UnownedProviderItem';
 
 
@@ -26,7 +24,7 @@ export const UnownedProviders: React.FC<ChildProps> = ({unownedServices, handleA
       justifyContent: 'center',
       flexWrap: 'wrap',
       listStyle: 'none',
-      p: 0.5,
+      pt: 2,
       m: 0,
     }}
     component="ul"

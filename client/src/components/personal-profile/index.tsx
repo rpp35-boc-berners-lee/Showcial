@@ -40,6 +40,11 @@ export const PersonalProfile = () => {
       })
   }
   
+  useEffect(() => {
+   fetchUserData();
+   fetchAPI();
+  }, [])
+  
   let currentOption = value;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log('value: ', value);
@@ -100,11 +105,15 @@ export const PersonalProfile = () => {
             userName={userName}
             followeeData={followeeData}
             followingList={followingList}
+            config={config}
          />
       );
    }
-
+   console.log('userName: ', userName);
+   console.log('followingList: ', followingList)
+   console.log('config: ', config);
    return (
+      
       <div className='personalProfile'>
          {followerSearchBar}
          {selectBar}

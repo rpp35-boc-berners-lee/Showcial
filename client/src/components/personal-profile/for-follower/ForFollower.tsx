@@ -28,7 +28,7 @@ export const ForFollower = (props: any) => {
   useEffect(() => {
     fetchUserFeed();
     fetchUserData();
-  },[]);
+  }, []);
 
   function fetchUserData () {
     axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName: props.followeeData}})
@@ -99,6 +99,7 @@ export const ForFollower = (props: any) => {
       </Button>
     );
   }
+  
 
   return (
     <>

@@ -4,6 +4,7 @@ import { Post } from '../post/Post';
 import { Stack } from '@mui/material';
 
 export const IndividualFeed = (props: any) => {
+   console.log('props: ', props);
    return (
       <div>
         <Stack spacing={2} className="individualFeed">

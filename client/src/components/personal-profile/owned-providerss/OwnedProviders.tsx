@@ -4,10 +4,6 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import axios from 'axios';
 import { OwnedProviderItem } from '../owned-provider-item/OwnedProviderItem';
 
-const ListItem = styled('li')(({ theme }) => ({
-  margin: theme.spacing(0.5),
-}));
-
 type ChildProps = {
   ownedServices: string[];
   handleDelete: any;
@@ -28,7 +24,7 @@ export const OwnedProviders: React.FC<ChildProps> = ({ownedServices, handleDelet
         justifyContent: 'center',
         flexWrap: 'wrap',
         listStyle: 'none',
-        p: 0.5,
+        pb: 2,
         m: 0,
       }}
       component="ul"
