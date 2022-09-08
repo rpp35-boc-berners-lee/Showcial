@@ -80,51 +80,50 @@ export default function Signup() {
          </Typography>
          <div className='signuppaper'>
             <Paper className='papersignup' elevation={15}>
-               <Stack>
-                  <form className='Authform'>
-                     <Stack>
-                        <TextField
-                           sx={{ margin: 1 }}
-                           type='text'
-                           value={values.userName}
-                           placeholder='User Name'
-                           onChange={(e) => handleUserNameChange(e)}
-                        />
-                        <TextField
-                           sx={{ margin: 1 }}
-                           type='email'
-                           value={values.email}
-                           placeholder='Email'
-                           onChange={(e) => handleEmailChange(e)}
-                        />
-                        <TextField
-                           sx={{ margin: 1 }}
-                           type='password'
-                           value={values.password}
-                           placeholder='Password'
-                           onChange={(e) => handlePasswordChange(e)}
-                        />
-                        <TextField
-                           sx={{ margin: 1 }}
-                           type='password'
-                           value={values.verifyPassword}
-                           placeholder='Verify Password'
-                           onChange={(e) => handleVerifyPasswordChange(e)}
-                        />
-                        {/* include clickable icons to add "owned services" to profile */}
-                     </Stack>
-                  </form>
-                  <Typography align='center'>
+               <form className='Authform'>
+                  <Stack>
+                     <TextField
+                        sx={{ margin: 1 }}
+                        type='text'
+                        value={values.userName}
+                        placeholder='User Name'
+                        onChange={(e) => handleUserNameChange(e)}
+                     />
+                     <TextField
+                        sx={{ margin: 1 }}
+                        type='email'
+                        value={values.email}
+                        placeholder='Email'
+                        onChange={(e) => handleEmailChange(e)}
+                     />
+                     <TextField
+                        sx={{ margin: 1 }}
+                        type='password'
+                        value={values.password}
+                        placeholder='Password'
+                        onChange={(e) => handlePasswordChange(e)}
+                     />
+                     <TextField
+                        sx={{ margin: 1 }}
+                        type='password'
+                        value={values.verifyPassword}
+                        placeholder='Verify Password'
+                        onChange={(e) => handleVerifyPasswordChange(e)}
+                     />
+                     {/* include clickable icons to add "owned services" to profile */}
                      <Button variant='contained'
+                        sx={{ margin: 1, mb: 4 }}
                         onClick={verifySignUp}>
                         Sign Up
                      </Button>
-                     <p>OR</p>
+                     <Typography align='center'>
+                        OR...
+                     </Typography>
                      <Button variant='text' color='inherit' onClick={guestLogin}>
                         Continue as a guest
                      </Button>
-                  </Typography>
-               </Stack>
+                  </Stack>
+               </form>
             </Paper>
          </div>
       </div >

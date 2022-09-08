@@ -71,11 +71,14 @@ export default function Signin() {
                         Sign in with Google
                      </Button>
                      <Typography align='center'>
-                        <p>OR</p>
-                        <p>Enter your username and password</p>
+                        <p>
+                           OR...
+                           <br></br>
+                           Enter your username and password
+                        </p>
                      </Typography>
                      <TextField
-                        sx={{ margin: 1, mt: 3 }}
+                        sx={{ margin: 1, mt: 0 }}
                         type='text'
                         placeholder='User Name'
                         onChange={(e) => handleUserNameChange(e)}
@@ -87,16 +90,15 @@ export default function Signin() {
                         onChange={(e) => handlePasswordChange(e)}
                      />
                      <Button variant='contained'
-                        sx={{ margin: 1, mb: 3 }}
+                        sx={{ margin: 1, mb: 4 }}
                         onClick={verifyLogin}
                      >
                         Sign-in
                      </Button>
                      <Typography align='center'>
-                     <p>OR</p>
+                        OR...
                      </Typography>
                      <Button variant='text'
-                        sx={{ margin: 1}}
                         color='inherit'
                         onClick={guestLogin}>
                         Continue as a guest
