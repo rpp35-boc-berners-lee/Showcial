@@ -1,28 +1,50 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import {Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button } from '@mui/material';
+import { IndividualFeed } from '../individual-feed/individualFeed';
+import { Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button, Stack, Avatar } from '@mui/material';
 
-
-// create button that sets index value back to 1 or 2 (save previous value)??
+const upperCaseReducer = (string: string) => {
+  return string.split('').reduce((pV, cV) => {
+    return (cV === cV.toUpperCase()) ? pV += cV : pV;
+  }, '')
+};
 
 export const ForFollower = (props: any) => {
-  const [forFollowerData, setForFollowerData] = useState<any>(undefined);
+  const [userFeed, setUserFeed] = useState<any>([]);
+  const [recommendedList, setRecommendedList] = useState<any>([]);
+  const [watchList, setWatchList] = useState<any>([]);
 
-  async function fetchForFollowerData (userName: string) {
-    await axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
-        .then((results: any) => {
-           console.log(results.data);
-           return results.data;
-        })
-        .catch((error) => {
-           console.log('fetchForFollowerData() Failed', error);
-        });
+  useEffect(() => {
+    fetchUserFeed();
+    fetchUserData();
+  },[]);
+
+  function fetchUserData () {
+    axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName: props.followeeData}})
+      .then((results: any) => {
+        setRecommendedList(results.data.watchedVideos);
+        setWatchList(results.data.recommendedVideos)
+      })
+      .catch((error: any) => {
+        console.log('ForFollower/fetchUserData Failed: ', error)
+      })
   }
 
-  function removeFollower () {
+  function fetchUserFeed () {
+   axios.get('http://localhost:8080/videoDB/user/individualFeed', {params: {userName: props.followeeData}})
+      .then((results) => {
+        console.log('fetchUserFeed() Success: ', results.data);
+        setUserFeed(results.data);
+      })
+      .catch((error: any) => {
+        console.log('fetchUserFeed() Failed: ', error);
+      })
+  }
+
+  function removeFollower (username: string, value: string) {
     axios.put('http://localhost:8080/videoDB/user/removeFollowed', {
-      username: props.userName,
-      value: props.followeeData
+      userName: username,
+      value: value
     })
     .then(() => {
       console.log('removeFollower SUCCESS')
@@ -32,10 +54,10 @@ export const ForFollower = (props: any) => {
     });
   }
 
-  function addFollower () {
-    axios.put('http://localhost:8080/videoDB/user/removeFollowed', {
-      username: props.userName,
-      value: props.followeeData
+  function addFollower (username: string, value: string) {
+    axios.put('http://localhost:8080/videoDB/user/addFollowed', {
+      userName: username,
+      value: value
     })
     .then(() => {
       console.log('addFollower SUCCESS')
@@ -45,32 +67,23 @@ export const ForFollower = (props: any) => {
     });
   }
 
-  useEffect(() => {
-    // setForFollowerData(fetchForFollowerData(props.followeeData));
-  }, [])
-
-  // check if followee is currently followed by owner account & render add/remove friend button
   let followingButton = undefined;
   let followingStatus = props.followingList.includes(props.followeeData);
   if (followingStatus)  {
     followingButton = (
-      <Button
-        className='backButton'
-        variant='contained'
-        fullWidth
-        onClick={removeFollower}
-      >
+      <Button className='button' variant='contained' fullWidth onClick={(event: any) => {
+        removeFollower(props.userName, props.followeeData);
+        event.target.innerText = 'UNFOLLOWED';
+      }}>
         Unfollow
       </Button>
     );
   } else {
     followingButton = (
-      <Button
-        className='button'
-        variant='contained'
-        fullWidth
-        onClick={addFollower}
-      >
+      <Button className='button' variant='contained' fullWidth onClick={(event: any) => {
+        addFollower(props.userName, props.followeeData);
+        event.target.innerText = 'FOLLOWED';
+      }}>
         Follow
       </Button>
     );
@@ -79,23 +92,28 @@ export const ForFollower = (props: any) => {
   return (
     <>
     <Card>
-      <CardHeader
-        title={props.followeeData}
-        style={{textAlign: 'center'}}
-      />
-      {followingButton}
-      <Divider className='divider'/>
-      <Button
-          className='button'
-          variant='contained'
-          fullWidth
-          color='secondary'
-          onClick={() => {
-            props.setValue(1);
-          }}
-      >
-        Back
-      </Button>
+      <Stack direction="row" spacing={1}   justifyContent="center" alignItems="center">
+      <Avatar className="Avatar">{upperCaseReducer(props.followeeData)}</Avatar>
+        <CardHeader
+          title={props.followeeData}
+          style={{textAlign: 'center'}}
+        />
+      </Stack>
+      <Stack spacing={2} className="individualFeed">
+        {followingButton}
+        <Button
+            className='button'
+            variant='contained'
+            fullWidth
+            color='secondary'
+            onClick={() => {
+              props.setValue(1);
+            }}
+        >
+          Back
+        </Button>
+      </Stack>
+      <IndividualFeed userFeed={userFeed} />
     </Card>
     </>
   );

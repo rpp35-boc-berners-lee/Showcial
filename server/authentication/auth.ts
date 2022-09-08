@@ -5,33 +5,31 @@ const bcrypt = require('bcryptjs');
 var passport = require('passport');
 const { findUser, addUser } = require('../database/controllers/index');
 import {
-  GoogleCallbackParameters,
-  Profile,
-  Strategy as GoogleStrategy,
-  VerifyCallback,
+   GoogleCallbackParameters,
+   Profile,
+   Strategy as GoogleStrategy,
+   VerifyCallback,
 } from 'passport-google-oauth20';
 import { SessionData } from 'express-session';
 import db from '../database/controllers';
 import * as generator from 'generate-password';
 
-
 const saltRounds = 10;
 
-// const checkAuth = (req: any, res: Response, next: any) => {
-//   if (!req.session.user) {
-//     res.redirect('/signin');
-//   } else next();
-// }
+const checkAuth = (req: any, res: Response, next: any) => {
+   if (!req.session.user) {
+      res.redirect('/signin');
+   } else next();
+};
 
 type userData = {
-  userName: string;
-  password: string;
-  email: string;
-  ownedServices: string[];
-}
+   userName: string;
+   password: string;
+   email: string;
+   ownedServices: string[];
+};
 
 const router = Router();
-
 
 const clientId = process.env.GOOGLE_CLIENT_ID as unknown as string;
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET as unknown as string;
@@ -58,7 +56,7 @@ passport.use(
          profile: Profile,
          done: VerifyCallback
       ) {
-        //  let session = req.session as unknown as SessionData;
+         //  let session = req.session as unknown as SessionData;
          if (req.session.user) {
             // user is already logged in, associate his google account with regular account and redirect user
             console.log('user is already logged in');
@@ -162,77 +160,71 @@ router.get(
 
 //route that checks if user is logged in
 router.get('/checkAuthStatus', (req: Request, res: Response) => {
-  console.log('req.session in checkauthstatus:', req.session);
-  if (req.session && req.session.user) {
-     res.status(200).send(req.session.user);
-  } else {
-     res.status(403).json('User is not logged in.');
-  }
+   if (req.session && req.session.user) {
+      res.status(200).send(req.session.user);
+   } else {
+      res.status(403).json('User is not logged in.');
+   }
 });
 
-
 router.get('/logout', (req: Request, res: Response) => {
-   req.session.destroy(err => {
-      if (err) {console.log('err:', err)
-   } else {
-      res.status(200).send('You have been logged out')
-   } 
+   req.session.destroy((err) => {
+      if (err) {
+         console.log('err:', err);
+      } else {
+         res.status(200).send('You have been logged out');
+      }
    });
-})
+});
 router.post('/signup', async (req: Request, res: Response) => {
-  let userName = req.body.params.userName;
-  let email = req.body.params.email;
-  let password = req.body.params.password;
-  let ownedServices = req.body.params.ownedServices;
-  //find one from db using userName, if unsuccessful, hash password and store a new user
+   let userName = req.body.params.userName;
+   let email = req.body.params.email;
+   let password = req.body.params.password;
+   let ownedServices = req.body.params.ownedServices;
+   //find one from db using userName, if unsuccessful, hash password and store a new user
 
-  let hashedPassword = bcrypt.hashSync(password, 8);
-  console.log(hashedPassword);
+   let hashedPassword = bcrypt.hashSync(password, 8);
+   console.log(hashedPassword);
 
-  axios.post(
-    'http://localhost:8080/videoDB/user',
-    {
-      userName,
-      hashedPassword,
-      email,
-      ownedServices
-
-    }
-  )
-    .then(() => {
-      res.status(201).send('User added to database');
-    })
-    .catch((err) => {
-      console.log(err);
-      res.send(err);
-    })
+   axios
+      .post('http://localhost:8080/videoDB/user', {
+         userName,
+         hashedPassword,
+         email,
+         ownedServices,
+      })
+      .then(() => {
+         res.status(201).send('User added to database');
+      })
+      .catch((err) => {
+         console.log(err);
+         res.send(err);
+      });
 });
 
 router.post('/signin', (req: any, res: Response) => {
-  let userName = req.body.params.userName;
-  let password = req.body.params.password;
+   let userName = req.body.params.userName;
+   let password = req.body.params.password;
 
-  axios.get(
-    'http://localhost:8080/videoDB/user',
-    {
-      params: {
-        userName
-      }
-    }
-  )
-    .then((response) => {
-      let hash = response.data.hashedPassword;
-      if (bcrypt.compareSync(password, hash)) {
-        req.session.user = response.data.userName;
-        res.status(201).send('Succesfully logged in');
-      } else {
-        res.status(401).send('Incorrect username or password');
-      }
-    })
-    .catch((err) => {
-      console.log(`Error logging in as ${userName}`, err);
-      res.status(400).send(err);
-    })
+   axios
+      .get('http://localhost:8080/videoDB/user', {
+         params: {
+            userName,
+         },
+      })
+      .then((response) => {
+         let hash = response.data.hashedPassword;
+         if (bcrypt.compareSync(password, hash)) {
+            req.session.user = response.data.userName;
+            res.status(201).send('Succesfully logged in');
+         } else {
+            res.status(401).send('Incorrect username or password');
+         }
+      })
+      .catch((err) => {
+         console.log(`Error logging in as ${userName}`, err);
+         res.status(400).send(err);
+      });
 });
 
 // router.get('/guest', (req: any, res: Response) => {
@@ -243,7 +235,6 @@ router.post('/signin', (req: any, res: Response) => {
 // })
 
 //need a delete route for logging out
-
 
 export { router };
 // export default checkAuth;

@@ -7,6 +7,7 @@ type ChildProps = {
   config: any;
   userName: string;
   mediaType: string;
+ getSelected: (id: number, type: string) => void;
 }
 
 type Video = {
@@ -16,12 +17,12 @@ type Video = {
   id: number;
 }
 
-export const Recommendations: React.FC<ChildProps> = ({vedios,  config, userName, mediaType}) => {
+export const Recommendations: React.FC<ChildProps> = ({vedios,  config, userName, mediaType, getSelected}) => {
   // console.log(vedios);
   // console.log(config);
   return (
     <div>
       <Slider vedios={vedios} config={config} userName={userName} mediaType={mediaType} />
-      <List />
+      <List  mediaType={mediaType} trendingOrRecommended={'trending'} getSelected={getSelected}/>
     </div>)
 }

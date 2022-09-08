@@ -35,7 +35,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
   const [numDisplayed, setNumDisplayed] = useState(0);
   const [maxRowCards, setMaxRowCards] = useState(0);
   const [filterType, setFilterType] = useState('');
-  const [filteredList, setFilteredList] = useState([]);
+  const [alterList, setAlterList] = useState(watchList);
   const [sortType, setSortType] = useState('');
   const [sortedList, setSortedList] = useState([]);
 
@@ -49,11 +49,23 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
   }, []);
 
   useEffect(() => {
-    if (numDisplayed > watchList.length) {
-      setNumDisplayed(watchList.length)
+    if (numDisplayed > alterList.length) {
+      setNumDisplayed(alterList.length)
     }
-    setDisplayedVideos(watchList.slice(0, numDisplayed));
+    setDisplayedVideos(alterList.slice(0, numDisplayed));
   }, [numDisplayed]);
+
+  useEffect(() => {
+    handleFilterAndSort();
+  }, [filterType]);
+
+  useEffect(() => {
+    handleFilterAndSort();
+  }, [sortType]);
+
+  useEffect(() => {
+    setDisplayedVideos(alterList.slice(0, numDisplayed));
+  }, [alterList])
 
   const handleFilterType = (event: SelectChangeEvent) => {
     setFilterType(event.target.value as string);
@@ -66,7 +78,8 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
   const handleReset = () => {
     setFilterType('');
     setSortType('');
-    setDisplayedVideos(watchList);
+    setAlterList(watchList);
+    setNumDisplayed(numDisplayed + maxRowCards);
   }
 
   const sort = (array: any) => {
@@ -82,10 +95,35 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
         return 0
       }
     })
-    return sorted
+    return sorted;
   }
 
-  // const filter = ()
+  const filter = (array: any) => {
+    let copy = array.slice();
+    let filtered = copy.filter((video: any) => {
+      if (video.watchProviders.flatrate !== undefined) {
+        let services = video.watchProviders.flatrate;
+        for (var i = 0; i < services.length; i++) {
+          if (services[i].provider_name.includes(filterType)) {
+            return true
+          }
+        }
+      }
+      return false;
+    });
+    return filtered;
+  }
+
+  const handleFilterAndSort = () => {
+    let newWatchList = watchList.slice();
+    if (sortType !== '') {
+      newWatchList = sort(newWatchList);
+    }
+    if (filterType !== '') {
+      newWatchList = filter(newWatchList);
+    }
+    setAlterList(newWatchList);
+  }
 
    return (
     <div>
@@ -102,9 +140,9 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
           >
             <MenuItem value={'Netflix'}>Netflix</MenuItem>
             <MenuItem value={'Hulu'}>Hulu</MenuItem>
-            <MenuItem value={'HBO Max'}>HBO Max</MenuItem>
-            <MenuItem value={'Disney+'}>Disney+</MenuItem>
-            <MenuItem value={'Amazon Prime'}>Amazon Prime</MenuItem>
+            <MenuItem value={'HBO'}>HBO Max</MenuItem>
+            <MenuItem value={'Disney Plus'}>Disney+</MenuItem>
+            <MenuItem value={'Amazon'}>Amazon Prime</MenuItem>
           </Select>
         </FormControl>
         <FormControl sx={{ m: 1, width: '10%' }} size='small'>
@@ -149,7 +187,8 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
       </Box>
       <Stack spacing={2} direction="row">
         {displayedVideos.length < watchList.length ?
-          <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={() => setNumDisplayed(numDisplayed + maxRowCards)}>SHOW MORE</Button> : null}
+          <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={() =>
+          setNumDisplayed((numDisplayed + maxRowCards) > alterList.length ? alterList.length : (numDisplayed + maxRowCards))}>SHOW MORE</Button> : null}
         {displayedVideos.length > maxRowCards ?
           <Button variant="text" startIcon={<ExpandLessIcon />} onClick={() =>
             setNumDisplayed((numDisplayed - maxRowCards < maxRowCards) ? maxRowCards : (numDisplayed - maxRowCards))}>SHOW LESS</Button> : null}
