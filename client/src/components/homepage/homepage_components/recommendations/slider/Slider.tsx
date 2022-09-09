@@ -108,19 +108,20 @@ export const Slider: React.FC<ChildProps> = ({ vedios, config, userName, mediaTy
       })}
       <BtnSlider moveSlide={nextSlide} direction={"next"} />
       <BtnSlider moveSlide={prevSlide} direction={"prev"} />
-
-      <div className="container-dots">
-        {Array.from({ length: vedios.length }).map((item, index) => (
-          <div
-            key={`dot-${index}`}
-            onClick={() => moveDot(index + 1)}
-            className={slideIndex === index + 1 ? "dot active" : "dot"}
-          ></div>
-        ))}
+      <div className="container-footer">
+        <h1 className='video-title'>
+          {vedios[slideIndex].title}
+        </h1> 
+        <div className="container-dots">
+          {Array.from({ length: vedios.length }).map((item, index) => (
+            <div
+              key={`dot-${index}`}
+              onClick={() => moveDot(index + 1)}
+              className={slideIndex === index + 1 ? "dot active" : "dot"}
+            ></div>
+          ))}
+        </div>
       </div>
-      <h3 className='video-title'>
-        {vedios[slideIndex].title}
-      </h3> 
     </div>
   )
 }

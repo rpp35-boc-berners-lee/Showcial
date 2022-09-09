@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import { styled, Chip, Paper, Container, Divider } from '@mui/material';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import theme from '../../../theme/theme';
 
 const ListItem = styled('li')(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -18,6 +19,7 @@ export const OwnedProviderItem : React.FC<ChildProps> = ({service, handleDelete}
   return (
     <ListItem >
       <Chip
+        color='primary'
         label={service}
         onDelete={handleDelete(service)}
         deleteIcon={<RemoveCircleOutlineIcon />}

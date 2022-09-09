@@ -9,11 +9,17 @@
 }
 
 .video-title {
-  position: absolute;
-  bottom: 50px;
-  text-align: center;
-  color: #f1f1f1;
+  padding: 20px;
+    margin-left: 40px;
+    font-size: 40px;
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+    color: #f1f1f1;
+    text-shadow: 1px 5px 10px black;
+    overflow: auto;
 }
+
 @media screen and (max-width: 700px){
   .container-slider {
     margin: 100px 10px 0;
@@ -25,6 +31,9 @@
   position: absolute;
   opacity: 0;
   transition: opacity ease-in-out 0.4s;
+  img {
+    filter: brightness(80%)
+  }
 }
 .slide img {
   width: 100%;
@@ -39,8 +48,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #f1f1f1;
-  border: 1px solid rgba(34, 34, 34, 0.287);
+  background: #ffffff92;
+  border: 1px solid rgba(97, 97, 97, 0.287);
   position: absolute;
   display: flex;
   justify-content: center;
