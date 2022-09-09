@@ -8,7 +8,6 @@ import videoDB_router from './database/routes/index';
 import { router as authRouter } from './authentication/auth';
 import cors from 'cors';
 const passport = require('passport');
-
 var session = require('express-session');
 const MongoStore = require('connect-mongo');
 
