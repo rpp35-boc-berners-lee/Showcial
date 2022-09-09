@@ -1,8 +1,8 @@
-Welcome to Showcial! The best site for finding movies and shows based on your friends reccomendations and ratings!
+# Welcome to Showcial! The best site for finding movies and shows based on your friends reccomendations and ratings!
 
-# Authored by:
-  -<a src="https://github.com/maomaotuo">Shengnan Huang</a>
-  
+## Authored by:
+  -[Shengnan Huang]("https://github.com/maomaotuo")
+
   -Kiki Cai: <a src="https://github.com/caixiuqi2013"/>
   -Kevin On: <a src="https://github.com/kanokawn"/>
   -Cristian Ordonez: <a src="https://github.com/cristianordonez"/>
@@ -11,7 +11,7 @@ Welcome to Showcial! The best site for finding movies and shows based on your fr
 
 # Introduction
 
-This was a month
+
 
 ## Features & Usage
 
