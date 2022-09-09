@@ -2,17 +2,10 @@ import React, { useState, useEffect }  from 'react';
 import axios from 'axios';
 import './YourWatchList.scss';
 import { VideoCard } from '../../shared/VideoCard';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import { Box, Grid, Stack, Button, Typography, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { SelectChangeEvent } from '@mui/material/Select';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 type ChildProps = {
@@ -127,11 +120,11 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
 
    return (
     <div>
-      <Typography variant='h4' component='h2' align='center' sx={{ pt: '2vh' }}>
+      <Typography variant='h5' sx={{ my: 3, ml: 5, fontWeight: "bold" }} variant='h4' component='h2' align='center' sx={{ pt: '2vh' }}>
         YOUR WATCH LIST
       </Typography>
       <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ p: '1vh' }}>
-        <FormControl sx={{ m: 1, width: '10%' }} size='small'>
+        <FormControl sx={{mb: 5, ml: 5, width: '10%' }} size='small'>
           <InputLabel id="filter">Filter</InputLabel>
           <Select
             labelId="filter-label"
@@ -147,7 +140,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
             <MenuItem value={'Amazon'}>Amazon Prime</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{ m: 1, width: '10%' }} size='small'>
+        <FormControl sx={{mb: 5, width: '10%' }} size='small'>
           <InputLabel id="sort">Sort</InputLabel>
           <Select
             labelId="sort-label"
@@ -190,10 +183,11 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
       }
       <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ paddingTop: '1vh' }}>
         {displayedVideos.length < watchList.length ?
-          <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={() =>
-          setNumDisplayed((numDisplayed + maxRowCards) > alterList.length ? alterList.length : (numDisplayed + maxRowCards))}>SHOW MORE</Button> : null}
+          <Button sx={{ml: 5, my: 3}} variant="text" startIcon={<ExpandMoreIcon />} onClick={() =>
+          setNumDisplayed((numDisplayed + maxRowCards) > alterList.length ? alterList.length : (numDisplayed + maxRowCards))}>SHOW MORE</Button>
+           : null}
         {displayedVideos.length > maxRowCards ?
-          <Button variant="text" startIcon={<ExpandLessIcon />} onClick={() =>
+          <Button sx={{ml: 5, my: 3}} variant="text" startIcon={<ExpandLessIcon />} onClick={() =>
             setNumDisplayed((numDisplayed - maxRowCards < maxRowCards) ? maxRowCards : (numDisplayed - maxRowCards))}>SHOW LESS</Button> : null}
       </Stack>
       </Box>

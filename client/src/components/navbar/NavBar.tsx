@@ -18,7 +18,7 @@ const loggedInPages = ['About', 'Log out'];
 
 const ResponsiveAppBar = () => {
    const auth = useAuth();
-   console.log('auth:', auth);
+   // console.log('auth:', auth);
 
    const navigate = useNavigate();
    const location = useLocation();
@@ -67,7 +67,7 @@ const ResponsiveAppBar = () => {
          <Container maxWidth='xl'>
             <Toolbar disableGutters>
                <Typography
-                  variant='h6'
+                  variant='h4'
                   noWrap
                   component='a'
                   href='/'
@@ -76,13 +76,13 @@ const ResponsiveAppBar = () => {
                      display: { xs: 'none', md: 'flex' },
                      fontFamily: 'monospace',
                      fontWeight: 700,
-                     letterSpacing: '.3rem',
-                     color: 'inherit',
+                     letterSpacing: '.2rem',
+                     color: '#b30e17',
                      textDecoration: 'none',
                      flexGrow: 4,
                   }}
                >
-                  Showcial
+                  SHOWCIAL
                </Typography>
                {/* MOBILE ONLY */}
                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -136,7 +136,7 @@ const ResponsiveAppBar = () => {
                </Box>
                {/* END MOBILE */}
                <Typography
-                  variant='h5'
+                  variant='h4'
                   noWrap
                   component='a'
                   href='/'
@@ -146,12 +146,12 @@ const ResponsiveAppBar = () => {
 
                      fontFamily: 'monospace',
                      fontWeight: 700,
-                     letterSpacing: '.3rem',
-                     color: 'inherit',
+                     letterSpacing: '.2rem',
+                     color: '#b30e17',
                      textDecoration: 'none',
                   }}
                >
-                  Showcial
+                  SHOWCIAL
                </Typography>
                {auth.isLoggedIn === false ? (
                   <Box

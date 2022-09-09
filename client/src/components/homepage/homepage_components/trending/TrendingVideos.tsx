@@ -84,7 +84,7 @@ export const TrendingOrRecommendedVideos: React.FC<Props> = ({ mediaType, trendi
    if (popularMovies.length > 0) {
       return (
          <>
-         <Typography variant='h4' component='h2' align='center' sx={{ pb: '2vh' }}>
+         <Typography variant='h5' sx={{ my: 3, ml: 5, fontWeight: "bold" }}>
             CURRENTLY TRENDING
          </Typography>
          <div className='outer-container'>
