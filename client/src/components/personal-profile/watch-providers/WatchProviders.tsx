@@ -97,7 +97,7 @@ export const WatchProviders = ({userName}: {userName: any}) => {
 
   return (
     <Paper sx={{py: 3}}>
-      <Typography align="center" variant="h6" sx={{pb: 3}}>Edit Your Streaming Services</Typography>
+      <Typography align="center" fontWeight="bold" variant="subtitle1" sx={{pb: 3, }}>MY STREAMING SERVICES</Typography>
       
       <OwnedProviders ownedServices={ownedServices} handleDelete={handleDelete} />
       <Divider variant="middle"/>
