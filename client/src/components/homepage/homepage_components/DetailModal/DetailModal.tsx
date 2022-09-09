@@ -55,7 +55,7 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
 
   const userName = 'JamesFranco';
 
-
+  console.log('vedio: ', vedio)
   const addToWatchList = async () => {
     await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, video: vedio });
     if (setInWatchList !== undefined) {
