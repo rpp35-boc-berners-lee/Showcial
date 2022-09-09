@@ -5,8 +5,23 @@
    @include devices(mobile) {
       padding: 0 1rem;
    }
-   padding: 0 3rem;
+   @include devices(mobile) {
+      padding: 0;
+   }
+   @include devices(tablet) {
+      padding: 0;
+   }
+   @include devices(desktopLarge) {
+      padding: 0 20%;
+   }
+   @include devices(desktopMedium) {
+      padding: 0 10%;
+   }
+
    img {
       max-height: 50vh;
    }
+   @include flex-center();
+   flex-direction: column;
+   align-items: space-evenly;
 }

@@ -7,6 +7,7 @@ import { PersonalProfile } from './personal-profile';
 import Signin from './Authpage/Signin';
 import Signup from './Authpage/Signup';
 import { ProvideAuth } from '../hooks/useAuth';
+
 export const App = () => {
    return (
       <>

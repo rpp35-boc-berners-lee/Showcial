@@ -73,7 +73,7 @@ export const Slider: React.FC<ChildProps> = ({ vedios, config, userName, mediaTy
     setModalIsOpen(true);
     getVideoDetail(id);
   }
-  console.log('config.images: ', config.images)
+  console.log('config', config)
   console.log('vedios: ', vedios)
   console.log('slideIndex: ', vedios[slideIndex].title);
   return (
@@ -89,7 +89,7 @@ export const Slider: React.FC<ChildProps> = ({ vedios, config, userName, mediaTy
                 onClick={() => sliderOnClick(vedios[slideIndex].id)} />
               </div>
             </Card>
-            
+
             {currentlySelected === undefined ? null :
             <DetailModal
               modalIsOpen={modalIsOpen}
@@ -111,7 +111,7 @@ export const Slider: React.FC<ChildProps> = ({ vedios, config, userName, mediaTy
       <div className="container-footer">
         <h1 className='video-title'>
           {vedios[slideIndex].title}
-        </h1> 
+        </h1>
         <div className="container-dots">
           {Array.from({ length: vedios.length }).map((item, index) => (
             <div
