@@ -12,6 +12,9 @@ type ChildProps = {
   config: any;
   userName: string;
   mediaType: string;
+  inWatchList?: boolean,
+  setInWatchList?: (bool: boolean) => void,
+  updateWatchList?: () => void,
 }
 const customStyles = {
   content: {
@@ -23,13 +26,10 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
   },
 };
-export const Slider: React.FC<ChildProps> = ({ vedios, config, userName, mediaType }) => {
-  // console.log(vedios, 'in Slider');
-  // console.log(config, 'in Slider');
+export const Slider: React.FC<ChildProps> = ({ vedios, config, userName, mediaType, inWatchList, setInWatchList, updateWatchList }) => {
   const [slideIndex, setSlideIndex] = useState(1)
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentlySelected, setCurrentlySelected] = useState();
-
 
   const getVideoDetail = async (id: number) => {
     let videoDetail = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${id}`);
@@ -66,27 +66,21 @@ export const Slider: React.FC<ChildProps> = ({ vedios, config, userName, mediaTy
   }
   const closeModal = () => {
     setModalIsOpen(false);
-    // console.log('clicked close button, now modalIsOpen ', modalIsOpen);
   }
-  const sliderOnClick = (id: number) => {
+  const sliderOnClick = (id: number): void => {
     setModalIsOpen(true);
     getVideoDetail(id);
   }
-
-  // useEffect(() => {
-  //   console.log('firing useEffect after modalIsOpen changed to', modalIsOpen)
-
-  // }, [modalIsOpen])
 
   return (
     <div className="container-slider">
       {vedios.map((vedio: any, index: number) => {
         return (
           <div key={`slider-${vedio.id}-${mediaType}`}>
-            <Card key={`slider-${vedio.id}-${mediaType}-card`} onClick={() => sliderOnClick(vedio.id)}>
+            <Card key={`slider-${vedio.id}-${mediaType}-card`} >
               <div className={slideIndex === index + 1 ? "slide active-anim" : "slide"}>
                 <p>{vedio.name}</p>
-                <img src={`${config.images.base_url}${config.images.poster_sizes[6]}${vedio.poster_path}`} />
+                <img src={`${config.images.base_url}${config.images.poster_sizes[6]}${vedio.poster_path}`} onClick={() => sliderOnClick(vedios[slideIndex - 1].id)}/>
               </div>
             </Card>
             {currentlySelected === undefined ? null :
@@ -97,6 +91,9 @@ export const Slider: React.FC<ChildProps> = ({ vedios, config, userName, mediaTy
               image={`${config.images.base_url}${config.images.poster_sizes[6]}${vedios[slideIndex - 1].poster_path}`}
               closeModal={closeModal}
               userName={userName}
+              inWatchList={inWatchList}
+              setInWatchList={setInWatchList}
+              updateWatchList={updateWatchList}
             />
             }
           </div>

@@ -8,9 +8,12 @@ type ChildProps = {
   config: any;
   open: boolean;
   close: (close: boolean) => void;
+  inWatchList?: boolean;
+  setInWatchList?: (bool: boolean) => void;
+  updateWatchList?: () => void;
 }
 
-export const VideoDetails:React.FC<ChildProps> = ({ mediaType, id, config, open, close }) => {
+export const VideoDetails:React.FC<ChildProps> = ({ mediaType, id, config, open, close, inWatchList, setInWatchList, updateWatchList }) => {
   const [currentlySelected, setCurrentlySelected] = useState<any>();
   // temp username
   const [userName, setUserName] = useState('JamesFranco');
@@ -32,6 +35,9 @@ export const VideoDetails:React.FC<ChildProps> = ({ mediaType, id, config, open,
 
   const getWatchProviders = async (id: number) => {
     let watchProviders = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${id}/watch/providers`);
+    if (!watchProviders.data.results['US']) {
+      return { flatrate: [] }
+    }
     return watchProviders.data.results['US'];
   }
 
@@ -49,6 +55,9 @@ export const VideoDetails:React.FC<ChildProps> = ({ mediaType, id, config, open,
           image={`${config.images.base_url}${config.images.poster_sizes[6]}${currentlySelected.poster_path}`}
           closeModal={closeModal}
           userName={userName}
+          inWatchList={inWatchList}
+          setInWatchList={setInWatchList}
+          updateWatchList={updateWatchList}
         />
         : null
       }
