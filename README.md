@@ -17,6 +17,7 @@
 
 ## Features & Usage Demo
 
+https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-8e51-90c76c8668da.mp4
 
 - Showcial allows users to share/review movies and shows
 - User followers can then see the 'activity' of the user and find reviews and reccomendations that matter to them, not just some online critic's two cents.
