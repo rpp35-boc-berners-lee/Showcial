@@ -167,23 +167,25 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
         }
       </div>
       <Box sx={{ width: '100%' }}>
-        <Grid container spacing={4} justifyContent='center'>
-          {displayedVideos.map((video: Video, i: number) => {
-            return (
-              <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
-                <VideoCard
-                  base_url={config.images.base_url}
-                  backdrop_sizes={config.images.backdrop_sizes}
-                  backdrop_path={video.backdrop_path}
-                  name={video.name || video.title}
-                  id={video.id}
-                  mediaType={video.media_type}
-                  getSelected={getSelected}
-                />
-              </Grid>
-            )
-          })}
-        </Grid>
+        {alterList.length === 0 ? 'No Videos Found' :
+          <Grid container spacing={4} justifyContent='center'>
+            {displayedVideos.map((video: Video, i: number) => {
+              return (
+                <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
+                  <VideoCard
+                    base_url={config.images.base_url}
+                    backdrop_sizes={config.images.backdrop_sizes}
+                    backdrop_path={video.backdrop_path}
+                    name={video.name || video.title}
+                    id={video.id}
+                    mediaType={video.media_type}
+                    getSelected={getSelected}
+                  />
+                </Grid>
+              )
+            })}
+          </Grid>
+      }
       </Box>
       <Stack spacing={2} direction="row">
         {displayedVideos.length < watchList.length ?
