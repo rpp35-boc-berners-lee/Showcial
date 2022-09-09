@@ -21,7 +21,7 @@ export default function Signup() {
             })
             .then((res) => {
                console.log('signup res', res);
-               navigate('/')
+               navigate('/');
             })
             .catch((err) => {
                console.error(err);
@@ -111,21 +111,25 @@ export default function Signup() {
                         onChange={(e) => handleVerifyPasswordChange(e)}
                      />
                      {/* include clickable icons to add "owned services" to profile */}
-                     <Button variant='contained'
+                     <Button
+                        variant='contained'
                         sx={{ margin: 1, mb: 4 }}
-                        onClick={verifySignUp}>
+                        onClick={verifySignUp}
+                     >
                         Sign Up
                      </Button>
-                     <Typography align='center'>
-                        OR...
-                     </Typography>
-                     <Button variant='text' color='inherit' onClick={guestLogin}>
+                     <Typography align='center'>OR...</Typography>
+                     <Button
+                        variant='text'
+                        color='inherit'
+                        onClick={guestLogin}
+                     >
                         Continue as a guest
                      </Button>
                   </Stack>
                </form>
             </Paper>
          </div>
-      </div >
+      </div>
    );
 }

@@ -22,14 +22,18 @@ export const Features = () => {
    ];
 
    return (
-      <Stack direction='column' spacing={1}>
-         <Typography variant='h4' component='h2'>
+      <Stack direction='column'>
+         <Typography
+            variant='h4'
+            component='h2'
+            sx={{ pt: '2rem', pb: '1rem' }}
+         >
             Features
          </Typography>
          <Grid
             container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
+            spacing={{ xs: 1, md: 2 }}
+            columns={{ xs: 4, sm: 4, md: 12 }}
             sx={{
                border: '1px solid black',
                borderRadius: '1%',

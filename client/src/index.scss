@@ -7,6 +7,16 @@ html {
 // $breakpoint is the variable that can have several values
 @mixin devices($breakpoint) {
    //CSS here only applies when device is below this width
+   @if $breakpoint == desktopLarge {
+      @media only screen and (max-width: 2600px) {
+         @content;
+      }
+   }
+   @if $breakpoint == desktopMedium {
+      @media only screen and (max-width: 2000px) {
+         @content;
+      }
+   }
    @if $breakpoint == tablet {
       @media only screen and (max-width: 900px) {
          @content;
