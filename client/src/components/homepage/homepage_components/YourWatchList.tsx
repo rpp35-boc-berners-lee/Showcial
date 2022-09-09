@@ -127,9 +127,9 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
 
    return (
     <div>
-      <Typography>YOUR WATCH LIST</Typography>
+      <Typography variant='h6' sx={{ my: 3, ml: 2, fontWeight: "bold" }}>YOUR WATCH LIST</Typography>
       <div>
-        <FormControl sx={{ m: 1, width: '10%' }} size='small'>
+        <FormControl sx={{mb: 5, ml: 2, width: '10%' }} size='small'>
           <InputLabel id="filter">Filter</InputLabel>
           <Select
             labelId="filter-label"
@@ -145,7 +145,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
             <MenuItem value={'Amazon'}>Amazon Prime</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{ m: 1, width: '10%' }} size='small'>
+        <FormControl sx={{mb: 5, width: '10%' }} size='small'>
           <InputLabel id="sort">Sort</InputLabel>
           <Select
             labelId="sort-label"

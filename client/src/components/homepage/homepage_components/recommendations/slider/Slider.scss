@@ -1,13 +1,18 @@
 .container-slider {
-  max-width: 700px;
-  height: 500px;
-  margin: 100px auto 0;
+  width: 100%;
+  // max-width: 700px;
+  height: 800px;
+  margin: 10px auto 20px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  p {
-    text-align: center;
-  }
+}
+
+.video-title {
+  position: absolute;
+  bottom: 50px;
+  text-align: center;
+  color: #f1f1f1;
 }
 @media screen and (max-width: 700px){
   .container-slider {
@@ -31,8 +36,8 @@
 }
 
 .btn-slide {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: #f1f1f1;
   border: 1px solid rgba(34, 34, 34, 0.287);
@@ -68,13 +73,13 @@
   display: flex;
 }
 .dot {
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: 3px solid #f1f1f1;
-  margin: 0 5px;
+  margin: 0 8px;
   background: #f1f1f1;
 }
 .dot.active {
-  background: rgb(32, 32, 32);
+  background: rgb(74, 74, 74);
 }

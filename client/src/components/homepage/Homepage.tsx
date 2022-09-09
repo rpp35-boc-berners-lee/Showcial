@@ -4,22 +4,17 @@ import './Homepage.scss';
 import { YourWatchList } from './homepage_components/YourWatchList';
 import { Search } from './homepage_components/Search';
 import { ConfigAPI, APIResponse } from '../../../../types';
-import Box from '@mui/material/Box';
+import { Box, Stack, Typography, Button, FormControl, MenuItem, Select, Container } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
 import SearchIcon from '@mui/icons-material/Search';
-import Button from '@mui/material/Button';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import { CarouselList } from './homepage_components/carousel/Carousel';
 import { Recommendations } from './homepage_components/recommendations/Recommendations';
 import { TrendingVideos } from '../shared/trending-videos/TrendingVideos';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { VideoDetails } from '../shared/VideoDetails';
 import { useAuth } from '../../hooks/useAuth';
 import { TrendingOrRecommendedVideos } from './homepage_components/trending/TrendingVideos'
@@ -162,7 +157,7 @@ export function Homepage() {
         setInWatchList={setInWatchList}
         updateWatchList={updateWatchList}
         /> : null}
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
+      <Box sx={{ '& > :not(style)': { ml: 4, my: 3 } }}>
         <form onSubmit={handleSubmit}>
           <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
             <InputLabel htmlFor="search-adornment">Search a show...</InputLabel>
@@ -224,54 +219,54 @@ export function Homepage() {
       </div>
       :
       <>
-        <h3>RECOMMENDATIONS FOR YOU</h3>
-        <Box sx={{ maxWidth: 200 }}>
-          <FormControl fullWidth>
-            <InputLabel id="tv-movie-filter">TV or Movie</InputLabel>
-            <Select
-              labelId="tv-movie-filter"
-              id="tv-movie-select"
-              value={mediaType}
-              label="MediaType"
-              onChange={handleMediaTypeChange}
-            >
-              <MenuItem value={'movie'}> Movie</MenuItem>
-              <MenuItem value={'tv'}>TV</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        {topTV !== undefined && mediaType === 'tv' ?
-          <Recommendations
-            vedios={topTV.results}
-            config={config}
-            userName={userName}
-            mediaType={mediaType}
-            getSelected={getSelected}
-            inWatchList={inWatchList}
-            setInWatchList={setInWatchList}
-            updateWatchList={updateWatchList}
-            /> : null}
-        {topMovie !== undefined && mediaType === 'movie' ?
-          <Recommendations
-            vedios={topMovie.results}
-            config={config}
-            userName={userName}
-            mediaType={mediaType}
-            getSelected={getSelected}
-            inWatchList={inWatchList}
-            setInWatchList={setInWatchList}
-            updateWatchList={updateWatchList}
-            /> : null}
-        {/* <TrendingVideos getSelected={getSelected}/> */}
-        <TrendingOrRecommendedVideos
-            mediaType={mediaType}
-            trendingOrRecommended={'trending'}
-            getSelected={getSelected}
-          />
-        {/* {trendingMovie !== undefined ?
-            <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
-        {watchList !== undefined ?
-          <YourWatchList watchList={watchList} config={config} getSelected={getSelected}/>: null}
+        <Typography variant="h5" sx={{ml: 5, mb: 4, fontWeight: "bold"}}>RECOMMENDATIONS FOR YOU</Typography>
+          <Box sx={{ maxWidth: 200, ml: 5, mb: 2 }}>
+            <FormControl fullWidth>
+              <InputLabel id="tv-movie-filter">TV or Movie</InputLabel>
+              <Select
+                labelId="tv-movie-filter"
+                id="tv-movie-select"
+                value={mediaType}
+                label="MediaType"
+                onChange={handleMediaTypeChange}
+              >
+                <MenuItem value={'movie'}> Movie</MenuItem>
+                <MenuItem value={'tv'}>TV</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          {topTV !== undefined && mediaType === 'tv' ?
+            <Recommendations
+              vedios={topTV.results}
+              config={config}
+              userName={userName}
+              mediaType={mediaType}
+              getSelected={getSelected}
+              inWatchList={inWatchList}
+              setInWatchList={setInWatchList}
+              updateWatchList={updateWatchList}
+              /> : null}
+          {topMovie !== undefined && mediaType === 'movie' ?
+            <Recommendations
+              vedios={topMovie.results}
+              config={config}
+              userName={userName}
+              mediaType={mediaType}
+              getSelected={getSelected}
+              inWatchList={inWatchList}
+              setInWatchList={setInWatchList}
+              updateWatchList={updateWatchList}
+              /> : null}
+          {/* <TrendingVideos getSelected={getSelected}/> */}
+          <TrendingOrRecommendedVideos
+              mediaType={mediaType}
+              trendingOrRecommended={'trending'}
+              getSelected={getSelected}
+            />
+          {/* {trendingMovie !== undefined ?
+              <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
+          {watchList !== undefined ?
+            <YourWatchList watchList={watchList} config={config} getSelected={getSelected}/>: null}
         </>
       }
     </div>
