@@ -1,4 +1,5 @@
 // import { RequestPage } from '@mui/icons-material';
+require('dotenv').config();
 import axios from 'axios';
 import { Request, Response, Router } from 'express';
 const bcrypt = require('bcryptjs');
@@ -58,7 +59,6 @@ passport.use(
          //  let session = req.session as unknown as SessionData;
          if (req.session.user) {
             // user is already logged in, associate his google account with regular account and redirect user
-            console.log('user is already logged in');
             const googleUser = {
                id: profile.id,
                user: req.session.user,
@@ -153,7 +153,11 @@ router.get(
    (req: Request, res: Response) => {
       let session = req.session as unknown as SessionData;
       req.session.user = session.passport.user.user;
-      res.redirect('http://localhost:3000');
+      if (process.env.NODE_ENV === 'production') {
+         res.redirect('http://localhost:8080');
+      } else {
+         res.redirect('http://localhost:3000');
+      }
    }
 );
 
@@ -213,9 +217,9 @@ router.post('/signin', (req: any, res: Response) => {
       })
       .then((response) => {
          let hash = response.data.hashedPassword;
+         console.log('hash:', hash);
          if (bcrypt.compareSync(password, hash)) {
             req.session.user = response.data.userName;
-            console.log('signin', req.session);
             res.status(201).send('Succesfully logged in');
             // res.status(201).redirect('http://localhost:3000');
          } else {
@@ -226,6 +230,8 @@ router.post('/signin', (req: any, res: Response) => {
          console.log(`Error logging in as ${userName}`, err);
          res.status(400).send(err);
       });
+   // req.session.user = 'JamesFranco';
+   // res.status(201).send('Succesfully logged in');
 });
 
 export { router };
