@@ -160,6 +160,8 @@ router.get(
 
 //route that checks if user is logged in
 router.get('/checkAuthStatus', (req: Request, res: Response) => {
+   console.log('here in check auth status');
+   console.log('req.session in checkAuthStatus:', req.session);
    if (req.session && req.session.user) {
       res.status(200).send(req.session.user);
    } else {
@@ -194,6 +196,7 @@ router.post('/signup', async (req: Request, res: Response) => {
          ownedServices,
       })
       .then(() => {
+         req.session.user = userName;
          res.status(201).send('User added to database');
       })
       .catch((err) => {
@@ -205,6 +208,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 router.post('/signin', (req: any, res: Response) => {
    let userName = req.body.params.userName;
    let password = req.body.params.password;
+   console.log('userName:', userName);
 
    axios
       .get('http://localhost:8080/videoDB/user', {
@@ -214,9 +218,12 @@ router.post('/signin', (req: any, res: Response) => {
       })
       .then((response) => {
          let hash = response.data.hashedPassword;
+         console.log('hash:', hash);
          if (bcrypt.compareSync(password, hash)) {
             req.session.user = response.data.userName;
+            console.log('req.session in signing route:', req.session);
             res.status(201).send('Succesfully logged in');
+            // res.status(201).redirect('http://localhost:3000');
          } else {
             res.status(401).send('Incorrect username or password');
          }
@@ -225,6 +232,8 @@ router.post('/signin', (req: any, res: Response) => {
          console.log(`Error logging in as ${userName}`, err);
          res.status(400).send(err);
       });
+   // req.session.user = 'JamesFranco';
+   // res.status(201).send('Succesfully logged in');
 });
 
 // router.get('/guest', (req: any, res: Response) => {

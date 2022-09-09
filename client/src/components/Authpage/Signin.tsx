@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Button, IconButton, Paper, TextField, Typography } from '@mui/material';
+import {
+   Button,
+   IconButton,
+   Paper,
+   TextField,
+   Typography,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import GoogleIcon from '@mui/icons-material/Google';
 import { Stack } from '@mui/system';
 import './Signin.scss';
-
 
 export default function Signin() {
    const navigate = useNavigate();
@@ -15,16 +20,16 @@ export default function Signin() {
    });
    const verifyLogin = () => {
       axios
-         .post('http://localhost:8080/api/auth/signin', {
+         .post('/api/auth/signin', {
             params: {
                userName: values.userName,
                password: values.password,
             },
          })
          .then((res) => {
-            console.log('status', res);
+            console.log('res after calling api/auth/signin', res);
             if (res.status === 201) {
-               navigate('/');
+               navigate('/', { replace: true });
             }
          })
          .catch((err) => {
@@ -89,18 +94,19 @@ export default function Signin() {
                         placeholder='Password'
                         onChange={(e) => handlePasswordChange(e)}
                      />
-                     <Button variant='contained'
+                     <Button
+                        variant='contained'
                         sx={{ margin: 1, mb: 4 }}
                         onClick={verifyLogin}
                      >
                         Sign-in
                      </Button>
-                     <Typography align='center'>
-                        OR...
-                     </Typography>
-                     <Button variant='text'
+                     <Typography align='center'>OR...</Typography>
+                     <Button
+                        variant='text'
                         color='inherit'
-                        onClick={guestLogin}>
+                        onClick={guestLogin}
+                     >
                         Continue as a guest
                      </Button>
                   </Stack>
