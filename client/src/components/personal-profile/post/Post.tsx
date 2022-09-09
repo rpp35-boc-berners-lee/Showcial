@@ -40,11 +40,12 @@ export const Post = (props: any) => {
    });
 
    return (
-      <Card sx={{ boxShadow: 12 }}>
+      <Card sx={{ boxShadow: 12, minWidth: 600, maxWidth: 600 }}>
          <Stack
+            className='postTile'
             direction='row'
             spacing={1}
-            justifyContent='left'
+            justifyContent='center'
             alignItems='center'
             style={{cursor: 'pointer'}}
             onClick={() => {
@@ -60,33 +61,40 @@ export const Post = (props: any) => {
          </Stack>
          <Divider variant='middle' />
          <Stack
-            direction='row'
             spacing={1}
+            direction='row'
             alignItems='center'
-            justifyContent='left'
+            justifyContent='center'
          >
-            <CardHeader
-               title={postData.videoName}
-               subheader={postData.comments}
+            <Stack
+               spacing={1}
+               alignItems='center'
+               justifyContent='center'
+            >
+               <>
+                  <CardHeader
+                     title={postData.videoName}
+                     subheader={postData.comments}
+                  />
+                     <Rating
+                        name='videoRating'
+                        value={postData.userRating / 2}
+                        readOnly
+                     />
+               </>
+            </Stack>
+            <CardMedia
+               className="postImage"
+               sx={{ minWidth: 300, maxWidth: 300 }}
+               height='169'
+               component='img'
+               image={
+                  postData.image !== undefined
+                     ? postData.image
+                     : 'http://bertsrentals.com/wp-content/uploads/2017/08/300x300-placeholder.jpg'
+               }
             />
-            <CardContent>
-               <Rating
-                  name='videoRating'
-                  value={postData.userRating / 2}
-                  readOnly
-               />
-            </CardContent>
          </Stack>
-         <CardMedia
-            height='180'
-            component='img'
-            className='post-image'
-            image={
-               postData.image !== undefined
-                  ? postData.image
-                  : 'http://bertsrentals.com/wp-content/uploads/2017/08/300x300-placeholder.jpg'
-            }
-         />
       </Card>
    );
 };

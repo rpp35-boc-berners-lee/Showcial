@@ -9,9 +9,8 @@ const upperCaseReducer = (string: string) => {
 
 export const SearchItem = (props: any) => {
   return (
-    <Card style={{cursor: 'pointer'}} key={props.index} sx={{ m: 1, width: '25ch' }}>
-      <Stack direction="row" spacing={1} justifyContent="left" alignItems="center" onClick={() => {
-        console.log('clicked')
+    <Card style={{cursor: 'pointer'}} key={props.index} sx={{ m: 1, width: '25ch' }} className="searchItem">
+      <Stack className='searchItemTitle' direction="row" spacing={1} justifyContent="left" alignItems="center" onClick={() => {
         props.setFolloweeData(props.followee);
         props.setValue(2);
       }}>
