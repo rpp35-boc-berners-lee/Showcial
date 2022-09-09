@@ -10,8 +10,8 @@ let theme = createTheme({
          main: '#6E63C6',
       },
       background: {
-         default: '#000000',
          paper: '#121212',
+         default: '#000000',
       },
    },
 });

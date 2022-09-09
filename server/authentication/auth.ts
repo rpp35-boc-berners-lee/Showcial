@@ -1,4 +1,5 @@
 // import { RequestPage } from '@mui/icons-material';
+require('dotenv').config();
 import axios from 'axios';
 import { Request, Response, Router } from 'express';
 const bcrypt = require('bcryptjs');
@@ -59,7 +60,6 @@ passport.use(
          //  let session = req.session as unknown as SessionData;
          if (req.session.user) {
             // user is already logged in, associate his google account with regular account and redirect user
-            console.log('user is already logged in');
             const googleUser = {
                id: profile.id,
                user: req.session.user,
@@ -154,14 +154,16 @@ router.get(
    (req: Request, res: Response) => {
       let session = req.session as unknown as SessionData;
       req.session.user = session.passport.user.user;
-      res.redirect('http://localhost:3000');
+      if (process.env.NODE_ENV === 'production') {
+         res.redirect('http://localhost:8080');
+      } else {
+         res.redirect('http://localhost:3000');
+      }
    }
 );
 
 //route that checks if user is logged in
 router.get('/checkAuthStatus', (req: Request, res: Response) => {
-   console.log('here in check auth status');
-   console.log('req.session in checkAuthStatus:', req.session);
    if (req.session && req.session.user) {
       res.status(200).send(req.session.user);
    } else {
@@ -208,7 +210,6 @@ router.post('/signup', async (req: Request, res: Response) => {
 router.post('/signin', (req: any, res: Response) => {
    let userName = req.body.params.userName;
    let password = req.body.params.password;
-   console.log('userName:', userName);
 
    axios
       .get('http://localhost:8080/videoDB/user', {

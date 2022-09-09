@@ -8,12 +8,16 @@ interface Props {
 
 export const FeatureCard = ({ description, image }: Props) => {
    return (
-      <Grid item xs={4} sm={4} md={3}>
-         <Card elevation={0}>
-            <CardMedia component='img' image={image} alt={description} />
-
+      <Grid item xs={4} sm={4} md={3} data-testid='feature-card'>
+         <Card elevation={1} sx={{ minHeight: '400px', maxHeight: '400px' }}>
+            <CardMedia
+               component='img'
+               image={image}
+               alt={description}
+               height={'auto'}
+            />
             <CardContent>
-               <Typography variant='subtitle1'>{description}</Typography>
+               <Typography variant='body1'>{description}</Typography>
             </CardContent>
          </Card>
       </Grid>
