@@ -193,21 +193,6 @@ export function Homepage() {
             updateWatchList={updateWatchList}
             /> : null}
           <Typography>SEARCH RESULTS</Typography>
-          <Box sx={{ maxWidth: 200 }}>
-            <FormControl fullWidth>
-              <InputLabel id="tv-movie-filter">Filter By</InputLabel>
-              <Select
-                labelId="tv-movie-filter"
-                id="tv-movie-select"
-                value={mediaType}
-                label="MediaType"
-                onChange={handleMediaTypeChange}
-              >
-                <MenuItem value={'movie'}> Movie</MenuItem>
-                <MenuItem value={'tv'}>TV</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
           <Stack spacing={2} direction="row">
             {page < searchResults?.total_pages ?
               <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
