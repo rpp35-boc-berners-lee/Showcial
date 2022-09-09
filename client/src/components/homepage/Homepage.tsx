@@ -96,7 +96,7 @@ export function Homepage() {
       setQuery(e.target.value);
    };
 
-   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+   const handleSubmit = async (e: FormEvent<HTMLFormElement> ) => {
       e.preventDefault();
       getSearchAPI();
    };
@@ -166,7 +166,7 @@ export function Homepage() {
               onChange={handleChange}
               endAdornment={
                 <InputAdornment position="end">
-                  <SearchIcon/>
+                  <SearchIcon />
                 </InputAdornment>
               }
               label="search"
@@ -187,9 +187,9 @@ export function Homepage() {
             setInWatchList={setInWatchList}
             updateWatchList={updateWatchList}
             /> : null}
-          <Typography>SEARCH RESULTS</Typography>
+          <Typography variant="h5" fontWeight="bold" sx={{ml: 5, mb: 4}}>SEARCH RESULTS</Typography>
           <Box sx={{ maxWidth: 200 }}>
-            <FormControl fullWidth>
+            <FormControl fullWidth sx={{ml: 5, mb: 4}}>
               <InputLabel id="tv-movie-filter">Filter By</InputLabel>
               <Select
                 labelId="tv-movie-filter"
@@ -203,18 +203,18 @@ export function Homepage() {
               </Select>
             </FormControl>
           </Box>
-          <Stack spacing={2} direction="row">
+          <Stack spacing={2}  direction="row">
             {page < searchResults?.total_pages ?
-              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
+              <Button sx={{ml:5}} variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
             {page > 1 ?
-              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
+              <Button sx={{ml:5}} variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
           </Stack>
           <Search searchResults={searchResults.results} config={config} getSelected={getSelected} mediaType={mediaType}/>
           <Stack spacing={2} direction="row">
             {page < searchResults?.total_pages ?
-              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
+              <Button  sx={{ml:5}} variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage} >SHOW NEXT PAGE</Button> : null}
             {page > 1 ?
-              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
+              <Button sx={{ml:5}} variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
           </Stack>
       </div>
       :

@@ -126,9 +126,9 @@ export const ForFollower = (props: any) => {
       </Stack>
       <IndividualFeed userFeed={userFeed} />
     </Card>
-    <Box sx={{ width: '100%', m: 6 }}>
+    <Box sx={{ width: '100%', mt: 6}}>
         <Typography variant="h4" align="center">{props.followeeData}'s Watch List</Typography>
-        <Grid container spacing={6} mt={6} justifyContent='center'>
+        <Grid container sx={{mt: 2}} spacing={4}justifyContent='center'>
           {watchList.map((video: Video, i: number) => {
             return (
               <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>

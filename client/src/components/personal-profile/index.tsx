@@ -27,7 +27,6 @@ export const PersonalProfile = () => {
       setConfig(config.data);
    };
 
-
   function fetchUserData () {
     axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
       .then((results: any) => {
@@ -44,6 +43,8 @@ export const PersonalProfile = () => {
    fetchUserData();
    fetchAPI();
   }, [])
+  
+  console.log('userName: ', userName)
   
   let currentOption = value;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -110,8 +111,7 @@ export const PersonalProfile = () => {
       );
    }
    console.log('userName: ', userName);
-   console.log('followingList: ', followingList)
-   console.log('config: ', config);
+
    return (
       
       <div className='personalProfile'>
