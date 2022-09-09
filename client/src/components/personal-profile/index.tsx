@@ -39,12 +39,12 @@ export const PersonalProfile = () => {
         console.log('fetchFollowingList() Failed', error);
       })
   }
-  
+
   useEffect(() => {
    fetchUserData();
    fetchAPI();
   }, [])
-  
+
   let currentOption = value;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log('value: ', value);
@@ -114,11 +114,9 @@ export const PersonalProfile = () => {
          />
       );
    }
-   console.log('userName: ', userName);
-   console.log('followingList: ', followingList)
-   console.log('config: ', config);
+
    return (
-      
+
       <div className='personalProfile'>
          {followerSearchBar}
          {selectBar}

@@ -27,8 +27,8 @@ export const FollowerSearchBar = (props: any) => {
       );
    }, [matchedUserList]);
 
-   function fetchUserList() {
-      axios
+   async function fetchUserList() {
+      await axios
          .get('http://localhost:8080/videoDB/user/all')
          .then((results: any) => {
             setUserList(results.data);

@@ -23,8 +23,8 @@ type Video = {
 
 export const ForYou: React.FC<Props> = ({ userName, watchList, config, setValue, setFolloweeData }) => {
   return (
-     <div>
-       <Grid container spacing={2} className='personal-profile'>
+     <div className='forYou'>
+       <Grid container spacing={2} className='forYou'>
          <Grid item xs={12} sm={12} md={3} className='provider-list'>
            <Paper><WatchProviders userName={userName} /></Paper>
          </Grid>
@@ -36,25 +36,6 @@ export const ForYou: React.FC<Props> = ({ userName, watchList, config, setValue,
            />
          </Grid>
        </Grid>
-       <Box sx={{ width: '100%' }}>
-        {/* <Typography>Watch List</Typography>
-        <Grid container spacing={4} justifyContent='center'>
-          {watchList.map((video: Video, i: number) => {
-            return (
-              <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
-                <VideoCard
-                  base_url={config.images.base_url}
-                  backdrop_sizes={config.images.backdrop_sizes}
-                  backdrop_path={video.backdrop_path}
-                  name={video.name || video.original_title}
-                  id={video.id}
-                  mediaType={video.media_type}
-                />
-              </Grid>
-            )
-          })}
-        </Grid> */}
-      </Box>
      </div>
   );
 };

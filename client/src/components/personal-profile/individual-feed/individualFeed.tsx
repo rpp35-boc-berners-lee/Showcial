@@ -26,8 +26,8 @@ export const IndividualFeed = (props: any) => {
 
 
    return (
-      <div>
-        <Stack spacing={2} className="individualFeed">
+      <div  className="individualFeed">
+        <Stack spacing={2}>
            {props.userFeed.map((feedData: any, index: number) => {
              return <Post className='post' feedData={feedData} key={index} />
            })}

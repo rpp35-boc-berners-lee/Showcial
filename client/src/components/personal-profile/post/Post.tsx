@@ -39,8 +39,22 @@ export const Post = (props: any) => {
       }
    });
 
+   let conditionalCardContent = undefined;
+   if (postData.comments) {
+     conditionalCardContent = (
+       <CardContent>
+         {postData.comments}
+       </CardContent>
+     );
+   }
+
    return (
-      <Card sx={{ boxShadow: 12, minWidth: 600, maxWidth: 600 }}>
+      <Card sx={{
+         boxShadow: 12,
+         // maxHeight: "500px"
+         // minWidth: 300,
+         // maxWidth: 780
+      }}>
          <Stack
             className='postTile'
             direction='row'
@@ -62,31 +76,23 @@ export const Post = (props: any) => {
          <Divider variant='middle' />
          <Stack
             spacing={1}
-            direction='row'
             alignItems='center'
             justifyContent='center'
          >
-            <Stack
-               spacing={1}
-               alignItems='center'
-               justifyContent='center'
-            >
-               <>
-                  <CardHeader
-                     title={postData.videoName}
-                     subheader={postData.comments}
-                  />
-                     <Rating
-                        name='videoRating'
-                        value={postData.userRating / 2}
-                        readOnly
-                     />
-               </>
-            </Stack>
+            <CardHeader
+            title={postData.videoName}
+            justifyContent='right'
+            />
+            <Rating
+               name='videoRating'
+               value={postData.userRating / 2}
+               readOnly
+            />
+            {conditionalCardContent}
             <CardMedia
                className="postImage"
-               sx={{ minWidth: 300, maxWidth: 300 }}
-               height='169'
+               // sx={{ maxWidth: 900 }}
+               // height='169'
                component='img'
                image={
                   postData.image !== undefined

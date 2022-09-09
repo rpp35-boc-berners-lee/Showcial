@@ -36,22 +36,25 @@
   // margin: 2rem;
 }
 
-.post {
-  padding: 1.5rem;
-  // margin: 2rem;
-}
 
-.postTile {
-  padding: 1.5rem;
-
-}
+// .postTile {
+//   padding: 1.5rem;
+// }
 
 .postImage {
   margin-bottom: 1rem;
 }
 
+.personalFeed {
+  // height: fit-content;
+  // overflow: hidden; //set to hide any contents greater than the height of total view height
+  overflow-y: auto;
+  align-self: center;
+}
+
 .individualFeed {
-  padding: 1.5rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
 }
 
 .searchItemTitle {
@@ -64,7 +67,8 @@
   margin-right: 1rem;
 }
 
-.personal-profile {
-  padding: 1.5rem;
-  margin-right: 1rem;
+.forYou {
+  // padding: 1.5rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
 }

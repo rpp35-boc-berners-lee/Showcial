@@ -16,36 +16,39 @@ export const PersonalFeed = (props: any) => {
    },[]);
 
    useEffect(() => {
-     setDisplayedPosts(userFeed.splice(0, numDisplayed));
+      setDisplayedPosts(userFeed.slice(0, 2));
+   }, [userFeed])
+
+   useEffect(() => {
+     setDisplayedPosts(userFeed.slice(0, numDisplayed));
    }, [numDisplayed])
 
-   function fetchUserFeed () {
-     axios.get('http://localhost:8080/videoDB/user/feed', {params: {userName: props.userName}})
+   async function fetchUserFeed () {
+     await axios.get('http://localhost:8080/videoDB/user/feed', {params: {userName: props.userName}})
        .then((results) => {
          setUserFeed(results.data);
-         setDisplayedPosts(results.data.splice(0, numDisplayed));
        })
        .catch((error: any) => {
          console.log('fetchUserFeed() Failed: ', error);
        })
    }
    const showMore = (<Button variant="text" startIcon={<ExpandMoreIcon />} onClick={() => {
-         setNumDisplayed(numDisplayed + 2);
+         setNumDisplayed(numDisplayed + 1);
       }}>
          SHOW MORE
       </Button>
    );
 
    const showLess = (<Button variant="text" startIcon={<ExpandLessIcon />} onClick={() => {
-      setNumDisplayed(numDisplayed - 2);
+      setNumDisplayed(numDisplayed - 1);
    }}>
       SHOW LESS
    </Button>
 );
 
    return (
-      <div>
-         <Stack spacing={2} className="personalFeed">
+      <div className="personalFeed">
+         <Stack spacing={2} justifyContent="center">
             {displayedPosts.map((feedData: any, index: number) => {
             return (
                <Post
@@ -58,7 +61,7 @@ export const PersonalFeed = (props: any) => {
             })}
          </Stack>
          <Stack direction="row" spacing={1} justifyContent="left" alignItems="center"  className="showMoreOrLess">
-            {(numDisplayed >= displayedPosts.length) ? showMore : null}
+            {(numDisplayed < userFeed.length) ? showMore : null}
             {(displayedPosts.length > 2) ? showLess : null}
          </Stack>
       </div>

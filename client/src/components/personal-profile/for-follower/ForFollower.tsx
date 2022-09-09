@@ -37,8 +37,8 @@ export const ForFollower = (props: any) => {
     fetchUserData();
   }, []);
 
-  function fetchUserData () {
-    axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName: props.followeeData}})
+  async function fetchUserData () {
+    await axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName: props.followeeData}})
       .then((results: any) => {
         setWatchList(results.data.watchedVideos)
         setRecommendedList(results.data.recommendedVideos);
@@ -59,8 +59,8 @@ export const ForFollower = (props: any) => {
       })
   }
 
-  function removeFollower (username: string, value: string) {
-    axios.put('http://localhost:8080/videoDB/user/removeFollowed', {
+ async function removeFollower (username: string, value: string) {
+    await axios.put('http://localhost:8080/videoDB/user/removeFollowed', {
       userName: username,
       value: value
     })
@@ -72,8 +72,8 @@ export const ForFollower = (props: any) => {
     });
   }
 
-  function addFollower (username: string, value: string) {
-    axios.put('http://localhost:8080/videoDB/user/addFollowed', {
+  async function addFollower (username: string, value: string) {
+   await axios.put('http://localhost:8080/videoDB/user/addFollowed', {
       userName: username,
       value: value
     })
@@ -107,14 +107,49 @@ export const ForFollower = (props: any) => {
     );
   }
 
+  let conditionalWatchList = undefined;
+  if (watchList.length) {
+    conditionalWatchList =
+      (<Grid container spacing={4} justifyContent='center'>
+        {watchList.map((video: Video, i: number) => {
+          return (
+            <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
+              <VideoCard
+                base_url={props.config.images.base_url}
+                backdrop_sizes={props.config.images.backdrop_sizes}
+                backdrop_path={video.backdrop_path}
+                name={video.name || video.original_title}
+                id={video.id}
+                mediaType={video.media_type}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>);
+  } else {
+    conditionalWatchList =
+      (<Typography
+        justifyContent="center"
+        alignItems="center"
+      >
+        No Videos in Watch List
+      </Typography>)
+  }
+
   return (
     <>
-    <Grid>
-      <Stack direction="row" spacing={1}   justifyContent="center" alignItems="center">
-      <Avatar className="Avatar">{upperCaseReducer(props.followeeData)}</Avatar>
+    {/* <Grid justifyContent="center" alignItems="center" sx={{ maxWidth: "75%"}}> */}
+      <Stack direction="row" spacing={1} justifyContent="center" alignItems="center">
+        <Avatar
+          className="Avatar"
+          sx={{ maxFontSize: "3rem", minHeight: "3rem", maxHeight: "7rem", minWidth: "3rem", maxWidth: "7rem"}}
+        >
+          {upperCaseReducer(props.followeeData)}
+        </Avatar>
         <CardHeader
           title={props.followeeData}
           style={{textAlign: 'center'}}
+          titleTypographyProps={{variant:'h2' }}
         />
       </Stack>
       <Stack spacing={2} className="individualFeed">
@@ -137,25 +172,10 @@ export const ForFollower = (props: any) => {
 
       <Box sx={{ width: '100%' }}>
         <Typography>My Watch List</Typography>
-        <Grid container spacing={4} justifyContent='center'>
-          {watchList.map((video: Video, i: number) => {
-            return (
-              <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
-                <VideoCard
-                  base_url={props.config.images.base_url}
-                  backdrop_sizes={props.config.images.backdrop_sizes}
-                  backdrop_path={video.backdrop_path}
-                  name={video.name || video.original_title}
-                  id={video.id}
-                  mediaType={video.media_type}
-                />
-              </Grid>
-            )
-          })}
-        </Grid>
+        {conditionalWatchList}
       </Box>
 
-    </Grid>
+    {/* </Grid> */}
     </>
   );
 };
