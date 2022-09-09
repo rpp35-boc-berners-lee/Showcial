@@ -11,7 +11,6 @@ type ChildProps = {
 export const UnownedProviders: React.FC<ChildProps> = ({unownedServices, handleAdd}) => {
   
   useEffect(() => {
-    console.log('in useEffect of UnownedProviders: ', unownedServices);
   }, [unownedServices])
   
   return (

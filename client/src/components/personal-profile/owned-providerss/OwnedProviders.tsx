@@ -13,10 +13,8 @@ export const OwnedProviders: React.FC<ChildProps> = ({ownedServices, handleDelet
   // const [owned, setOwned] = useState([ownedServices])
   
   useEffect(() => {
-    console.log('in useEffect of OwnedProviders: ', ownedServices)
   }, [ownedServices])
   
-  console.log('OwnedProviders rendered');
   return (
     <Container
       sx={{
@@ -30,7 +28,6 @@ export const OwnedProviders: React.FC<ChildProps> = ({ownedServices, handleDelet
       component="ul"
   >
     {ownedServices.map((service, i) => {
-      console.log('ownedServices in child component', ownedServices)
       return (
        <OwnedProviderItem service={service} key={i} handleDelete={handleDelete} />
       );

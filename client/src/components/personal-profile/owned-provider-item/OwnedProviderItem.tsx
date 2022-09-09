@@ -14,7 +14,6 @@ type ChildProps = {
 export const OwnedProviderItem : React.FC<ChildProps> = ({service, handleDelete}) => {
   
   useEffect(() => {
-    console.log('in useEffect of OwnedProviderItem')
   }, [service])
   return (
     <ListItem >

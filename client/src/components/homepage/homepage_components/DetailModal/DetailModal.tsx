@@ -52,7 +52,7 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
   // const [ mediaType, setMediaType ] = useState('movie');
 
   // temporary username until we get username from passport
-  const userName = 'JamesFranco';
+  const userName = 'Joe';
 
   //not working well
   // const fetchAll = async () => {

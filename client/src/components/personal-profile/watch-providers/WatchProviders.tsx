@@ -80,10 +80,8 @@ export const WatchProviders = ({userName}: {userName: any}) => {
     unownedServices.splice(index, 1)
     setUnownedServices([...unownedServices]);
 
-    console.log('unownedServices: ', unownedServices);
     ownedServices.push(added);
     setOwnedServices([...ownedServices]);
-    console.log('ownedServices: ', ownedServices);
 
     let options = {
       method: 'put',
