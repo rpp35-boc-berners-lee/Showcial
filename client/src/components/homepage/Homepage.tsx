@@ -150,7 +150,7 @@ export function Homepage() {
         setInWatchList={setInWatchList}
         updateWatchList={updateWatchList}
         /> : null}
-      <Box sx={{ '& > :not(style)': { ml: 4, my: 3 } }}>
+      <Box sx={{ ml: 4, my: 3 }}>
         <form onSubmit={handleSubmit}>
           <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
             <InputLabel htmlFor="search-adornment">Search</InputLabel>
@@ -203,9 +203,11 @@ export function Homepage() {
       </div>
       :
       <>
-        <Typography variant="h5" sx={{ml: 5, mb: 4, fontWeight: "bold"}}>RECOMMENDATIONS FOR YOU</Typography>
-          <Box sx={{ maxWidth: 200, ml: 5, mb: 2 }}>
-            <FormControl fullWidth>
+        <Typography variant='h5' sx={{ my: 3, ml: 5, fontWeight: "bold" }} component='h2' align='center'>
+          RECOMMENDATIONS FOR YOU
+        </Typography>
+          <Stack direction='row' alignItems='center' justifyContent='center' sx={{ mb: 5, ml: 5 }}>
+            <FormControl sx={{ width: '10%' }} size='small'>
               <InputLabel id="tv-movie-filter">TV or Movie</InputLabel>
               <Select
                 labelId="tv-movie-filter"
@@ -218,7 +220,7 @@ export function Homepage() {
                 <MenuItem value={'tv'}>TV</MenuItem>
               </Select>
             </FormControl>
-          </Box>
+          </Stack>
           {topTV !== undefined && mediaType === 'tv' ?
             <Recommendations
               vedios={topTV.results}

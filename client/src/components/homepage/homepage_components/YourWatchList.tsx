@@ -120,11 +120,11 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
 
    return (
     <div>
-      <Typography variant='h5' sx={{ my: 3, ml: 5, fontWeight: "bold" }} variant='h4' component='h2' align='center' sx={{ pt: '2vh' }}>
+      <Typography variant='h5' sx={{ my: 3, ml: 5, fontWeight: "bold" }} component='h2' align='center'>
         YOUR WATCH LIST
       </Typography>
-      <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ p: '1vh' }}>
-        <FormControl sx={{mb: 5, ml: 5, width: '10%' }} size='small'>
+      <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ mb: 5, ml: 5 }}>
+        <FormControl sx={{ width: '10%' }} size='small'>
           <InputLabel id="filter">Filter</InputLabel>
           <Select
             labelId="filter-label"
@@ -140,7 +140,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
             <MenuItem value={'Amazon'}>Amazon Prime</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{mb: 5, width: '10%' }} size='small'>
+        <FormControl sx={{ width: '10%' }} size='small'>
           <InputLabel id="sort">Sort</InputLabel>
           <Select
             labelId="sort-label"
@@ -162,7 +162,10 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
         }
       </Stack>
       <Box sx={{ width: '100%', borderTop: '1px solid rgba(211, 211, 211, .5)', borderBottom: '1px solid rgba(211, 211, 211, .5)', pt: '2vh', pb: '1vh' }}>
-        {alterList.length === 0 ? 'No Videos Found' :
+        {alterList.length === 0 ?
+          <Typography variant='h6' sx={{ fontWeight: "bold" }} component='h2' align='center'>
+            There are no videos under this filter.
+          </Typography> :
           <Grid container spacing={2} justifyContent='center'>
             {displayedVideos.map((video: Video, i: number) => {
               return (
