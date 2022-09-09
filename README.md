@@ -1,13 +1,14 @@
 # Welcome to Showcial! The best site for finding movies and shows based on your friends reccomendations and ratings!
 
+<img>
+
 ## Authored by:
   -[Shengnan Huang](https://github.com/maomaotuo)
-
-  -Kiki Cai <a src="https://github.com/caixiuqi2013"/>
-  -Kevin On: <a src="https://github.com/kanokawn"/>
-  -Cristian Ordonez: <a src="https://github.com/cristianordonez"/>
-  -Tyler Nourse: <a src="https://github.com/Nourse41">
-  -Josh Waalkes: <a src="https://github.com/WaalkesJoshua">
+  -[Kiki Cai](https://github.com/caixiuqi2013)
+  -[Kevin On](https://github.com/kanokawn)
+  -[Cristian Ordonez](https://github.com/cristianordonez)
+  -[Tyler Nourse](https://github.com/Nourse41)
+  -[Josh Waalkes](https://github.com/WaalkesJoshua)
 
 # Introduction
 
