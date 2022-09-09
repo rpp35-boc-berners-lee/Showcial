@@ -18,7 +18,7 @@ const loggedInPages = ['About', 'Log out'];
 
 const ResponsiveAppBar = () => {
    const auth = useAuth();
-   console.log('auth:', auth);
+   // console.log('auth:', auth);
 
    const navigate = useNavigate();
    const location = useLocation();
