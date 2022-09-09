@@ -155,7 +155,7 @@ export const ForFollower = (props: any) => {
       <Stack spacing={2} className="individualFeed">
         {followingButton}
         <Button
-            className='button'
+            className='backButton'
             variant='contained'
             fullWidth
             color='secondary'
@@ -166,14 +166,16 @@ export const ForFollower = (props: any) => {
           Back
         </Button>
       </Stack>
+      <Divider/>
       <IndividualFeed
         userFeed={userFeed}
       />
-
-      <Box sx={{ width: '100%' }}>
-        <Typography>My Watch List</Typography>
-        {conditionalWatchList}
-      </Box>
+      <div  className="individualFeed">
+        <Box>
+          <Typography>My Watch List</Typography>
+          {conditionalWatchList}
+        </Box>
+      </div>
 
     {/* </Grid> */}
     </>

@@ -5,7 +5,7 @@ import { PersonalFeed } from '.././personal-feed/PersonalFeed';
 import { VideoCard } from '../../shared/VideoCard';
 
 type Props = {
-  userName: string;
+  userName: any;
   watchList: any;
   config: any;
   setValue: any;

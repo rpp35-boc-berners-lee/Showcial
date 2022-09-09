@@ -10,15 +10,28 @@ import Tab from '@mui/material/Tab';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import AssistantPhotoOutlinedIcon from '@mui/icons-material/AssistantPhotoOutlined';
 import { ConfigAPI } from '../../../../types';
+import { useAuth } from '../../hooks/useAuth';
 
 export const PersonalProfile = () => {
+   const auth = useAuth();
+   console.log('auth.user', auth.user);
    const [value, setValue] = React.useState(1);
-   const [userName, setUserName] = useState<any>('JamesFranco'); //! switch to current signed in user
+   const [userName, setUserName] = useState<any>(auth.user || 'JamesFranco'); //! switch to current signed in user
    const [followeeData, setFolloweeData] = useState<any>(undefined);
    const [followingList, setFollowingList] = useState<any>([]);
    const [recommendedList, setRecommendedList] = useState<any>([]);
    const [watchList, setWatchList] = useState<any>([]);
    const [config, setConfig] = useState<ConfigAPI | undefined>();
+
+   useEffect(() => {
+      setUserName(auth.user)
+   }, [auth.user])
+
+   useEffect(() => {
+      fetchUserData();
+      fetchAPI();
+   }, [userName])
+
 
    const fetchAPI = async () => {
       let config = await axios.get<ConfigAPI>(
@@ -39,11 +52,6 @@ export const PersonalProfile = () => {
         console.log('fetchFollowingList() Failed', error);
       })
   }
-
-  useEffect(() => {
-   fetchUserData();
-   fetchAPI();
-  }, [])
 
   let currentOption = value;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
