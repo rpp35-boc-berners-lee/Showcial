@@ -1,14 +1,25 @@
 .container-slider {
-  max-width: 700px;
-  height: 500px;
-  margin: 100px auto 0;
+  width: 100%;
+  // max-width: 700px;
+  height: 800px;
+  margin: 10px auto 20px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  p {
-    text-align: center;
-  }
 }
+
+.video-title {
+  padding: 20px;
+    margin-left: 40px;
+    font-size: 40px;
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+    color: #f1f1f1;
+    text-shadow: 1px 5px 10px black;
+    overflow: auto;
+}
+
 @media screen and (max-width: 700px){
   .container-slider {
     margin: 100px 10px 0;
@@ -20,6 +31,9 @@
   position: absolute;
   opacity: 0;
   transition: opacity ease-in-out 0.4s;
+  img {
+    filter: brightness(80%)
+  }
 }
 .slide img {
   width: 100%;
@@ -31,11 +45,11 @@
 }
 
 .btn-slide {
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: #f1f1f1;
-  border: 1px solid rgba(34, 34, 34, 0.287);
+  background: #ffffff92;
+  border: 1px solid rgba(97, 97, 97, 0.287);
   position: absolute;
   display: flex;
   justify-content: center;
@@ -68,13 +82,13 @@
   display: flex;
 }
 .dot {
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   border: 3px solid #f1f1f1;
-  margin: 0 5px;
+  margin: 0 8px;
   background: #f1f1f1;
 }
 .dot.active {
-  background: rgb(32, 32, 32);
+  background: rgb(74, 74, 74);
 }

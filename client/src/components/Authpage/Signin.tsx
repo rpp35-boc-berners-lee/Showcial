@@ -5,9 +5,12 @@ import axios from 'axios';
 import GoogleIcon from '@mui/icons-material/Google';
 import { Stack } from '@mui/system';
 import './Signin.scss';
+import { useAuth } from '../../hooks/useAuth';
 
 
 export default function Signin() {
+   // const auth = useAuth();
+
    const navigate = useNavigate();
    const [values, setValues] = useState({
       userName: '',
@@ -15,14 +18,14 @@ export default function Signin() {
    });
    const verifyLogin = () => {
       axios
-         .post('http://localhost:8080/api/auth/signin', {
+         .post('/api/auth/signin', {
             params: {
                userName: values.userName,
                password: values.password,
             },
          })
          .then((res) => {
-            console.log('status', res);
+            // console.log('signin auth:', auth);
             if (res.status === 201) {
                navigate('/');
             }

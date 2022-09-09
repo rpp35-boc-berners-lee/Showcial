@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {Slider} from './slider/Slider';
 import List from './list/List'
+import { Stack, Container } from '@mui/material';
 
 type ChildProps = {
   vedios: any;
@@ -15,7 +16,7 @@ type ChildProps = {
 
 export const Recommendations: React.FC<ChildProps> = ({vedios,  config, userName, mediaType, getSelected, inWatchList, setInWatchList, updateWatchList }) => {
   return (
-    <div>
+    <Container sx={{width: 1}}>
       <Slider
         vedios={vedios}
         config={config}
@@ -26,5 +27,7 @@ export const Recommendations: React.FC<ChildProps> = ({vedios,  config, userName
         updateWatchList={updateWatchList}
       />
       <List  mediaType={mediaType} trendingOrRecommended={'trending'} getSelected={getSelected}/>
-    </div>)
+    </Container>
+      
+  )
 }
