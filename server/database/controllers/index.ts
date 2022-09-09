@@ -72,66 +72,77 @@ const findUserByEmail = (email: string | undefined) => {
 
 const addToWatchedList = async (userName: any, video: any) => {
    return await models.UserTable.find({ userName })
-     .then(async (results: any) => {
-       let watchList = results[0].watchedVideos;
-       let exists = false;
-       for (let i = 0; i < watchList.length; i++) {
-         if (watchList[i][video.id] !== undefined) {
-           exists = true;
-         }
-       }
-       if (!exists) {
-         await models.UserTable.update({ userName }, { $push: { watchedVideos: video }})
-         console.log(`Success updating ${userName}'s watched list with videoID ${video.id}`)
-       } else {
-         console.log('Video already exists in user watch list');
-       }
-     })
-     .catch((error: any) => {
-       console.log(`Error updating ${userName}'s watched list with videoID ${video.id}: ${error}`)
-     })
- }
-
- const removeFromWatchedList = async (userName: any, videoId: number) => {
-   return await models.UserTable.find({ userName })
-     .then(async (results: any) => {
-       let watchList = results[0].watchedVideos;
-       let exists = false;
-       for (let i = 0; i < watchList.length; i++) {
-         if (watchList[i].id === videoId) {
-           exists = true;
-         }
-       }
-       if (exists) {
-         await models.UserTable.update({ userName }, { $pull: { watchedVideos: { id: videoId }}})
-         console.log(`Success removing videoID ${videoId} from ${userName}'s watched list`)
-       } else {
-         console.log('Video was never in user watch list');
-       }
-     })
-     .catch((error: any) => {
-       console.log(`Error removing videoID ${videoId} from ${userName}'s watched list: ${error}`)
-     })
- }
-//TODO: add videoID to recommended list
-const addToRecommended = async (userName: any, videoID: number) => {
-   return await models.UserTable.find({ userName })
       .then(async (results: any) => {
-         if (results[0].recommendedVideos.indexOf(videoID) === -1) {
-            await models.UserTable.update(
-               { userName },
-               { $push: { recommendedVideos: videoID } }
-            );
-            console.log(
-               `Success updating ${userName}'s recommended list with videoID ${videoID}`
-            );
+         let watchList = results[0].watchedVideos;
+         let exists = false;
+         for (let i = 0; i < watchList.length; i++) {
+            if (watchList[i][video.id] !== undefined) {
+               exists = true;
+            }
+         }
+         if (!exists) {
+            await models.UserTable.update({ userName }, { $push: { watchedVideos: video } })
+            console.log(`Success updating ${userName}'s watched list with videoID ${video.id}`)
          } else {
-            console.log('Video already exists in user recommended list');
+            console.log('Video already exists in user watch list');
          }
       })
       .catch((error: any) => {
+         console.log(`Error updating ${userName}'s watched list with videoID ${video.id}: ${error}`)
+      })
+}
+
+const removeFromWatchedList = async (userName: any, videoId: number) => {
+   return await models.UserTable.find({ userName })
+      .then(async (results: any) => {
+         let watchList = results[0].watchedVideos;
+         let exists = false;
+         for (let i = 0; i < watchList.length; i++) {
+            if (watchList[i].id === videoId) {
+               exists = true;
+            }
+         }
+         if (exists) {
+            await models.UserTable.update({ userName }, { $pull: { watchedVideos: { id: videoId } } })
+            console.log(`Success removing videoID ${videoId} from ${userName}'s watched list`)
+         } else {
+            console.log('Video was never in user watch list');
+         }
+      })
+      .catch((error: any) => {
+         console.log(`Error removing videoID ${videoId} from ${userName}'s watched list: ${error}`)
+      })
+}
+//TODO: add videoID to recommended list
+const addToRecommended = async (userName: any, addingVideo: any) => {
+   return await models.UserTable.find({ userName })
+      .then(async (results: any) => {
+         let recommendedList = results[0].recommendedVideos;
+         let exists = false;
+         for (let i = 0; i < recommendedList.length; i++) {
+            if (recommendedList[i].id === addingVideo.id) {
+               exists = true;
+            }
+         }
+         if(!exists) {
+            await models.UserTable.updateOne(
+               { userName },
+               { $push: { recommendedVideos: addingVideo } }
+            );
+            console.log(
+               `Success updating ${userName}'s recommended list with videoID ${addingVideo.id}`
+            );
+         } else {
+            console.log(
+               `video ${addingVideo.id} already in DB`
+            );
+         }
+         }
+
+      )
+      .catch((error: any) => {
          console.log(
-            `Error updating ${userName}'s recommended list with videoID ${videoID}: ${error}`
+            `Error updating ${userName}'s recommended list with videoID ${addingVideo.id}: ${error}`
          );
       });
 };
