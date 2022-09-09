@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Request, Response, Router } from 'express';
 const bcrypt = require('bcryptjs');
 var passport = require('passport');
-const { findUser, addUser } = require('../database/controllers/index');
 import {
    GoogleCallbackParameters,
    Profile,
@@ -188,7 +187,6 @@ router.post('/signup', async (req: Request, res: Response) => {
    //find one from db using userName, if unsuccessful, hash password and store a new user
 
    let hashedPassword = bcrypt.hashSync(password, 8);
-   console.log(hashedPassword);
 
    axios
       .post('http://localhost:8080/videoDB/user', {
@@ -222,7 +220,6 @@ router.post('/signin', (req: any, res: Response) => {
          console.log('hash:', hash);
          if (bcrypt.compareSync(password, hash)) {
             req.session.user = response.data.userName;
-            console.log('req.session in signing route:', req.session);
             res.status(201).send('Succesfully logged in');
             // res.status(201).redirect('http://localhost:3000');
          } else {
@@ -236,15 +233,6 @@ router.post('/signin', (req: any, res: Response) => {
    // req.session.user = 'JamesFranco';
    // res.status(201).send('Succesfully logged in');
 });
-
-// router.get('/guest', (req: any, res: Response) => {
-//   //update req.session.user to null
-//   console.log('guest');
-//   req.session.user = null;
-//   res.send('Logged in as "guest"')
-// })
-
-//need a delete route for logging out
 
 export { router };
 // export default checkAuth;

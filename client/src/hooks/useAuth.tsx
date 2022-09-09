@@ -6,7 +6,6 @@ import React, {
    ReactComponentElement,
 } from 'react';
 import axios from 'axios';
-
 import { useNavigate, useLocation } from 'react-router-dom';
 import { replace } from 'cypress/types/lodash';
 

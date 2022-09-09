@@ -19,7 +19,6 @@ export const PersonalFeed = (props: any) => {
          console.log('fetchUserFeed() Failed: ', error);
        })
    }
-
    return (
       <Stack spacing={2} className="personalFeed">
          {userFeed.map((feedData: any, index: number) => {

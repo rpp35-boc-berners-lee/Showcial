@@ -4,42 +4,39 @@ import './Homepage.scss';
 import { YourWatchList } from './homepage_components/YourWatchList';
 import { Search } from './homepage_components/Search';
 import { ConfigAPI, APIResponse } from '../../../../types';
-import Box from '@mui/material/Box';
+import { Box, Stack, Typography, Button, FormControl, MenuItem, Select, Container } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
 import SearchIcon from '@mui/icons-material/Search';
-import Button from '@mui/material/Button';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import { CarouselList } from './homepage_components/carousel/Carousel';
 import { Recommendations } from './homepage_components/recommendations/Recommendations';
 import { TrendingVideos } from '../shared/trending-videos/TrendingVideos';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { SelectChangeEvent } from '@mui/material/Select';
 import { VideoDetails } from '../shared/VideoDetails';
 import { useAuth } from '../../hooks/useAuth';
 import { TrendingOrRecommendedVideos } from './homepage_components/trending/TrendingVideos'
+import { set } from 'cypress/types/lodash';
 interface MouseEvent {
    target: {
       id: string;
    };
 }
 
+
 export function Homepage() {
-  // const auth = useAuth();
-  // console.log('auth:', auth);
-  const [watchList, setWatchList] = useState();
+  const auth = useAuth();
+  console.log('auth:', auth);
+  const [watchList, setWatchList] = useState<any[]>();
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const [topTV, setTopTV] = useState<APIResponse | undefined>();
   const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
   const [topMovie, setTopMovie] = useState<APIResponse | undefined>();
   const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
-  const [userName, setUserName] = useState<string>('JamesFranco');
   // temporary username
+  const [userName, setUserName] = useState<string>('JamesFranco');
   const [query, setQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
   const [page, setPage] = useState<number>(1);
@@ -47,8 +44,7 @@ export function Homepage() {
   const [selectedMediaType, setSelectedMediaType] = useState<string>('')
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [mediaType, setMediaType] = useState('movie');
-  // temporary username
-
+  const [inWatchList, setInWatchList] = useState<boolean>(false);
 
    useEffect(() => {
       fetchAPI();
@@ -69,7 +65,19 @@ export function Homepage() {
   useEffect(() => {
     setSearchResults(undefined);
   }, [query === ''])
-  
+
+  useEffect(() => {
+    if (!openModal) {
+      setInWatchList(false);
+    } else {
+      checkWatchList();
+    }
+  }, [openModal]);
+
+  useEffect(() => {
+    setSearchResults(undefined);
+  }, [query === ''])
+
   const fetchAPI = async () => {
     let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
     setConfig(config.data);
@@ -110,10 +118,10 @@ export function Homepage() {
   }
 
   const getSearchAPI = async () => {
-    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/${mediaType}/${query}/${page}`);
+    let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${mediaType}/${query}/${page}`);
     setSearchResults(search.data);
   }
-  
+
 
   const updateWatchList = async () => {
     let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
@@ -125,11 +133,31 @@ export function Homepage() {
     setSelectedMediaType(type);
     setOpenModal(!openModal);
   }
+  const checkWatchList = () => {
+    if (watchList !== undefined) {
+      for (let i = 0; i < watchList.length; i++) {
+        if (watchList[i].id === selectedId) {
+          setInWatchList(true);
+          return;
+        }
+      }
+      setInWatchList(false);
+    }
+  }
 
   return (
     <div id='homepage'>
-      {openModal ? <VideoDetails mediaType={selectedMediaType} id={selectedId} config={config} open={openModal} close={setOpenModal} /> : null}
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
+      {openModal ? <VideoDetails
+        mediaType={selectedMediaType}
+        id={selectedId}
+        config={config}
+        open={openModal}
+        close={setOpenModal}
+        inWatchList={inWatchList}
+        setInWatchList={setInWatchList}
+        updateWatchList={updateWatchList}
+        /> : null}
+      <Box sx={{ '& > :not(style)': { ml: 4, my: 3 } }}>
         <form onSubmit={handleSubmit}>
           <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
             <InputLabel htmlFor="search-adornment">Search a show...</InputLabel>
@@ -149,7 +177,16 @@ export function Homepage() {
       {searchResults !== undefined && query !== ''
         ?
         <div>
-          {openModal ? <VideoDetails mediaType={selectedMediaType} id={selectedId} config={config} open={openModal} close={setOpenModal} /> : null}
+          {openModal ? <VideoDetails
+            mediaType={selectedMediaType}
+            id={selectedId}
+            config={config}
+            open={openModal}
+            close={setOpenModal}
+            inWatchList={inWatchList}
+            setInWatchList={setInWatchList}
+            updateWatchList={updateWatchList}
+            /> : null}
           <Typography>SEARCH RESULTS</Typography>
           <Box sx={{ maxWidth: 200 }}>
             <FormControl fullWidth>
@@ -182,32 +219,54 @@ export function Homepage() {
       </div>
       :
       <>
-        <h3>RECOMMENDATIONS FOR YOU</h3>
-        <Box sx={{ maxWidth: 200 }}>
-          <FormControl fullWidth>
-            <InputLabel id="tv-movie-filter">TV or Movie</InputLabel>
-            <Select
-              labelId="tv-movie-filter"
-              id="tv-movie-select"
-              value={mediaType}
-              label="MediaType"
-              onChange={handleMediaTypeChange}
-            >
-              <MenuItem value={'movie'}> Movie</MenuItem>
-              <MenuItem value={'tv'}>TV</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        {topTV !== undefined && mediaType === 'tv' ?
-          <Recommendations vedios={topTV.results} config={config} userName={userName} mediaType={mediaType} getSelected={getSelected} /> : null}
-        {topMovie !== undefined && mediaType === 'movie' ?
-          <Recommendations vedios={topMovie.results} config={config} userName={userName} mediaType={mediaType} getSelected={getSelected}/> : null}
-        {/* <TrendingVideos getSelected={getSelected}/> */}
-        <TrendingOrRecommendedVideos mediaType={mediaType} trendingOrRecommended={'trending'} getSelected={getSelected}/>
-        {/* {trendingMovie !== undefined ?
-            <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
-        {watchList !== undefined ?
-          <YourWatchList watchList={watchList} config={config} getSelected={getSelected}/>: null}
+        <Typography variant="h5" sx={{ml: 5, mb: 4, fontWeight: "bold"}}>RECOMMENDATIONS FOR YOU</Typography>
+          <Box sx={{ maxWidth: 200, ml: 5, mb: 2 }}>
+            <FormControl fullWidth>
+              <InputLabel id="tv-movie-filter">TV or Movie</InputLabel>
+              <Select
+                labelId="tv-movie-filter"
+                id="tv-movie-select"
+                value={mediaType}
+                label="MediaType"
+                onChange={handleMediaTypeChange}
+              >
+                <MenuItem value={'movie'}> Movie</MenuItem>
+                <MenuItem value={'tv'}>TV</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+          {topTV !== undefined && mediaType === 'tv' ?
+            <Recommendations
+              vedios={topTV.results}
+              config={config}
+              userName={userName}
+              mediaType={mediaType}
+              getSelected={getSelected}
+              inWatchList={inWatchList}
+              setInWatchList={setInWatchList}
+              updateWatchList={updateWatchList}
+              /> : null}
+          {topMovie !== undefined && mediaType === 'movie' ?
+            <Recommendations
+              vedios={topMovie.results}
+              config={config}
+              userName={userName}
+              mediaType={mediaType}
+              getSelected={getSelected}
+              inWatchList={inWatchList}
+              setInWatchList={setInWatchList}
+              updateWatchList={updateWatchList}
+              /> : null}
+          {/* <TrendingVideos getSelected={getSelected}/> */}
+          <TrendingOrRecommendedVideos
+              mediaType={mediaType}
+              trendingOrRecommended={'trending'}
+              getSelected={getSelected}
+            />
+          {/* {trendingMovie !== undefined ?
+              <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
+          {watchList !== undefined ?
+            <YourWatchList watchList={watchList} config={config} getSelected={getSelected}/>: null}
         </>
       }
     </div>

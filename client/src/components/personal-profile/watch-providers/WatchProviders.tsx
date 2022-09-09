@@ -3,8 +3,7 @@ import './WatchProviders.scss';
 import { OwnedProviders } from '../owned-providerss/OwnedProviders';
 import { UnownedProviders } from '../unowned-providers/UnownedProviders';
 import { styled, Chip, Paper, Container, Divider, Typography } from '@mui/material';
-// import Chip from '@mui/material/Chip';
-// import Paper from '@mui/material/Paper';
+
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import axios from 'axios';
@@ -81,10 +80,8 @@ export const WatchProviders = ({userName}: {userName: any}) => {
     unownedServices.splice(index, 1)
     setUnownedServices([...unownedServices]);
 
-    console.log('unownedServices: ', unownedServices);
     ownedServices.push(added);
     setOwnedServices([...ownedServices]);
-    console.log('ownedServices: ', ownedServices);
 
     let options = {
       method: 'put',
@@ -99,8 +96,8 @@ export const WatchProviders = ({userName}: {userName: any}) => {
   };
 
   return (
-    <Paper>
-      <Typography align="center">Edit Your Streaming Services</Typography>
+    <Paper sx={{py: 3}}>
+      <Typography align="center" fontWeight="bold" variant="subtitle1" sx={{pb: 3, }}>MY STREAMING SERVICES</Typography>
       
       <OwnedProviders ownedServices={ownedServices} handleDelete={handleDelete} />
       <Divider variant="middle"/>

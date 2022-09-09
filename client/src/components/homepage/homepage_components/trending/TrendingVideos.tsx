@@ -5,12 +5,14 @@ import axios from 'axios';
 import { Typography, Stack, Grid, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { DetailModal } from '../DetailModal/DetailModal'
 
 type PopularMovie = {
    backdrop_path: string;
    adult: boolean;
    id: number;
    title: string;
+   name: string;
    original_language: string;
    original_title: string;
    overview: string;
@@ -18,9 +20,16 @@ type PopularMovie = {
    release_date: string;
    vote_average: number;
    vote_count: number;
+   poster_path: string;
 };
 
-export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended, getSelected}: {mediaType: string; trendingOrRecommended: string, getSelected: (id: number, type: string) => void;}) => {
+type Props = {
+   mediaType: string;
+   trendingOrRecommended: string;
+   getSelected: (id: number, type: string) => void;
+}
+
+export const TrendingOrRecommendedVideos: React.FC<Props> = ({ mediaType, trendingOrRecommended, getSelected }) => {
    const [popularMovies, setPopularMovies] = useState<PopularMovie[] | []>([]);
    const [imageUrl, setImageUrl] = useState<string>('');
    const [imageSize, setImageSize] = useState<string[]>(['']);
@@ -75,8 +84,8 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended, g
    if (popularMovies.length > 0) {
       return (
          <>
-         <Typography variant='h4' component='h2' align='center' sx={{ pb: 1 }}>
-            Currently Trending
+         <Typography variant='h5' sx={{ my: 3, ml: 5, fontWeight: "bold" }}>
+            CURRENTLY TRENDING
          </Typography>
          <div className='outer-container'>
             {scrollPosition === 0 ? (
@@ -100,7 +109,7 @@ export const TrendingOrRecommendedVideos = ({mediaType, trendingOrRecommended, g
                            base_url={imageUrl}
                            backdrop_sizes={imageSize}
                            backdrop_path={movie.backdrop_path}
-                           name={movie.title}
+                           name={movie.title || movie.name}
                            id={movie.id}
                            mediaType={mediaType || 'movie'}
                            getSelected={getSelected}

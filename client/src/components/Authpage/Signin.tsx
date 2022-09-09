@@ -11,8 +11,11 @@ import axios from 'axios';
 import GoogleIcon from '@mui/icons-material/Google';
 import { Stack } from '@mui/system';
 import './Signin.scss';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function Signin() {
+   // const auth = useAuth();
+
    const navigate = useNavigate();
    const [values, setValues] = useState({
       userName: '',
@@ -27,7 +30,7 @@ export default function Signin() {
             },
          })
          .then((res) => {
-            console.log('res after calling api/auth/signin', res);
+            // console.log('signin auth:', auth);
             if (res.status === 201) {
                navigate('/', { replace: true });
             }

@@ -54,7 +54,7 @@ export const FollowerSearchBar = (props: any) => {
    return (
       <div>
          <TextField
-            sx={{ m: 1, width: '25ch' }}
+            sx={{ mt: 3, ml: 3 , width: '25ch' }}
             variant='outlined'
             className='followerSearchBar'
             fullWidth
