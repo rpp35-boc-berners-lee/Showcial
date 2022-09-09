@@ -127,10 +127,10 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
 
    return (
     <div>
-      <Typography variant='h4' component='h2' align='center' sx={{ pb: 1 }}>
+      <Typography variant='h4' component='h2' align='center' sx={{ pt: '2vh' }}>
         YOUR WATCH LIST
       </Typography>
-      <div>
+      <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ p: '1vh' }}>
         <FormControl sx={{ m: 1, width: '10%' }} size='small'>
           <InputLabel id="filter">Filter</InputLabel>
           <Select
@@ -167,8 +167,8 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
           </Button>
           : null
         }
-      </div>
-      <Box sx={{ width: '100%' }}>
+      </Stack>
+      <Box sx={{ width: '100%', borderTop: '1px solid rgba(211, 211, 211, .5)', borderBottom: '1px solid rgba(211, 211, 211, .5)', pt: '2vh', pb: '1vh' }}>
         {alterList.length === 0 ? 'No Videos Found' :
           <Grid container spacing={2} justifyContent='center'>
             {displayedVideos.map((video: Video, i: number) => {
@@ -188,8 +188,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
             })}
           </Grid>
       }
-      </Box>
-      <Stack spacing={2} direction="row">
+      <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ paddingTop: '1vh' }}>
         {displayedVideos.length < watchList.length ?
           <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={() =>
           setNumDisplayed((numDisplayed + maxRowCards) > alterList.length ? alterList.length : (numDisplayed + maxRowCards))}>SHOW MORE</Button> : null}
@@ -197,6 +196,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
           <Button variant="text" startIcon={<ExpandLessIcon />} onClick={() =>
             setNumDisplayed((numDisplayed - maxRowCards < maxRowCards) ? maxRowCards : (numDisplayed - maxRowCards))}>SHOW LESS</Button> : null}
       </Stack>
+      </Box>
     </div>
    );
 };

@@ -11,8 +11,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { CarouselList } from './homepage_components/carousel/Carousel';
@@ -23,13 +23,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { VideoDetails } from '../shared/VideoDetails';
 import { useAuth } from '../../hooks/useAuth';
 import { TrendingOrRecommendedVideos } from './homepage_components/trending/TrendingVideos'
-import { set } from 'cypress/types/lodash';
-interface MouseEvent {
-   target: {
-      id: string;
-   };
-}
-
 
 export function Homepage() {
   const auth = useAuth();
@@ -192,20 +185,26 @@ export function Homepage() {
             setInWatchList={setInWatchList}
             updateWatchList={updateWatchList}
             /> : null}
-          <Typography>SEARCH RESULTS</Typography>
-          <Stack spacing={2} direction="row">
-            {page < searchResults?.total_pages ?
-              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
-            {page > 1 ?
-              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
-          </Stack>
+          <Typography variant='h4' component='h2' align='center' sx={{ pb: 1 }}>
+            SEARCH RESULTS
+          </Typography>
+          <div className='page'>
+            <Stack spacing={2} direction='row' alignItems='center' justifyContent='center'>
+              {page > 1 ?
+                <Button variant="text" startIcon={<NavigateBeforeIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
+              {page < searchResults?.total_pages ?
+                <Button variant="text" endIcon={<NavigateNextIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
+            </Stack>
+          </div>
           <Search searchResults={searchResults.results} config={config} getSelected={getSelected} mediaType={mediaType}/>
-          <Stack spacing={2} direction="row">
-            {page < searchResults?.total_pages ?
-              <Button variant="text" startIcon={<ExpandMoreIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
-            {page > 1 ?
-              <Button variant="text" startIcon={<ExpandLessIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
-          </Stack>
+          <div className='page'>
+            <Stack spacing={2} direction='row' alignItems='center' justifyContent='center'>
+              {page > 1 ?
+                <Button variant="text" startIcon={<NavigateBeforeIcon />} onClick={handlePreviousPage}>SHOW PREVIOUS PAGE</Button> : null}
+              {page < searchResults?.total_pages ?
+                <Button variant="text" endIcon={<NavigateNextIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
+            </Stack>
+          </div>
       </div>
       :
       <>
