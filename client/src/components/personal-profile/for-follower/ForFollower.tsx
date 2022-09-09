@@ -109,7 +109,7 @@ export const ForFollower = (props: any) => {
 
   return (
     <>
-    <Card>
+    <Grid>
       <Stack direction="row" spacing={1}   justifyContent="center" alignItems="center">
       <Avatar className="Avatar">{upperCaseReducer(props.followeeData)}</Avatar>
         <CardHeader
@@ -155,7 +155,7 @@ export const ForFollower = (props: any) => {
         </Grid>
       </Box>
 
-    </Card>
+    </Grid>
     </>
   );
 };

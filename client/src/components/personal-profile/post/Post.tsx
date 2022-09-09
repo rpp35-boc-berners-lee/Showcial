@@ -40,14 +40,14 @@ export const Post = (props: any) => {
    });
 
    return (
-      <Card className='post' sx={{ boxShadow: 12 }}>
+      <Card sx={{ boxShadow: 12 }}>
          <Stack
             direction='row'
             spacing={1}
             justifyContent='left'
             alignItems='center'
+            style={{cursor: 'pointer'}}
             onClick={() => {
-               console.log('clicked')
                props.setFolloweeData(postData.userName);
                props.setValue(2);
             }}
