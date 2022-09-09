@@ -15,14 +15,17 @@
   This project was completed over the course of a month, where our team wrote a full stack application for Bonnie Owens and Joe Casey. We met with Bonnie and Joe August 20th, 2022 for a project proposal. One week later we met with them again to present our application wireframes and to review the project proposal. At this point, we recieved some change requests to improve user experience. Our next client meeting the functioning application was happily approved and from there we spent the remainder of the project styling and fixing minor bugs.
 
 
-## Features & Usage
+## Features & Usage Demo
+
 
 - Showcial allows users to share/review movies and shows
 - User followers can then see the 'activity' of the user and find reviews and reccomendations that matter to them, not just some online critic's two cents.
+- Users can create their own watch list
 - Filtering allows users to see only movies and shows they own services for such as Netflix, Hulu, Disney+, HBO Max, and Prime Video.
 - Search functionality allows users to find movies and tv shows by name as well as friends to follow.
 - Users can also explore the site without creating an account, however, to use most of the personalized features, they will need to login.
 - Users are given the option of logging in with google or signing in with a username and password
+
 
 ## Tech Stack
 
@@ -42,11 +45,12 @@ This project was built with the following technologies:
 <img src="https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white" />
 
 ## Challenges
-  - ### Anticipated
-    - Styling with MUI components was difficult at first but with persistent research we were able to create a visually appealing site.
 
-  - ### Unexpected
-    - Using Passport.js for local authentication was difficult due to poorly written documentation. Instead we created our own authentication system to handle username and password and used Passport.js for google authentication. 
+### Anticipated
+  - Styling with MUI components was difficult at first but with persistent research we were able to create a visually appealing site.
+
+### Unexpected
+  - Using Passport.js for local authentication was difficult due to poorly written documentation. Instead we created our own authentication system to handle username and password and used Passport.js for google authentication.
 
 ## Setup/ Installation
 
