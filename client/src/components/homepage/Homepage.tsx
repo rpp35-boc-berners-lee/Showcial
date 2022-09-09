@@ -165,7 +165,7 @@ export function Homepage() {
       <Box sx={{ '& > :not(style)': { m: 1 } }}>
         <form onSubmit={handleSubmit}>
           <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-            <InputLabel htmlFor="search-adornment">Search a show...</InputLabel>
+            <InputLabel htmlFor="search-adornment">Search</InputLabel>
             <OutlinedInput
               id="search-adornment"
               onChange={handleChange}

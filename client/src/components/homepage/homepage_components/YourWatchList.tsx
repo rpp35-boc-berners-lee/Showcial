@@ -127,7 +127,9 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
 
    return (
     <div>
-      <Typography>YOUR WATCH LIST</Typography>
+      <Typography variant='h4' component='h2' align='center' sx={{ pb: 1 }}>
+        YOUR WATCH LIST
+      </Typography>
       <div>
         <FormControl sx={{ m: 1, width: '10%' }} size='small'>
           <InputLabel id="filter">Filter</InputLabel>
@@ -168,7 +170,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
       </div>
       <Box sx={{ width: '100%' }}>
         {alterList.length === 0 ? 'No Videos Found' :
-          <Grid container spacing={4} justifyContent='center'>
+          <Grid container spacing={2} justifyContent='center'>
             {displayedVideos.map((video: Video, i: number) => {
               return (
                 <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
