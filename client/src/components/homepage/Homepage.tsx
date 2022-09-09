@@ -150,9 +150,9 @@ export function Homepage() {
         setInWatchList={setInWatchList}
         updateWatchList={updateWatchList}
         /> : null}
-      <Box sx={{ ml: 4, my: 3 }}>
+      <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ mt: '2vh' }}>
         <form onSubmit={handleSubmit}>
-          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+          <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
             <InputLabel htmlFor="search-adornment">Search</InputLabel>
             <OutlinedInput
               id="search-adornment"
@@ -166,7 +166,7 @@ export function Homepage() {
             />
           </FormControl>
         </form>
-      </Box>
+      </Stack>
       {searchResults !== undefined && query !== ''
         ?
         <div>
