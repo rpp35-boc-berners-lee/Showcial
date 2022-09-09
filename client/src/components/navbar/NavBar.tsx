@@ -9,7 +9,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { useAuth } from '../../hooks/useAuth';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -18,7 +17,6 @@ const loggedInPages = ['About', 'Log out'];
 
 const ResponsiveAppBar = () => {
    const auth = useAuth();
-   // console.log('auth:', auth);
 
    const navigate = useNavigate();
    const location = useLocation();
@@ -193,9 +191,14 @@ const ResponsiveAppBar = () => {
                      >
                         About
                      </Button>
-                     <Button href="/personal" className="profile-button" sx={{ my: 2, color: 'white', display: 'block' }} variant='text' >
-                           My Account
-                           </Button>
+                     <Button
+                        href='/personal'
+                        className='profile-button'
+                        sx={{ my: 2, color: 'white', display: 'block' }}
+                        variant='text'
+                     >
+                        My Account
+                     </Button>
                      <Button
                         sx={{ my: 2, color: 'white', display: 'block' }}
                         variant='text'
