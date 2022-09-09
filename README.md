@@ -1,6 +1,16 @@
-# Skeleton Template App
+Welcome to Showcial! The best site for finding movies and shows based on your friends reccomendations and ratings!
 
-Repository template with custom webpack, TypeScript, Prettier, Jest, Cypress, Nodemon and Babel configuration files.
+# Authored by:
+  -Shengnan Huang: <link src="https://github.com/maomaotuo"/>
+  -Kiki Cai: <link src="https://github.com/caixiuqi2013"/>
+  -Kevin On: <link src="https://github.com/kanokawn"/>
+  -Cristian Ordonez: <link src="https://github.com/cristianordonez"/>
+  -Tyler Nourse: <link src="https://github.com/Nourse41">
+  -Josh Waalkes: <link src="https://github.com/WaalkesJoshua">
+
+# Introduction
+
+This was a month
 
 ## Features & Usage
 
