@@ -4,7 +4,7 @@ import { Post } from '../post/Post';
 import { Stack, Button } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import { display } from '@mui/system';
+
 
 export const PersonalFeed = (props: any) => {
    const [userFeed, setUserFeed] = useState<any>([]);
@@ -29,7 +29,6 @@ export const PersonalFeed = (props: any) => {
          console.log('fetchUserFeed() Failed: ', error);
        })
    }
-
    const showMore = (<Button variant="text" startIcon={<ExpandMoreIcon />} onClick={() => {
          setNumDisplayed(numDisplayed + 2);
       }}>

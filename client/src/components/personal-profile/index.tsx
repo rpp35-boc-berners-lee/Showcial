@@ -27,33 +27,31 @@ export const PersonalProfile = () => {
       setConfig(config.data);
    };
 
-   useEffect(() => {
-      fetchUserData();
-      fetchAPI();
-   }, []);
 
-   function fetchUserData() {
-      axios
-         .get<any>('http://localhost:8080/videoDB/user', {
-            params: { userName },
-         })
-         .then((results: any) => {
-            setFollowingList(results.data.followingList);
-            setRecommendedList(results.data.recommendedVideos);
-            setWatchList(results.data.watchedVideos);
-         })
-         .catch((error) => {
-            console.log('fetchFollowingList() Failed', error);
-         });
-   }
-
-   let currentOption = value;
-   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-      console.log('value: ', value);
-      setValue(newValue);
-      console.log('new value: ', newValue);
-      currentOption = newValue;
-   };
+  function fetchUserData () {
+    axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
+      .then((results: any) => {
+        setFollowingList(results.data.followingList);
+        setRecommendedList(results.data.recommendedVideos);
+        setWatchList(results.data.watchedVideos)
+      })
+      .catch((error) => {
+        console.log('fetchFollowingList() Failed', error);
+      })
+  }
+  
+  useEffect(() => {
+   fetchUserData();
+   fetchAPI();
+  }, [])
+  
+  let currentOption = value;
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log('value: ', value);
+    setValue(newValue);
+    console.log('new value: ', newValue);
+    currentOption = newValue
+  };
 
    const SelectBar = () => {
       return (
@@ -112,11 +110,15 @@ export const PersonalProfile = () => {
             userName={userName}
             followeeData={followeeData}
             followingList={followingList}
+            config={config}
          />
       );
    }
-
+   console.log('userName: ', userName);
+   console.log('followingList: ', followingList)
+   console.log('config: ', config);
    return (
+      
       <div className='personalProfile'>
          {followerSearchBar}
          {selectBar}

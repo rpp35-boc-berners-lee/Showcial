@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 import { Grid, Paper, Box, Typography } from '@mui/material';
 import { WatchProviders } from '.././watch-providers/WatchProviders'
 import { PersonalFeed } from '.././personal-feed/PersonalFeed';
-import { YourWatchList } from '../../homepage/homepage_components/YourWatchList';
 import { VideoCard } from '../../shared/VideoCard';
 
 type Props = {
@@ -39,7 +37,7 @@ export const ForYou: React.FC<Props> = ({ userName, watchList, config, setValue,
          </Grid>
        </Grid>
        <Box sx={{ width: '100%' }}>
-        <Typography>My Watch List</Typography>
+        {/* <Typography>Watch List</Typography>
         <Grid container spacing={4} justifyContent='center'>
           {watchList.map((video: Video, i: number) => {
             return (
@@ -55,7 +53,7 @@ export const ForYou: React.FC<Props> = ({ userName, watchList, config, setValue,
               </Grid>
             )
           })}
-        </Grid>
+        </Grid> */}
       </Box>
      </div>
   );

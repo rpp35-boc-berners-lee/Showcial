@@ -30,6 +30,7 @@ interface MouseEvent {
    };
 }
 
+
 export function Homepage() {
   const auth = useAuth();
   console.log('auth:', auth);
@@ -137,7 +138,6 @@ export function Homepage() {
     setSelectedMediaType(type);
     setOpenModal(!openModal);
   }
-
   const checkWatchList = () => {
     if (watchList !== undefined) {
       for (let i = 0; i < watchList.length; i++) {

@@ -193,6 +193,9 @@ const ResponsiveAppBar = () => {
                      >
                         About
                      </Button>
+                     <Button href="/personal" className="profile-button" sx={{ my: 2, color: 'white', display: 'block' }} variant='text' >
+                           My Account
+                           </Button>
                      <Button
                         sx={{ my: 2, color: 'white', display: 'block' }}
                         variant='text'
