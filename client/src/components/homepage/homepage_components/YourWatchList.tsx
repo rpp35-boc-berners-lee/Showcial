@@ -101,7 +101,6 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
   const filter = (array: any) => {
     let copy = array.slice();
     let filtered = copy.filter((video: any) => {
-      console.log(video);
       if (video.watchProviders.flatrate !== undefined) {
         let services = video.watchProviders.flatrate;
         for (var i = 0; i < services.length; i++) {

@@ -35,6 +35,9 @@ export const VideoDetails:React.FC<ChildProps> = ({ mediaType, id, config, open,
 
   const getWatchProviders = async (id: number) => {
     let watchProviders = await axios.get(`http://localhost:8080/tmdb/${mediaType}/${id}/watch/providers`);
+    if (!watchProviders.data.results['US']) {
+      return { flatrate: [] }
+    }
     return watchProviders.data.results['US'];
   }
 

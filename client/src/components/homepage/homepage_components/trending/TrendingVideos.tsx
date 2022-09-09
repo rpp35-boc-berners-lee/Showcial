@@ -35,8 +35,6 @@ export const TrendingOrRecommendedVideos: React.FC<Props> = ({ mediaType, trendi
    const [imageSize, setImageSize] = useState<string[]>(['']);
    const [scrollPosition, setScrollPosition] = useState<number>(0);
    const [showBtnRight, setShowBtnRight] = useState<boolean>(true);
-   const [modalIsOpen, setModalIsOpen] = useState(false);
-   const [currentlySelected, setCurrentlySelected] = useState();
    const sliderRef = useRef<HTMLDivElement>(null);
 
 
