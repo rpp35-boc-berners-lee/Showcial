@@ -54,8 +54,9 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
   const [platform, SetPlatform] = useState([])
 
   const userName = 'JamesFranco';
+  const [liked, setLiked] = useState(false);
 
-  console.log('vedio: ', vedio)
+  console.log('vedio in DetailModal: ', vedio)
   const addToWatchList = async () => {
     await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, video: vedio });
     if (setInWatchList !== undefined) {
@@ -75,7 +76,13 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
       updateWatchList();
     }
   }
-
+  const addToRecommended = async () => {
+    await axios.post(`http://localhost:8080/videoDB/user/addToRecommended`, { userName, vedio });
+    setLiked(!liked);
+  }
+  useEffect(() => {
+    console.log(vedio, 'in DetailModal');
+  }, [])
   return (
     <div id='details'>
       <ReactModal
@@ -106,11 +113,8 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
             alt="Paella dish"
           />
           <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton aria-label="share">
-              <ShareIcon />
+          <IconButton aria-label="add to favorites" onClick={addToRecommended}>
+              {liked? <FavoriteIcon /> : <FavoriteBorderIcon/>}
             </IconButton>
             <IconButton>
               <StarBorderIcon aria-label="rate" />
