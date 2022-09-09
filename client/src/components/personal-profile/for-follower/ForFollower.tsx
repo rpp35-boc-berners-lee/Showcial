@@ -1,7 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { IndividualFeed } from '../individual-feed/individualFeed';
-import { Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button, Stack, Avatar } from '@mui/material';
+import { Card, CardMedia, CardContent, CardHeader, Shadows, Divider, Button, Stack, Avatar, Grid, Box, Typography } from '@mui/material';
+import { VideoCard } from '../../shared/VideoCard';
+
+
+type Video = {
+  base_url: string;
+  backdrop_path: string;
+  name: string;
+  id: number;
+  original_title: string;
+  media_type: string;
+}
 
 const upperCaseReducer = (string: string) => {
   return string.split('').reduce((pV, cV) => {
@@ -17,13 +28,13 @@ export const ForFollower = (props: any) => {
   useEffect(() => {
     fetchUserFeed();
     fetchUserData();
-  },[]);
+  }, []);
 
   function fetchUserData () {
     axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName: props.followeeData}})
       .then((results: any) => {
-        setRecommendedList(results.data.watchedVideos);
-        setWatchList(results.data.recommendedVideos)
+        setRecommendedList(results.data.recommendedVideos);
+        setWatchList(results.data.watchedVideos)
       })
       .catch((error: any) => {
         console.log('ForFollower/fetchUserData Failed: ', error)
@@ -88,7 +99,7 @@ export const ForFollower = (props: any) => {
       </Button>
     );
   }
-
+  
   return (
     <>
     <Card>
@@ -115,6 +126,25 @@ export const ForFollower = (props: any) => {
       </Stack>
       <IndividualFeed userFeed={userFeed} />
     </Card>
+    <Box sx={{ width: '100%', m: 6 }}>
+        <Typography variant="h4" align="center">{props.followeeData}'s Watch List</Typography>
+        <Grid container spacing={6} mt={6} justifyContent='center'>
+          {watchList.map((video: Video, i: number) => {
+            return (
+              <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
+                <VideoCard
+                  base_url={props.config.images.base_url}
+                  backdrop_sizes={props.config.images.backdrop_sizes}
+                  backdrop_path={video.backdrop_path}
+                  name={video.name || video.original_title}
+                  id={video.id}
+                  mediaType={video.media_type}
+                />
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Box>
     </>
   );
 };
