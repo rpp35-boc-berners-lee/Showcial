@@ -1,4 +1,4 @@
-# Welcome to Showcial! The best site for finding movies and shows based on your friends reccomendations and ratings!
+# Welcome to Showcial! The best site for finding movies and shows based on your friends reccomendations and ratings
 
 ## Authored by:
   -[Shengnan Huang](https://github.com/maomaotuo)
