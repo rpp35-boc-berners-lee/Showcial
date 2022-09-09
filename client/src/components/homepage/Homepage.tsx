@@ -38,10 +38,15 @@ export function Homepage() {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [mediaType, setMediaType] = useState('movie');
   const [inWatchList, setInWatchList] = useState<boolean>(false);
+  const [recommendedList, setRecommendedList] = useState<Array<any>>([]);
 
-   useEffect(() => {
-      fetchAPI();
-   }, []);
+  useEffect(() => {
+    fetchAPI();
+    fetchRecommendList();
+  }, []);
+  useEffect(() => {
+    fetchRecommendList();
+  }, [mediaType]);
 
   useEffect(() => {
     setSearchResults(undefined);
@@ -84,15 +89,33 @@ export function Homepage() {
     setTrendingMovie(movie_trending.data);
     updateWatchList();
   }
+  const fetchRecommendList = async () => {
+    await axios.get<any>('http://localhost:8080/videoDB/user', { params: { userName: userName } })
+      .then((results: any) => {
+        let followingList = results.data.followingList;
+        let currRecommended: Array<any> = [];
+        followingList.forEach(async (following: string) => {
+          await axios.get<any>('http://localhost:8080/videoDB/user', { params: { userName: following } })
+            .then((results: any) => {
+              console.log('vedios from DB', results.data.recommendedVideos);
+              currRecommended = currRecommended.concat(results.data.recommendedVideos);
+              currRecommended = currRecommended.filter((vedio) => vedio.mediaType === mediaType);
+              setRecommendedList(currRecommended);
+            })
+        })
+      })
+      .catch((error: any) => {
+        console.log('ForFollower/fetchUserData Failed: ', error)
+      })
+  }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+  };
 
-   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      setQuery(e.target.value);
-   };
-
-   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      getSearchAPI();
-   };
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    getSearchAPI();
+  };
 
   const handleNextPage = async () => {
     if (page !== searchResults?.total_pages) {
@@ -137,7 +160,6 @@ export function Homepage() {
       setInWatchList(false);
     }
   }
-
   return (
     <div id='homepage'>
       {openModal ? <VideoDetails
@@ -159,7 +181,7 @@ export function Homepage() {
               onChange={handleChange}
               endAdornment={
                 <InputAdornment position="end">
-                  <SearchIcon/>
+                  <SearchIcon />
                 </InputAdornment>
               }
               label="search"
@@ -245,14 +267,12 @@ export function Homepage() {
               /> : null}
           {/* <TrendingVideos getSelected={getSelected}/> */}
           <TrendingOrRecommendedVideos
-              mediaType={mediaType}
-              trendingOrRecommended={'trending'}
-              getSelected={getSelected}
-            />
-          {/* {trendingMovie !== undefined ?
-              <CarouselList vedioList={trendingMovie.results} config={config}/>: null} */}
+            mediaType={mediaType}
+            trendingOrRecommended={'trending'}
+            getSelected={getSelected}
+          />
           {watchList !== undefined ?
-            <YourWatchList watchList={watchList} config={config} getSelected={getSelected}/>: null}
+            <YourWatchList watchList={watchList} config={config} getSelected={getSelected} /> : null}
         </>
       }
     </div>
