@@ -12,7 +12,7 @@
 
 # Introduction
 
-  This project was completed over the course of a month, where our team wrote a full stack application for Bonnie Owens and Joe Casey. We met with Bonnie and Joe August 20th, 2022 for a project proposal. One week later we met with them again to present our application wireframes and to review the project proposal. At this point, we recieved some change requests to improve user experience. Our next client meeting the functioning application was happily approved and from there we spent the remainder of the project styling and fixing minor bugs.
+  This project was completed over the course of a month, where our team wrote a full stack application for Bonnie Owens and Joe Casey. We met with Bonnie and Joe August 20th, 2022 for a project proposal. One week later we met with them again to present our application wireframes and to review the project proposal. At this point, we recieved some change requests to improve user experience. At our next client meeting, the functioning application was happily approved and from there we spent the remainder of the project styling and fixing minor bugs.
 
 
 ## Features & Usage Demo
