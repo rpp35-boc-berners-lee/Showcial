@@ -6,7 +6,7 @@ import React, {
    ReactComponentElement,
 } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { replace } from 'cypress/types/lodash';
 
 interface AuthProvider {
@@ -31,6 +31,7 @@ export const useAuth = () => {
 
 //this is the custom hook passed to our Provider that will handle all our authentication state and create the authentication object
 function useProvideAuth() {
+   const location = useLocation();
    const navigate = useNavigate();
    const [user, setUser] = useState<string>('');
    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -48,7 +49,7 @@ function useProvideAuth() {
          .catch((err) => {
             setIsLoggedIn(false);
          });
-   }, []);
+   }, [location]);
 
    const signout = async () => {
       try {

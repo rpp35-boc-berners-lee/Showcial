@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Request, Response, Router } from 'express';
 const bcrypt = require('bcryptjs');
 var passport = require('passport');
-const { findUser, addUser } = require('../database/controllers/index');
 import {
    GoogleCallbackParameters,
    Profile,
@@ -184,7 +183,6 @@ router.post('/signup', async (req: Request, res: Response) => {
    //find one from db using userName, if unsuccessful, hash password and store a new user
 
    let hashedPassword = bcrypt.hashSync(password, 8);
-   console.log(hashedPassword);
 
    axios
       .post('http://localhost:8080/videoDB/user', {
@@ -194,6 +192,7 @@ router.post('/signup', async (req: Request, res: Response) => {
          ownedServices,
       })
       .then(() => {
+         req.session.user = userName;
          res.status(201).send('User added to database');
       })
       .catch((err) => {
@@ -216,7 +215,9 @@ router.post('/signin', (req: any, res: Response) => {
          let hash = response.data.hashedPassword;
          if (bcrypt.compareSync(password, hash)) {
             req.session.user = response.data.userName;
+            console.log('signin', req.session);
             res.status(201).send('Succesfully logged in');
+            // res.status(201).redirect('http://localhost:3000');
          } else {
             res.status(401).send('Incorrect username or password');
          }
@@ -226,15 +227,6 @@ router.post('/signin', (req: any, res: Response) => {
          res.status(400).send(err);
       });
 });
-
-// router.get('/guest', (req: any, res: Response) => {
-//   //update req.session.user to null
-//   console.log('guest');
-//   req.session.user = null;
-//   res.send('Logged in as "guest"')
-// })
-
-//need a delete route for logging out
 
 export { router };
 // export default checkAuth;
