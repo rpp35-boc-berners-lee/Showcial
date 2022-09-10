@@ -10,7 +10,7 @@ type ChildProps = {
   getSelected: (id: number, type: string) => void;
   inWatchList?: boolean,
   setInWatchList?: (bool: boolean) => void,
-  updateWatchList?: () => void,
+  updateWatchList?: (userName: string) => void,
 }
 
 export const Recommendations: React.FC<ChildProps> = ({vedios,  config, userName, mediaType, getSelected, inWatchList, setInWatchList, updateWatchList }) => {
