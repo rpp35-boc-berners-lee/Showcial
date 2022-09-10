@@ -39,6 +39,7 @@ export const PersonalProfile = () => {
       setConfig(config.data);
    };
 
+
  async function fetchUserData (userName: any) {
     console.log('fetch userData', userName)
     await axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
@@ -71,6 +72,7 @@ export const PersonalProfile = () => {
          </Tabs>
       );
    };
+
 
    return (
       <div className='personalProfile'>
