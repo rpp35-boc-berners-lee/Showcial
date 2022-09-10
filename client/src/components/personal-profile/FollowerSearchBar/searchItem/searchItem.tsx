@@ -12,7 +12,7 @@ export const SearchItem = (props: any) => {
       <Card
          style={{ cursor: 'pointer' }}
          key={props.index}
-         sx={{ m: 1, width: '25ch' }}
+         sx={{ ml: 3, width: '25ch' }}
          className='searchItem'
       >
          <Stack

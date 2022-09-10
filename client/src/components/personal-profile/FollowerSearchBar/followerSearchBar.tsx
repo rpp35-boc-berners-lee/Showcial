@@ -55,7 +55,7 @@ export const FollowerSearchBar = (props: any) => {
    return (
       <Stack alignItems='center' justifyContent='center'>
          <TextField
-            sx={{ mt: 3, ml: 3, width: '50ch' }}
+            sx={{ mt: 3, ml: 6, width: '50ch' }}
             variant='outlined'
             className='followerSearchBar'
             fullWidth
