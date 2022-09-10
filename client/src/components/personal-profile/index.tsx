@@ -16,22 +16,31 @@ export const PersonalProfile = () => {
    const auth = useAuth();
    console.log('auth.user', auth.user);
    const [value, setValue] = React.useState(1);
-   const [userName, setUserName] = useState<any>(auth.user || 'JamesFranco'); //! switch to current signed in user
+   const [userName, setUserName] = useState<any>('JamesFranco'); //! switch to current signed in user
    const [followeeData, setFolloweeData] = useState<any>(undefined);
    const [followingList, setFollowingList] = useState<any>([]);
    const [recommendedList, setRecommendedList] = useState<any>([]);
    const [watchList, setWatchList] = useState<any>([]);
    const [config, setConfig] = useState<ConfigAPI | undefined>();
 
-   useEffect(() => {
-      setUserName(auth.user)
-   }, [auth.user])
+  //  useEffect(() => {
+  //   console.log('1ar useEffect has ran')
+  //   fetchUserData();
+  //   fetchAPI();
+  //  }, [])
 
    useEffect(() => {
-      fetchUserData();
+      if (auth.user !== null) {
+        //  console.log('2nd useEffect')
+         setUserName(auth.user)
+      }
+   }, [auth.user !== ''])
+
+   useEffect(() => {
+      // console.log('3rd useEffect has ran')
+      fetchUserData(auth.user);
       fetchAPI();
    }, [userName])
-
 
    const fetchAPI = async () => {
       let config = await axios.get<ConfigAPI>(
@@ -40,13 +49,14 @@ export const PersonalProfile = () => {
       setConfig(config.data);
    };
 
-
-  function fetchUserData () {
-    axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
-      .then((results: any) => {
-        setFollowingList(results.data.followingList);
-        setRecommendedList(results.data.recommendedVideos);
-        setWatchList(results.data.watchedVideos)
+ async function fetchUserData (userName: any) {
+    console.log('fetch userData', userName)
+    await axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
+      .then(async (results: any) => {
+        console.log('fetchUserData', results.data)
+        await setFollowingList(results.data.followingList);
+        await setRecommendedList(results.data.recommendedVideos);
+        await setWatchList(results.data.watchedVideos)
       })
       .catch((error) => {
         console.log('fetchFollowingList() Failed', error);
@@ -55,9 +65,7 @@ export const PersonalProfile = () => {
 
   let currentOption = value;
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log('value: ', value);
     setValue(newValue);
-    console.log('new value: ', newValue);
     currentOption = newValue
   };
 
@@ -75,60 +83,53 @@ export const PersonalProfile = () => {
       );
    };
 
-   // Conditionally render main component (FollowingList/For-You/For-Follower), SelectBar and FollowerSearchBar
-   let followerSearchBar = undefined;
-   let selectBar = undefined;
-   let component = undefined;
-   if (currentOption === 0) {
-      followerSearchBar = (
-         <FollowerSearchBar
-            setValue={setValue}
-            setFolloweeData={setFolloweeData}
-         />
-      );
-      selectBar = <SelectBar />;
-      component = (
-         <FollowingList
-            setValue={setValue}
-            userName={userName}
-            setFolloweeData={setFolloweeData}
-            followingList={followingList}
-         />
-      );
-   } else if (currentOption === 1) {
-      followerSearchBar = (
-         <FollowerSearchBar
-            setValue={setValue}
-            setFolloweeData={setFolloweeData}
-         />
-      );
-      selectBar = <SelectBar />;
-      component = (
-         <ForYou
-            userName={userName}
-            watchList={watchList}
-            config={config}
-            setValue={setValue}
-            setFolloweeData={setFolloweeData} />
-      );
-   } else if (currentOption === 2) {
-      component = (
-         <ForFollower
-            setValue={setValue}
-            userName={userName}
-            followeeData={followeeData}
-            followingList={followingList}
-            config={config}
-         />
-      );
-   }
-
    return (
-
       <div className='personalProfile'>
-         {followerSearchBar}
-         {selectBar}
-         {component}
+         {currentOption === 0 ?
+           <div>
+              <FollowerSearchBar
+                setValue={setValue}
+                setFolloweeData={setFolloweeData}
+              />
+              <SelectBar />
+              <FollowingList
+                setValue={setValue}
+                userName={userName}
+                setFolloweeData={setFolloweeData}
+                followingList={followingList}
+              />
+           </div>
+
+           : null
+         }
+         {currentOption === 1 ?
+           <div>
+             <FollowerSearchBar
+               setValue={setValue}
+               setFolloweeData={setFolloweeData}
+             />
+             <SelectBar />
+             <ForYou
+               userName={userName}
+               watchList={watchList}
+               config={config}
+               setValue={setValue}
+               setFolloweeData={setFolloweeData}
+             />
+           </div>
+           : null}
+         {currentOption === 2 ?
+           <div>
+             <ForFollower
+               setValue={setValue}
+               userName={userName}
+               followeeData={followeeData}
+               followingList={followingList}
+               config={config}
+             />
+           </div>
+           : null
+         }
       </div>
    );
 };
