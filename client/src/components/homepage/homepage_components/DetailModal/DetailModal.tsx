@@ -92,23 +92,25 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
       updateWatchList(userName);
     }
   }
+
   const addToRecommended = async () => {
     await axios.post(`http://localhost:8080/videoDB/user/addToRecommended`, { userName, vedio });
     setLiked(!liked);
   }
+
   const addRating = async () => {
     setIsRating(true);
   }
+
   const closeRating = () => {
     setIsRating(false);
   }
+
   const submitRating = () => {
     setIsRating(false);
     setRated(true)
   }
-  useEffect(() => {
-    console.log(vedio, 'in DetailModal');
-  }, [])
+
   return (
     <div id='details'>
       <ReactModal

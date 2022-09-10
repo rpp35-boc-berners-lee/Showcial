@@ -149,14 +149,12 @@ export function Homepage() {
 
   const getSearchAPI = async () => {
     let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${mediaType}/${query}/${page}`);
-    console.log(search.data);
     setSearchResults(search.data);
   }
 
 
   const updateWatchList = async (userName: string) => {
     let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`)
-    console.log(`${userName}: `, watch_list.data.watchedVideos);
     setWatchList(watch_list.data.watchedVideos);
   }
 
@@ -273,7 +271,7 @@ export function Homepage() {
           />
           {watchList !== undefined ?
             <YourWatchList watchList={watchList} config={config} getSelected={getSelected} /> :
-              <Typography variant='h6' component='h2' align='center' sx={{ pb: 1 }}>
+              <Typography variant='h6' component='h2' align='center' sx={{ my: 3, ml: 5, fontWeight: "bold" }}>
                 You currently do not have any videos in your watch list.
               </Typography>
           }
