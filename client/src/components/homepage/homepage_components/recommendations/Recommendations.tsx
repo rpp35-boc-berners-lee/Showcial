@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import {Slider} from './slider/Slider';
-import { Stack, Container } from '@mui/material';
+import React from 'react';
+import { Slider } from './slider/Slider';
+import { Container } from '@mui/material';
 
 type ChildProps = {
   vedios: any;
