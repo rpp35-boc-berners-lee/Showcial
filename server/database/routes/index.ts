@@ -211,7 +211,7 @@ router.post('/user/addToRecommended', async (req: Request, res: Response) => {
 router.post('/user/addToRecommended', async (req: Request, res: Response) => {
    let query = req.query as unknown as Query;
    await controllers
-      .removeFromRecommended(query.userName, Number(query.videoID))
+      .removeFromRecommended(req.body.userName, req.body.vedio)
       .then(() => {
          res.sendStatus(201);
       })
