@@ -4,19 +4,18 @@ import { DetailModal } from '../homepage/homepage_components/DetailModal/DetailM
 
 type ChildProps = {
   mediaType: string;
+  userName: string;
   id: number;
   config: any;
   open: boolean;
   close: (close: boolean) => void;
   inWatchList?: boolean;
   setInWatchList?: (bool: boolean) => void;
-  updateWatchList?: () => void;
+  updateWatchList?: (userName: string) => void;
 }
 
-export const VideoDetails:React.FC<ChildProps> = ({ mediaType, id, config, open, close, inWatchList, setInWatchList, updateWatchList }) => {
+export const VideoDetails:React.FC<ChildProps> = ({ mediaType, userName, id, config, open, close, inWatchList, setInWatchList, updateWatchList }) => {
   const [currentlySelected, setCurrentlySelected] = useState<any>();
-  // temp username
-  const [userName, setUserName] = useState('JamesFranco');
 
   useEffect(() => {
     close(open);

@@ -14,7 +14,7 @@ type ChildProps = {
   mediaType: string;
   inWatchList?: boolean,
   setInWatchList?: (bool: boolean) => void,
-  updateWatchList?: () => void,
+  updateWatchList?: (userName: string) => void,
 }
 const customStyles = {
   content: {
@@ -73,9 +73,7 @@ export const Slider: React.FC<ChildProps> = ({ vedios, config, userName, mediaTy
     setModalIsOpen(true);
     getVideoDetail(id);
   }
-  console.log('config', config)
-  console.log('vedios: ', vedios)
-  console.log('slideIndex: ', vedios[slideIndex].title);
+
   return (
     <div className="container-slider">
       {vedios.map((vedio: any, index: number) => {

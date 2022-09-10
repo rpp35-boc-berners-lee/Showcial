@@ -5,6 +5,7 @@ import axios from 'axios';
 import { Typography, Stack, Grid, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { VideoDetails } from '../VideoDetails'
 
 type PopularMovie = {
    backdrop_path: string;

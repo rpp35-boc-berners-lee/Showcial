@@ -30,7 +30,6 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
   const [filterType, setFilterType] = useState('');
   const [alterList, setAlterList] = useState(watchList);
   const [sortType, setSortType] = useState('');
-  const [sortedList, setSortedList] = useState([]);
 
   useEffect(() => {
     let box = document.querySelector('.MuiGrid-container');
@@ -120,9 +119,11 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
 
    return (
     <div>
-      <Typography variant='h5' sx={{ my: 3, ml: 5, fontWeight: "bold" }}>YOUR WATCH LIST</Typography>
-      <div>
-        <FormControl sx={{mb: 5, ml: 5, width: '10%' }} size='small'>
+      <Typography variant='h5' sx={{ my: 3, ml: 5, fontWeight: "bold" }} component='h2' align='center'>
+        YOUR WATCH LIST
+      </Typography>
+      <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ mb: 5, ml: 5 }}>
+        <FormControl sx={{ width: '10%' }} size='small'>
           <InputLabel id="filter">Filter</InputLabel>
           <Select
             labelId="filter-label"
@@ -138,7 +139,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
             <MenuItem value={'Amazon'}>Amazon Prime</MenuItem>
           </Select>
         </FormControl>
-        <FormControl sx={{mb: 5, width: '10%' }} size='small'>
+        <FormControl sx={{ width: '10%' }} size='small'>
           <InputLabel id="sort">Sort</InputLabel>
           <Select
             labelId="sort-label"
@@ -158,10 +159,13 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
           </Button>
           : null
         }
-      </div>
-      <Box sx={{ width: '100%' }}>
-        {alterList.length === 0 ? 'No Videos Found' :
-          <Grid container spacing={4} justifyContent='center'>
+      </Stack>
+      <Box sx={{ width: '100%', borderTop: '1px solid rgba(211, 211, 211, .5)', borderBottom: '1px solid rgba(211, 211, 211, .5)', pt: '2vh', pb: '1vh' }}>
+        {alterList.length === 0 ?
+          <Typography variant='h6' sx={{ fontWeight: "bold" }} component='h2' align='center'>
+            There are no videos available.
+          </Typography> :
+          <Grid container spacing={3.5} justifyContent='center'>
             {displayedVideos.map((video: Video, i: number) => {
               return (
                 <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
@@ -179,8 +183,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
             })}
           </Grid>
       }
-      </Box>
-      <Stack spacing={2} direction="row">
+      <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ paddingTop: '1vh' }}>
         {displayedVideos.length < watchList.length ?
           <Button sx={{ml: 5, my: 3}} variant="text" startIcon={<ExpandMoreIcon />} onClick={() =>
           setNumDisplayed((numDisplayed + maxRowCards) > alterList.length ? alterList.length : (numDisplayed + maxRowCards))}>SHOW MORE</Button>
@@ -189,6 +192,7 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
           <Button sx={{ml: 5, my: 3}} variant="text" startIcon={<ExpandLessIcon />} onClick={() =>
             setNumDisplayed((numDisplayed - maxRowCards < maxRowCards) ? maxRowCards : (numDisplayed - maxRowCards))}>SHOW LESS</Button> : null}
       </Stack>
+      </Box>
     </div>
    );
 };
