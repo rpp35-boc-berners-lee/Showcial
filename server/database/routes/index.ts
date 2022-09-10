@@ -191,11 +191,12 @@ router.post(
    }
 );
 
-//TODO: add videoID to recommended list
-router.post('/addToRecommended', async (req: Request, res: Response) => {
-   let query = req.query as unknown as Query;
+//TODO: add video to recommended list
+router.post('/user/addToRecommended', async (req: Request, res: Response) => {
+   console.log(req.body.userName, 'req.body.userName')
+   console.log('req.body.vedio', req.body.vedio)
    await controllers
-      .addToRecommended(query.userName, Number(query.videoID))
+      .addToRecommended(req.body.userName, req.body.vedio)
       .then(() => {
          res.sendStatus(201);
       })
@@ -207,10 +208,10 @@ router.post('/addToRecommended', async (req: Request, res: Response) => {
 });
 
 //TODO: remove videoID from recommended list
-router.post('/addToRecommended', async (req: Request, res: Response) => {
+router.post('/user/addToRecommended', async (req: Request, res: Response) => {
    let query = req.query as unknown as Query;
    await controllers
-      .removeFromRecommended(query.userName, Number(query.videoID))
+      .removeFromRecommended(req.body.userName, req.body.vedio)
       .then(() => {
          res.sendStatus(201);
       })

@@ -5,9 +5,11 @@ import { PersonalFeed } from '.././personal-feed/PersonalFeed';
 import { VideoCard } from '../../shared/VideoCard';
 
 type Props = {
-  userName: string;
+  userName: any;
   watchList: any;
   config: any;
+  setValue: any;
+  setFolloweeData: any;
 }
 
 type Video = {
@@ -19,36 +21,21 @@ type Video = {
   media_type: string;
 }
 
-export const ForYou: React.FC<Props> = ({ userName, watchList, config }) => {
+export const ForYou: React.FC<Props> = ({ userName, watchList, config, setValue, setFolloweeData }) => {
   return (
-     <div>
-       <Grid container spacing={2} className='personal-profile'>
+     <div className='forYou'>
+       <Grid container spacing={2} className='forYou'>
          <Grid item xs={12} sm={12} md={3} className='provider-list'>
            <Paper><WatchProviders userName={userName} /></Paper>
          </Grid>
          <Grid item xs={12} sm={12} md={9} className='personal-feed'>
-           <PersonalFeed userName={userName}/>
+           <PersonalFeed
+             userName={userName}
+             setValue={setValue}
+             setFolloweeData={setFolloweeData}
+           />
          </Grid>
        </Grid>
-       <Box sx={{ width: '100%' }}>
-        {/* <Typography>Watch List</Typography>
-        <Grid container spacing={4} justifyContent='center'>
-          {watchList.map((video: Video, i: number) => {
-            return (
-              <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
-                <VideoCard
-                  base_url={config.images.base_url}
-                  backdrop_sizes={config.images.backdrop_sizes}
-                  backdrop_path={video.backdrop_path}
-                  name={video.name || video.original_title}
-                  id={video.id}
-                  mediaType={video.media_type}
-                />
-              </Grid>
-            )
-          })}
-        </Grid> */}
-      </Box>
      </div>
   );
 };

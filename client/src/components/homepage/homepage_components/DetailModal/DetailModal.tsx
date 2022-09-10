@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { styled } from '@mui/material/styles';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
@@ -13,17 +12,16 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
-import CloseIcon from '@mui/icons-material/Close';
-import { Height } from '@mui/icons-material';
+import { Height, SentimentNeutralOutlined, SettingsBackupRestoreRounded } from '@mui/icons-material';
 import ReactModal from 'react-modal';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import AddToQueueOutlined from '@mui/icons-material/AddToQueueOutlined';
 import RemoveFromQueueOutlined from '@mui/icons-material/RemoveFromQueueOutlined'
-import { env } from 'process';
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
 
 interface Props {
   modalIsOpen: boolean,
@@ -34,8 +32,9 @@ interface Props {
   userName: string,
   inWatchList?: boolean,
   setInWatchList?: (bool: boolean) => void,
-  updateWatchList?: () => void,
+  updateWatchList?: (userName: string) => void,
 }
+
 const customStyles = {
   content: {
     top: '50%',
@@ -47,22 +46,35 @@ const customStyles = {
   },
 };
 
+const ratingStyle = {
+  content: {
+    top: '70%',
+    left: '20%',
+    right: 'auto',
+    bottom: 'auto',
+    transform: 'translate(-50%, -50%)',
+    background: '#cfe8fc',
+    margin: 0
+  }
+}
 ReactModal.setAppElement('#root');
 
-export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal, inWatchList, setInWatchList, updateWatchList }) => {
+export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal, userName, inWatchList, setInWatchList, updateWatchList }) => {
   const [recommendedUsers, SetRecommendedUsers] = useState([]);
   const [platform, SetPlatform] = useState([])
 
-  const userName = 'JamesFranco';
+  const [liked, setLiked] = useState(false);
+  const [isRating, setIsRating] = useState(false);
+  const [value, setValue] = React.useState<number | null>(2);
+  const [rated, setRated] = useState(false)
 
-  console.log('vedio: ', vedio)
   const addToWatchList = async () => {
     await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, video: vedio });
     if (setInWatchList !== undefined) {
       setInWatchList(true);
     }
     if (updateWatchList !== undefined) {
-      updateWatchList();
+      updateWatchList(userName);
     }
   }
 
@@ -72,8 +84,26 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
       setInWatchList(false);
     }
     if (updateWatchList !== undefined) {
-      updateWatchList();
+      updateWatchList(userName);
     }
+  }
+
+  const addToRecommended = async () => {
+    await axios.post(`http://localhost:8080/videoDB/user/addToRecommended`, { userName, vedio });
+    setLiked(!liked);
+  }
+
+  const addRating = async () => {
+    setIsRating(true);
+  }
+
+  const closeRating = () => {
+    setIsRating(false);
+  }
+
+  const submitRating = () => {
+    setIsRating(false);
+    setRated(true)
   }
 
   return (
@@ -88,7 +118,7 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
+                S
               </Avatar>
             }
             action={
@@ -106,15 +136,34 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
             alt="Paella dish"
           />
           <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <FavoriteIcon />
+            <IconButton aria-label="add to favorites" onClick={addToRecommended}>
+              {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
-            <IconButton aria-label="share">
-              <ShareIcon />
+            <IconButton onClick={addRating}>
+              {rated ? <StarIcon /> : <StarBorderIcon aria-label="rate" />}
             </IconButton>
-            <IconButton>
-              <StarBorderIcon aria-label="rate" />
-            </IconButton>
+            <ReactModal
+              isOpen={isRating}
+              onRequestClose={closeRating}
+              style={ratingStyle}
+            >
+              <Box
+                sx={{
+                  '& > legend': { mt: 2 },
+                  bgcolor: '#cfe8fc'
+                }}
+              >
+                <Typography component="legend" sx ={{color: 'black'}}>Rate this Video</Typography>
+                <Rating
+                  name="simple-controlled"
+                  value={value}
+                  onChange={(event, newValue) => {
+                    setValue(newValue);
+                  }}
+                />
+                <Button variant="contained" onClick={submitRating}>Submit</Button>
+              </Box>
+            </ReactModal>
             {inWatchList ?
               <IconButton onClick={removeFromWatchList}>
                 <RemoveFromQueueOutlined aria-label="add to watch list" />

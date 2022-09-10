@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect }  from 'react';
 import { SearchItem } from './searchItem/searchItem';
 import axios from 'axios';
 import { TextField, Box, InputAdornment } from '@mui/material';
@@ -27,8 +27,8 @@ export const FollowerSearchBar = (props: any) => {
       );
    }, [matchedUserList]);
 
-   function fetchUserList() {
-      axios
+   async function fetchUserList() {
+      await axios
          .get('http://localhost:8080/videoDB/user/all')
          .then((results: any) => {
             setUserList(results.data);
@@ -54,7 +54,7 @@ export const FollowerSearchBar = (props: any) => {
    return (
       <div>
          <TextField
-            sx={{ mt: 3, ml: 3 , width: '25ch' }}
+            sx={{ mt: 3, ml: 6 , width: '25ch' }}
             variant='outlined'
             className='followerSearchBar'
             fullWidth

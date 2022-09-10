@@ -7,7 +7,6 @@ type ChildProps = {
   searchResults: any;
   config: any;
   getSelected?: (id: number, type: string) => void;
-  mediaType: string;
 }
 
 type Video = {
@@ -15,10 +14,11 @@ type Video = {
   backdrop_path: string;
   name: string;
   id: number;
-  original_title: string;
+  title: string;
+  media_type: string;
 }
 
-export const Search:React.FC<ChildProps> = ({ searchResults, config, getSelected, mediaType }) => {
+export const Search:React.FC<ChildProps> = ({ searchResults, config, getSelected }) => {
   const [displayedVideos, setDisplayedVideos] = useState([]);
 
   useEffect(() => {
@@ -36,9 +36,9 @@ export const Search:React.FC<ChildProps> = ({ searchResults, config, getSelected
                   base_url={config.images.base_url}
                   backdrop_sizes={config.images.backdrop_sizes}
                   backdrop_path={video.backdrop_path}
-                  name={video.name || video.original_title}
+                  name={video.name || video.title}
                   id={video.id}
-                  mediaType={mediaType}
+                  mediaType={video.media_type}
                   getSelected={getSelected}
                 />
               </Grid>
