@@ -44,6 +44,10 @@ export function Homepage() {
   }, []);
 
   useEffect(() => {
+    fetchRecommendList(userName);
+  }, [mediaType]);
+
+  useEffect(() => {
     if (auth.user !== null) {
       fetchRecommendList(auth.user);
     }
@@ -258,28 +262,9 @@ export function Homepage() {
               </Select>
             </FormControl>
           </Stack>
-          {topTV !== undefined && mediaType === 'tv' ?
-            <Recommendations
-              vedios={topTV.results}
-              config={config}
-              userName={userName}
-              mediaType={mediaType}
-              getSelected={getSelected}
-              inWatchList={inWatchList}
-              setInWatchList={setInWatchList}
-              updateWatchList={updateWatchList}
-              /> : null}
-          {topMovie !== undefined && mediaType === 'movie' ?
-            <Recommendations
-              vedios={topMovie.results}
-              config={config}
-              userName={userName}
-              mediaType={mediaType}
-              getSelected={getSelected}
-              inWatchList={inWatchList}
-              setInWatchList={setInWatchList}
-              updateWatchList={updateWatchList}
-              /> : null}
+          {recommendedList.length?
+            <Recommendations vedios={recommendedList} config={config} userName={userName} mediaType={mediaType} getSelected={getSelected} inWatchList={inWatchList}
+              setInWatchList={setInWatchList} updateWatchList={updateWatchList}/> : null}
           <TrendingOrRecommendedVideos
             mediaType={mediaType}
             trendingOrRecommended={'trending'}

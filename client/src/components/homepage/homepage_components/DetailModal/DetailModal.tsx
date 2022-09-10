@@ -18,12 +18,15 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import CloseIcon from '@mui/icons-material/Close';
-import { Height } from '@mui/icons-material';
+import { Height, SentimentNeutralOutlined, SettingsBackupRestoreRounded } from '@mui/icons-material';
 import ReactModal from 'react-modal';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import AddToQueueOutlined from '@mui/icons-material/AddToQueueOutlined';
 import RemoveFromQueueOutlined from '@mui/icons-material/RemoveFromQueueOutlined'
 import { env } from 'process';
+import Rating from '@mui/material/Rating';
+import Box from '@mui/material/Box';
+import { set } from 'cypress/types/lodash';
 
 interface Props {
   modalIsOpen: boolean,
@@ -48,6 +51,17 @@ const customStyles = {
   },
 };
 
+const ratingStyle = {
+  content: {
+    top: '70%',
+    left: '20%',
+    right: 'auto',
+    bottom: 'auto',
+    transform: 'translate(-50%, -50%)',
+    background: '#cfe8fc',
+    margin: 0
+  }
+}
 ReactModal.setAppElement('#root');
 
 export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal, userName, inWatchList, setInWatchList, updateWatchList }) => {
@@ -55,6 +69,9 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
   const [platform, SetPlatform] = useState([])
 
   const [liked, setLiked] = useState(false);
+  const [isRating, setIsRating] = useState(false);
+  const [value, setValue] = React.useState<number | null>(2);
+  const [rated, setRated] = useState(false)
 
   const addToWatchList = async () => {
     await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, video: vedio });
@@ -79,6 +96,16 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
     await axios.post(`http://localhost:8080/videoDB/user/addToRecommended`, { userName, vedio });
     setLiked(!liked);
   }
+  const addRating = async () => {
+    setIsRating(true);
+  }
+  const closeRating = () => {
+    setIsRating(false);
+  }
+  const submitRating = () => {
+    setIsRating(false);
+    setRated(true)
+  }
   useEffect(() => {
     console.log(vedio, 'in DetailModal');
   }, [])
@@ -94,7 +121,7 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
           <CardHeader
             avatar={
               <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                R
+                S
               </Avatar>
             }
             action={
@@ -112,12 +139,34 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
             alt="Paella dish"
           />
           <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" onClick={addToRecommended}>
-              {liked? <FavoriteIcon /> : <FavoriteBorderIcon/>}
+            <IconButton aria-label="add to favorites" onClick={addToRecommended}>
+              {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
-            <IconButton>
-              <StarBorderIcon aria-label="rate" />
+            <IconButton onClick={addRating}>
+              {rated ? <StarIcon /> : <StarBorderIcon aria-label="rate" />}
             </IconButton>
+            <ReactModal
+              isOpen={isRating}
+              onRequestClose={closeRating}
+              style={ratingStyle}
+            >
+              <Box
+                sx={{
+                  '& > legend': { mt: 2 },
+                  bgcolor: '#cfe8fc'
+                }}
+              >
+                <Typography component="legend" sx ={{color: 'black'}}>Rate this Video</Typography>
+                <Rating
+                  name="simple-controlled"
+                  value={value}
+                  onChange={(event, newValue) => {
+                    setValue(newValue);
+                  }}
+                />
+                <Button variant="contained" onClick={submitRating}>Submit</Button>
+              </Box>
+            </ReactModal>
             {inWatchList ?
               <IconButton onClick={removeFromWatchList}>
                 <RemoveFromQueueOutlined aria-label="add to watch list" />
