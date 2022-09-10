@@ -19,6 +19,7 @@ import { TrendingOrRecommendedVideos } from './homepage_components/trending/Tren
 
 export function Homepage() {
   const auth = useAuth();
+  console.log(auth);
   const [watchList, setWatchList] = useState<any[]>();
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const [userName, setUserName] = useState<string>('JamesFranco');
