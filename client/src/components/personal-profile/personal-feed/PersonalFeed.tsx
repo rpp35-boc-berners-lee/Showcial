@@ -12,8 +12,8 @@ export const PersonalFeed = (props: any) => {
    const [numDisplayed, setNumDisplayed] = useState(2);
 
    useEffect(() => {
-     fetchUserFeed();
-   },[]);
+     fetchUserFeed(props.userName);
+   },[props.userName]);
 
    useEffect(() => {
       setDisplayedPosts(userFeed.slice(0, 2));
@@ -23,10 +23,15 @@ export const PersonalFeed = (props: any) => {
      setDisplayedPosts(userFeed.slice(0, numDisplayed));
    }, [numDisplayed])
 
-   async function fetchUserFeed () {
-     await axios.get('http://localhost:8080/videoDB/user/feed', {params: {userName: props.userName}})
+   async function fetchUserFeed (userName: any) {
+     await axios.get('http://localhost:8080/videoDB/user/feed', {params: {userName}})
        .then((results) => {
-         setUserFeed(results.data);
+         console.log('results.data', results.data)
+         if (!results.data.length) {
+            setUserFeed([]);
+         } else {
+            setUserFeed(results.data);
+         }
        })
        .catch((error: any) => {
          console.log('fetchUserFeed() Failed: ', error);
