@@ -112,10 +112,12 @@ export function Homepage() {
     setQuery(e.target.value);
   };
 
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     getSearchAPI();
   };
+
 
   const handleNextPage = async () => {
     if (page !== searchResults?.total_pages) {
@@ -206,7 +208,8 @@ export function Homepage() {
             setInWatchList={setInWatchList}
             updateWatchList={updateWatchList}
             /> : null}
-          <Typography variant='h4' component='h2' align='center' sx={{ pb: 1 }}>
+
+          <Typography variant='h4' component='h2' fontWeight="bold" align='center' sx={{ pb: 1 }}>
             SEARCH RESULTS
           </Typography>
           <div className='page'>
