@@ -13,23 +13,25 @@ import { ConfigAPI } from '../../../../types';
 import { useAuth } from '../../hooks/useAuth';
 
 export const PersonalProfile = () => {
+  const auth = useAuth();
   const [value, setValue] = React.useState(1);
-  const [userName, setUserName] = useState<any>('JamesFranco');
+  const [userName, setUserName] = useState<any>(auth.user || 'JamesFranco');
   const [followeeData, setFolloweeData] = useState<any>(undefined);
   const [followingList, setFollowingList] = useState<any>([]);
   const [watchList, setWatchList] = useState<any>([]);
   const [config, setConfig] = useState<ConfigAPI | undefined>();
-  const auth = useAuth();
 
    useEffect(() => {
-      if (auth.user !== null) {
+      if (auth.user !== null && auth.user !== '') {
          setUserName(auth.user)
       }
    }, [auth.user !== ''])
 
    useEffect(() => {
-      fetchUserData(auth.user);
-      fetchAPI();
+      if (auth.user !== "") {
+        fetchUserData(auth.user);
+        fetchAPI();
+      }
    }, [userName])
 
    const fetchAPI = async () => {
