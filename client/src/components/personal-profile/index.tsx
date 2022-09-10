@@ -20,9 +20,7 @@ export const PersonalProfile = () => {
   const [watchList, setWatchList] = useState<any>([]);
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const auth = useAuth();
-
-  // make a change
-
+  
    useEffect(() => {
       if (auth.user !== null) {
          setUserName(auth.user)

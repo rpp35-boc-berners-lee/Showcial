@@ -106,35 +106,40 @@ export const ForFollower = (props: any) => {
       </Button>
     );
   }
-
-  let conditionalWatchList = undefined;
-  if (watchList.length) {
-    conditionalWatchList =
-      (<Grid container spacing={4} justifyContent='center'>
-        {watchList.map((video: Video, i: number) => {
-          return (
-            <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
-              <VideoCard
-                base_url={props.config.images.base_url}
-                backdrop_sizes={props.config.images.backdrop_sizes}
-                backdrop_path={video.backdrop_path}
-                name={video.name || video.original_title}
-                id={video.id}
-                mediaType={video.media_type}
-              />
-            </Grid>
-          );
-        })}
-      </Grid>);
-  } else {
-    conditionalWatchList =
-      (<Typography
-        justifyContent="center"
-        alignItems="center"
-      >
-        No Videos in Watch List
-      </Typography>)
+  
+  const renderList = (watchList: any) => {
+    let conditionalWatchList = undefined;
+    if (watchList.length) {
+      conditionalWatchList =
+        (<Grid container spacing={4} justifyContent='center'>
+          {watchList.map((video: Video, i: number) => {
+            return (
+              <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>
+                <VideoCard
+                  base_url={props.config.images.base_url}
+                  backdrop_sizes={props.config.images.backdrop_sizes}
+                  backdrop_path={video.backdrop_path}
+                  name={video.name || video.original_title}
+                  id={video.id}
+                  mediaType={video.media_type}
+                />
+              </Grid>
+            );
+          })}
+        </Grid>);
+    } else {
+      conditionalWatchList =
+        (<Typography
+          justifyContent="center"
+          alignItems="center"
+        >
+          No Videos in Watch List
+        </Typography>)
+    }
+    return conditionalWatchList;
   }
+
+  
 
   return (
     <>
@@ -144,12 +149,12 @@ export const ForFollower = (props: any) => {
           className="Avatar"
           sx={{ maxFontSize: "3rem", minHeight: "3rem", maxHeight: "7rem", minWidth: "3rem", maxWidth: "7rem"}}
         >
-          {upperCaseReducer(props.followeeData)}
+            {upperCaseReducer(props.followeeData)}
         </Avatar>
         <CardHeader
           title={props.followeeData}
-          style={{textAlign: 'center'}}
-          titleTypographyProps={{variant:'h2' }}
+          style={{textAlign: 'center', fontWeigh:"bold"}}
+          titleTypographyProps={{variant:'h3', }}
         />
       </Stack>
       <Stack spacing={2} className="individualFeed">
@@ -172,8 +177,12 @@ export const ForFollower = (props: any) => {
       />
       <div  className="individualFeed">
         <Box>
-          <Typography>{props.followeeData} Watch List</Typography>
-          {conditionalWatchList}
+          <Typography sx={{my: 3}} variant="h5" fontWeight="bold" align="center">{props.followeeData}'s Watch List</Typography>
+          {renderList(watchList)}
+        </Box>
+        <Box>
+          <Typography sx={{my: 3}} variant="h5" fontWeight="bold" align="center">{props.followeeData} Liked</Typography>
+          {renderList(recommendedList)}
         </Box>
       </div>
 

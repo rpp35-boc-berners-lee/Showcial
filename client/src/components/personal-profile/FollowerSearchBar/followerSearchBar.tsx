@@ -1,7 +1,8 @@
 import React, { useState, useEffect }  from 'react';
 import { SearchItem } from './searchItem/searchItem';
 import axios from 'axios';
-import { TextField, Box, InputAdornment } from '@mui/material';
+import { TextField, Box, InputAdornment, Stack, } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 export const FollowerSearchBar = (props: any) => {
    const [userList, setUserList] = useState([]);
@@ -52,16 +53,18 @@ export const FollowerSearchBar = (props: any) => {
    }
 
    return (
-      <div>
+      <Stack alignItems='center' justifyContent='center'>
          <TextField
-            sx={{ mt: 3, ml: 6 , width: '25ch' }}
+
+            sx={{ mt: 3, ml: 6, width: '50ch' }}
             variant='outlined'
             className='followerSearchBar'
             fullWidth
             label='Search a user...'
             onChange={handleChange}
+            InputProps={{ endAdornment: <SearchIcon  /> }}
          />
          <>{shownSearchItems}</>
-      </div>
+      </Stack>
    );
 };
