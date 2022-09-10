@@ -1,5 +1,4 @@
 import React, { useState, useEffect }  from 'react';
-import axios from 'axios';
 import './YourWatchList.scss';
 import { VideoCard } from '../../shared/VideoCard';
 import { Box, Grid, Stack, Button, Typography, InputLabel, MenuItem, FormControl, Select } from '@mui/material';
