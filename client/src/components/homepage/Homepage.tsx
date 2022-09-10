@@ -19,7 +19,6 @@ import { TrendingOrRecommendedVideos } from './homepage_components/trending/Tren
 
 export function Homepage() {
   const auth = useAuth();
-  console.log(auth);
   const [watchList, setWatchList] = useState<any[]>();
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const [userName, setUserName] = useState<string>('JamesFranco');
@@ -113,7 +112,7 @@ export function Homepage() {
     setQuery(e.target.value);
   };
 
-  
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     getSearchAPI();
