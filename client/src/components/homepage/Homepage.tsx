@@ -98,7 +98,6 @@ export function Homepage() {
     setTopMovie(movie_top.data);
     let movie_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/popular`);
     setTrendingMovie(movie_trending.data);
-    updateWatchList(userName);
   }
 
   const fetchRecommendList = async (userName: string) => {
@@ -151,8 +150,9 @@ export function Homepage() {
 
 
   const updateWatchList = async (userName: string) => {
-    let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
-    await setWatchList(watch_list.data.watchedVideos);
+    let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`)
+    console.log(`${userName}: `, watch_list.data.watchedVideos);
+    setWatchList(watch_list.data.watchedVideos);
   }
 
   const getSelected = (id: number, type: string) => {
@@ -160,6 +160,7 @@ export function Homepage() {
     setSelectedMediaType(type);
     setOpenModal(!openModal);
   }
+
   const checkWatchList = () => {
     if (watchList !== undefined) {
       for (let i = 0; i < watchList.length; i++) {
@@ -171,6 +172,7 @@ export function Homepage() {
       setInWatchList(false);
     }
   }
+
   return (
     <div id='homepage'>
       {openModal ? <VideoDetails
