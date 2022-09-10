@@ -13,31 +13,23 @@ import { ConfigAPI } from '../../../../types';
 import { useAuth } from '../../hooks/useAuth';
 
 export const PersonalProfile = () => {
-   const auth = useAuth();
-   console.log('auth.user', auth.user);
-   const [value, setValue] = React.useState(1);
-   const [userName, setUserName] = useState<any>('JamesFranco'); //! switch to current signed in user
-   const [followeeData, setFolloweeData] = useState<any>(undefined);
-   const [followingList, setFollowingList] = useState<any>([]);
-   const [recommendedList, setRecommendedList] = useState<any>([]);
-   const [watchList, setWatchList] = useState<any>([]);
-   const [config, setConfig] = useState<ConfigAPI | undefined>();
+  const [value, setValue] = React.useState(1);
+  const [userName, setUserName] = useState<any>('JamesFranco');
+  const [followeeData, setFolloweeData] = useState<any>(undefined);
+  const [followingList, setFollowingList] = useState<any>([]);
+  const [watchList, setWatchList] = useState<any>([]);
+  const [config, setConfig] = useState<ConfigAPI | undefined>();
+  const auth = useAuth();
 
-  //  useEffect(() => {
-  //   console.log('1ar useEffect has ran')
-  //   fetchUserData();
-  //   fetchAPI();
-  //  }, [])
+  // make a change
 
    useEffect(() => {
       if (auth.user !== null) {
-        //  console.log('2nd useEffect')
          setUserName(auth.user)
       }
    }, [auth.user !== ''])
 
    useEffect(() => {
-      // console.log('3rd useEffect has ran')
       fetchUserData(auth.user);
       fetchAPI();
    }, [userName])
@@ -55,7 +47,6 @@ export const PersonalProfile = () => {
       .then(async (results: any) => {
         console.log('fetchUserData', results.data)
         await setFollowingList(results.data.followingList);
-        await setRecommendedList(results.data.recommendedVideos);
         await setWatchList(results.data.watchedVideos)
       })
       .catch((error) => {
@@ -99,7 +90,6 @@ export const PersonalProfile = () => {
                 followingList={followingList}
               />
            </div>
-
            : null
          }
          {currentOption === 1 ?
