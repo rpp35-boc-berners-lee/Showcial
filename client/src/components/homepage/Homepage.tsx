@@ -11,9 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import { CarouselList } from './homepage_components/carousel/Carousel';
 import { Recommendations } from './homepage_components/recommendations/Recommendations';
-import { TrendingVideos } from '../shared/trending-videos/TrendingVideos';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { VideoDetails } from '../shared/VideoDetails';
 import { useAuth } from '../../hooks/useAuth';
@@ -23,10 +21,6 @@ export function Homepage() {
   const auth = useAuth();
   const [watchList, setWatchList] = useState<any[]>();
   const [config, setConfig] = useState<ConfigAPI | undefined>();
-  const [topTV, setTopTV] = useState<APIResponse | undefined>();
-  const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
-  const [topMovie, setTopMovie] = useState<APIResponse | undefined>();
-  const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
   const [userName, setUserName] = useState<string>('JamesFranco');
   const [query, setQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
@@ -39,7 +33,7 @@ export function Homepage() {
   const [recommendedList, setRecommendedList] = useState<Array<any>>([]);
 
   useEffect(() => {
-    fetchAPI();
+    fetchConfig();
     fetchRecommendList(userName);
   }, []);
 
@@ -91,18 +85,9 @@ export function Homepage() {
     }
   }, [auth.user !== ''])
 
-  const fetchAPI = async () => {
+  const fetchConfig = async () => {
     let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
     setConfig(config.data);
-    let tv_top = await axios.get<APIResponse>(`http://localhost:8080/tmdb/tv/top_rated`);
-    setTopTV(tv_top.data);
-    let tv_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/tv/popular`);
-    setTrendingTV(tv_trending.data);
-    let movie_top = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/top_rated`);
-    setTopMovie(movie_top.data);
-    let movie_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/popular`);
-    setTrendingMovie(movie_trending.data);
-    updateWatchList(userName);
   }
 
   const fetchRecommendList = async (userName: string) => {
@@ -155,8 +140,8 @@ export function Homepage() {
 
 
   const updateWatchList = async (userName: string) => {
-    let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`);
-    await setWatchList(watch_list.data.watchedVideos);
+    let watch_list = await axios.get(`http://localhost:8080/videoDB/user?userName=${userName}`)
+    setWatchList(watch_list.data.watchedVideos);
   }
 
   const getSelected = (id: number, type: string) => {
@@ -164,6 +149,7 @@ export function Homepage() {
     setSelectedMediaType(type);
     setOpenModal(!openModal);
   }
+
   const checkWatchList = () => {
     if (watchList !== undefined) {
       for (let i = 0; i < watchList.length; i++) {
@@ -175,6 +161,7 @@ export function Homepage() {
       setInWatchList(false);
     }
   }
+
   return (
     <div id='homepage'>
       {openModal ? <VideoDetails
@@ -190,7 +177,7 @@ export function Homepage() {
         /> : null}
       <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ mt: '2vh' }}>
         <form onSubmit={handleSubmit}>
-          <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
+          <FormControl sx={{ my: 3, ml: 5, width: '50ch' }} variant="outlined">
             <InputLabel htmlFor="search-adornment">Search</InputLabel>
             <OutlinedInput
               id="search-adornment"
@@ -230,7 +217,7 @@ export function Homepage() {
                 <Button variant="text" endIcon={<NavigateNextIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
             </Stack>
           </div>
-          <Search searchResults={searchResults.results} config={config} getSelected={getSelected} mediaType={mediaType}/>
+          <Search searchResults={searchResults.results} config={config} getSelected={getSelected}/>
           <div className='page'>
             <Stack spacing={2} direction='row' alignItems='center' justifyContent='center'>
               {page > 1 ?
@@ -270,7 +257,7 @@ export function Homepage() {
           />
           {watchList !== undefined ?
             <YourWatchList watchList={watchList} config={config} getSelected={getSelected} /> :
-              <Typography variant='h6' component='h2' align='center' sx={{ pb: 1 }}>
+              <Typography variant='h6' component='h2' align='center' sx={{ my: 3, ml: 5, fontWeight: "bold" }}>
                 You currently do not have any videos in your watch list.
               </Typography>
           }

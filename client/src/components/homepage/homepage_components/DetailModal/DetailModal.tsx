@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import { styled } from '@mui/material/styles';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
@@ -13,20 +12,16 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
-import CloseIcon from '@mui/icons-material/Close';
 import { Height, SentimentNeutralOutlined, SettingsBackupRestoreRounded } from '@mui/icons-material';
 import ReactModal from 'react-modal';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import AddToQueueOutlined from '@mui/icons-material/AddToQueueOutlined';
 import RemoveFromQueueOutlined from '@mui/icons-material/RemoveFromQueueOutlined'
-import { env } from 'process';
 import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
-import { set } from 'cypress/types/lodash';
 
 interface Props {
   modalIsOpen: boolean,
@@ -73,7 +68,6 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
   const [value, setValue] = React.useState<number | null>(2);
   const [rated, setRated] = useState(false)
 
-  console.log('vedio in DetailModal: ', vedio)
   const addToWatchList = async () => {
     await axios.post(`http://localhost:8080/videoDB/user/addToWatchedList`, { userName, video: vedio });
     if (setInWatchList !== undefined) {
@@ -93,23 +87,25 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
       updateWatchList(userName);
     }
   }
+
   const addToRecommended = async () => {
     await axios.post(`http://localhost:8080/videoDB/user/addToRecommended`, { userName, vedio });
     setLiked(!liked);
   }
+
   const addRating = async () => {
     setIsRating(true);
   }
+
   const closeRating = () => {
     setIsRating(false);
   }
+
   const submitRating = () => {
     setIsRating(false);
     setRated(true)
   }
-  useEffect(() => {
-    console.log(vedio, 'in DetailModal');
-  }, [])
+
   return (
     <div id='details'>
       <ReactModal
