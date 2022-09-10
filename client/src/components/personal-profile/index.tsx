@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './PersonalProfile.scss';
 import { ForYou } from './for-you/ForYou';
 import { FollowingList } from './following-list/FollowingList';
-import { FollowerSearchBar } from './FollowerSearchBar/followerSearchBar';
+import { FollowerSearchBar } from './followerSearchBar/followerSearchBar';
 import { ForFollower } from './for-follower/ForFollower';
 import axios from 'axios';
 import Tabs from '@mui/material/Tabs';
@@ -20,9 +20,7 @@ export const PersonalProfile = () => {
   const [watchList, setWatchList] = useState<any>([]);
   const [config, setConfig] = useState<ConfigAPI | undefined>();
   const auth = useAuth();
-
-  // make a change
-
+  
    useEffect(() => {
       if (auth.user !== null) {
          setUserName(auth.user)
