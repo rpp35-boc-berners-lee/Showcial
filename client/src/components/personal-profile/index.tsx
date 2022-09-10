@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './PersonalProfile.scss';
 import { ForYou } from './for-you/ForYou';
 import { FollowingList } from './following-list/FollowingList';
-import { FollowerSearchBar } from './followerSearchBar/followerSearchBar';
+import { FollowerSearchBar } from './FollowerSearchBar/followerSearchBar';
 import { ForFollower } from './for-follower/ForFollower';
 import axios from 'axios';
 import Tabs from '@mui/material/Tabs';
@@ -39,6 +39,7 @@ export const PersonalProfile = () => {
       setConfig(config.data);
    };
 
+
  async function fetchUserData (userName: any) {
     console.log('fetch userData', userName)
     await axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
@@ -71,6 +72,7 @@ export const PersonalProfile = () => {
          </Tabs>
       );
    };
+
 
    return (
       <div className='personalProfile'>
