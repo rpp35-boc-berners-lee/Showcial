@@ -14,20 +14,10 @@ export const App = () => {
          <ProvideAuth>
             <NavBar />
             <Routes>
-               {/* <Route path='/' element={<Template />} /> */}
                <Route path='/' element={<Homepage />} />
                <Route path='/personal/' element={<PersonalProfile />} />
                <Route path='/signin' element={<Signin />} />
                <Route path='/signup' element={<Signup />} />
-
-               {/* <Route
-               path='/home'
-               element={
-                  // <ProvideAuth>
-                     <Homepage />
-                  // </ProvideAuth>
-               }
-            /> */}
                <Route path='/about' element={<AboutPage />} />
             </Routes>
          </ProvideAuth>
