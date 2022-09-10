@@ -1,7 +1,7 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import { SearchItem } from './searchItem/searchItem';
 import axios from 'axios';
-import { TextField, Box, InputAdornment, Stack, } from '@mui/material';
+import { TextField, Box, InputAdornment, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export const FollowerSearchBar = (props: any) => {
@@ -61,7 +61,7 @@ export const FollowerSearchBar = (props: any) => {
             fullWidth
             label='Search a user...'
             onChange={handleChange}
-            InputProps={{ endAdornment: <SearchIcon  /> }}
+            InputProps={{ endAdornment: <SearchIcon /> }}
          />
          <>{shownSearchItems}</>
       </Stack>
