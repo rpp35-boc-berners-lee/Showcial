@@ -112,7 +112,7 @@ export function Homepage() {
     setQuery(e.target.value);
   };
 
-  
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     getSearchAPI();
