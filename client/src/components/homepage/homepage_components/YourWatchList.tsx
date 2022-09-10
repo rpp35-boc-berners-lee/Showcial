@@ -30,7 +30,6 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
   const [filterType, setFilterType] = useState('');
   const [alterList, setAlterList] = useState(watchList);
   const [sortType, setSortType] = useState('');
-  const [sortedList, setSortedList] = useState([]);
 
   useEffect(() => {
     let box = document.querySelector('.MuiGrid-container');
@@ -164,9 +163,9 @@ export const YourWatchList:React.FC<ChildProps> = ({ watchList, config, getSelec
       <Box sx={{ width: '100%', borderTop: '1px solid rgba(211, 211, 211, .5)', borderBottom: '1px solid rgba(211, 211, 211, .5)', pt: '2vh', pb: '1vh' }}>
         {alterList.length === 0 ?
           <Typography variant='h6' sx={{ fontWeight: "bold" }} component='h2' align='center'>
-            There are no videos under this filter.
+            There are no videos available.
           </Typography> :
-          <Grid container spacing={2} justifyContent='center'>
+          <Grid container spacing={3.5} justifyContent='center'>
             {displayedVideos.map((video: Video, i: number) => {
               return (
                 <Grid item xs={0} key={`trending-${video.media_type}-${video.id}`}>

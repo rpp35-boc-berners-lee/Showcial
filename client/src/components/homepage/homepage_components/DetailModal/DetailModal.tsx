@@ -34,8 +34,9 @@ interface Props {
   userName: string,
   inWatchList?: boolean,
   setInWatchList?: (bool: boolean) => void,
-  updateWatchList?: () => void,
+  updateWatchList?: (userName: string) => void,
 }
+
 const customStyles = {
   content: {
     top: '50%',
@@ -49,11 +50,10 @@ const customStyles = {
 
 ReactModal.setAppElement('#root');
 
-export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal, inWatchList, setInWatchList, updateWatchList }) => {
+export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedio, image, closeModal, userName, inWatchList, setInWatchList, updateWatchList }) => {
   const [recommendedUsers, SetRecommendedUsers] = useState([]);
   const [platform, SetPlatform] = useState([])
 
-  const userName = 'JamesFranco';
   const [liked, setLiked] = useState(false);
 
   console.log('vedio in DetailModal: ', vedio)
@@ -63,7 +63,7 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
       setInWatchList(true);
     }
     if (updateWatchList !== undefined) {
-      updateWatchList();
+      updateWatchList(userName);
     }
   }
 
@@ -73,7 +73,7 @@ export const DetailModal: React.FC<Props> = ({ modalIsOpen, setModalIsOpen, vedi
       setInWatchList(false);
     }
     if (updateWatchList !== undefined) {
-      updateWatchList();
+      updateWatchList(userName);
     }
   }
   const addToRecommended = async () => {
