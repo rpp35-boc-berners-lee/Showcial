@@ -14,7 +14,6 @@ import {
 // import TimeAgo functionality
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-import { ZoomInMapSharp } from '@mui/icons-material';
 TimeAgo.addDefaultLocale(en);
 const timeAgo = new TimeAgo('en-US');
 
@@ -40,13 +39,33 @@ export const Post = (props: any) => {
       }
    });
 
+   let conditionalCardContent = undefined;
+   if (postData.comments) {
+     conditionalCardContent = (
+       <CardContent>
+         {postData.comments}
+       </CardContent>
+     );
+   }
+
    return (
-      <Card className='post' sx={{ boxShadow: 12 }}>
+      <Card sx={{
+         boxShadow: 12,
+         // maxHeight: "500px"
+         // minWidth: 300,
+         // maxWidth: 780
+      }}>
          <Stack
+            className='postTile'
             direction='row'
             spacing={1}
-            justifyContent='left'
+            justifyContent='center'
             alignItems='center'
+            style={{cursor: 'pointer'}}
+            onClick={() => {
+               props.setFolloweeData(postData.userName);
+               props.setValue(2);
+            }}
          >
             <Avatar>{upperCaseReducer(postData.userName)}</Avatar>
             <CardHeader
@@ -56,33 +75,32 @@ export const Post = (props: any) => {
          </Stack>
          <Divider variant='middle' />
          <Stack
-            direction='row'
             spacing={1}
             alignItems='center'
-            justifyContent='left'
+            justifyContent='center'
          >
             <CardHeader
-               title={postData.videoName}
-               subheader={postData.comments}
+            title={postData.videoName}
+            justifyContent='right'
             />
-            <CardContent>
-               <Rating
-                  name='videoRating'
-                  value={postData.userRating / 2}
-                  readOnly
-               />
-            </CardContent>
+            <Rating
+               name='videoRating'
+               value={postData.userRating / 2}
+               readOnly
+            />
+            {conditionalCardContent}
+            <CardMedia
+               className="postImage"
+               // sx={{ maxWidth: 900 }}
+               // height='169'
+               component='img'
+               image={
+                  postData.image !== undefined
+                     ? postData.image
+                     : 'http://bertsrentals.com/wp-content/uploads/2017/08/300x300-placeholder.jpg'
+               }
+            />
          </Stack>
-         <CardMedia
-            height='180'
-            component='img'
-            className='post-image'
-            image={
-               postData.image !== undefined
-                  ? postData.image
-                  : 'http://bertsrentals.com/wp-content/uploads/2017/08/300x300-placeholder.jpg'
-            }
-         />
       </Card>
    );
 };
