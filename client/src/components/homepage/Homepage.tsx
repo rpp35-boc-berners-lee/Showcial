@@ -149,6 +149,7 @@ export function Homepage() {
 
   const getSearchAPI = async () => {
     let search = await axios.get<APIResponse>(`http://localhost:8080/tmdb/search/${mediaType}/${query}/${page}`);
+    console.log(search.data);
     setSearchResults(search.data);
   }
 
@@ -232,7 +233,7 @@ export function Homepage() {
                 <Button variant="text" endIcon={<NavigateNextIcon />} onClick={handleNextPage}>SHOW NEXT PAGE</Button> : null}
             </Stack>
           </div>
-          <Search searchResults={searchResults.results} config={config} getSelected={getSelected} mediaType={mediaType}/>
+          <Search searchResults={searchResults.results} config={config} getSelected={getSelected}/>
           <div className='page'>
             <Stack spacing={2} direction='row' alignItems='center' justifyContent='center'>
               {page > 1 ?
