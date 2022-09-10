@@ -23,10 +23,6 @@ export function Homepage() {
   const auth = useAuth();
   const [watchList, setWatchList] = useState<any[]>();
   const [config, setConfig] = useState<ConfigAPI | undefined>();
-  const [topTV, setTopTV] = useState<APIResponse | undefined>();
-  const [trendingTV, setTrendingTV] = useState<APIResponse | undefined>();
-  const [topMovie, setTopMovie] = useState<APIResponse | undefined>();
-  const [trendingMovie, setTrendingMovie] = useState<APIResponse | undefined>();
   const [userName, setUserName] = useState<string>('JamesFranco');
   const [query, setQuery] = useState<string>('');
   const [searchResults, setSearchResults] = useState<APIResponse | undefined>();
@@ -39,7 +35,7 @@ export function Homepage() {
   const [recommendedList, setRecommendedList] = useState<Array<any>>([]);
 
   useEffect(() => {
-    fetchAPI();
+    fetchConfig();
     fetchRecommendList(userName);
   }, []);
 
@@ -91,17 +87,9 @@ export function Homepage() {
     }
   }, [auth.user !== ''])
 
-  const fetchAPI = async () => {
+  const fetchConfig = async () => {
     let config = await axios.get<ConfigAPI>(`http://localhost:8080/tmdb/configuration`);
     setConfig(config.data);
-    let tv_top = await axios.get<APIResponse>(`http://localhost:8080/tmdb/tv/top_rated`);
-    setTopTV(tv_top.data);
-    let tv_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/tv/popular`);
-    setTrendingTV(tv_trending.data);
-    let movie_top = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/top_rated`);
-    setTopMovie(movie_top.data);
-    let movie_trending = await axios.get<APIResponse>(`http://localhost:8080/tmdb/movie/popular`);
-    setTrendingMovie(movie_trending.data);
   }
 
   const fetchRecommendList = async (userName: string) => {
@@ -191,7 +179,7 @@ export function Homepage() {
         /> : null}
       <Stack spacing={2} direction='row' alignItems='center' justifyContent='center' sx={{ mt: '2vh' }}>
         <form onSubmit={handleSubmit}>
-          <FormControl sx={{ m: 1, width: '50ch' }} variant="outlined">
+          <FormControl sx={{ my: 3, ml: 5, width: '50ch' }} variant="outlined">
             <InputLabel htmlFor="search-adornment">Search</InputLabel>
             <OutlinedInput
               id="search-adornment"
