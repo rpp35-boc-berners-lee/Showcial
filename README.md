@@ -3,30 +3,29 @@
 <img>
 
 ## Authored by:
-  - [Shengnan Huang](https://github.com/maomaotuo)
-  - [Kiki Cai](https://github.com/caixiuqi2013)
-  - [Kevin On](https://github.com/kanokawn)
-  - [Cristian Ordonez](https://github.com/cristianordonez)
-  - [Tyler Nourse](https://github.com/Nourse41)
-  - [Josh Waalkes](https://github.com/WaalkesJoshua)
+
+-  [Shengnan Huang](https://github.com/maomaotuo)
+-  [Kiki Cai](https://github.com/caixiuqi2013)
+-  [Kevin On](https://github.com/kanokawn)
+-  [Cristian Ordonez](https://github.com/cristianordonez)
+-  [Tyler Nourse](https://github.com/Nourse41)
+-  [Josh Waalkes](https://github.com/WaalkesJoshua)
 
 # Introduction
 
-  This project was completed over the course of a month, where our team wrote a full stack application for Bonnie Owens and Joe Casey. We met with Bonnie and Joe August 20th, 2022 for a project proposal. One week later we met with them again to present our application wireframes and to review the project proposal. At this point, we recieved some change requests to improve user experience. At our next client meeting, the functioning application was happily approved and from there we spent the remainder of the project styling and fixing minor bugs.
-
+This project was completed over the course of a month, where our team wrote a full stack application for Bonnie Owens and Joe Casey. We met with Bonnie and Joe August 20th, 2022 for a project proposal. One week later we met with them again to present our application wireframes and to review the project proposal. At this point, we recieved some change requests to improve user experience. At our next client meeting, the functioning application was happily approved and from there we spent the remainder of the project styling and fixing minor bugs.
 
 ## Features & Usage Demo
 
 https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-8e51-90c76c8668da.mp4
 
-- Showcial allows users to share/review movies and shows
-- User followers can then see the 'activity' of the user and find reviews and reccomendations that matter to them, not just some online critic's two cents.
-- Users can create their own watch list
-- Filtering allows users to see only movies and shows they own services for such as Netflix, Hulu, Disney+, HBO Max, and Prime Video.
-- Search functionality allows users to find movies and tv shows by name as well as friends to follow.
-- Users can also explore the site without creating an account, however, to use most of the personalized features, they will need to login.
-- Users are given the option of logging in with google or signing in with a username and password
-
+-  Showcial allows users to share/review movies and shows
+-  User followers can then see the 'activity' of the user and find reviews and reccomendations that matter to them, not just some online critic's two cents.
+-  Users can create their own watch list
+-  Filtering allows users to see only movies and shows they own services for such as Netflix, Hulu, Disney+, HBO Max, and Prime Video.
+-  Search functionality allows users to find movies and tv shows by name as well as friends to follow.
+-  Users can also explore the site without creating an account, however, to use most of the personalized features, they will need to login.
+-  Users are given the option of logging in with google or signing in with a username and password
 
 ## Tech Stack
 
@@ -48,10 +47,12 @@ This project was built with the following technologies:
 ## Challenges
 
 ### Anticipated
-  - Styling with MUI components was difficult at first but with persistent research we were able to create a visually appealing site.
+
+-  Styling with MUI components was difficult at first but with persistent research we were able to create a visually appealing site.
 
 ### Unexpected
-  - Using Passport.js for local authentication was difficult due to poorly written documentation. Instead we created our own authentication system to handle username and password and used Passport.js for google authentication.
+
+-  Using Passport.js for local authentication was difficult due to poorly written documentation. Instead we created our own authentication system to handle username and password and used Passport.js for google authentication.
 
 ## Setup/ Installation
 

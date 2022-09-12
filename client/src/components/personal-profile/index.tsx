@@ -40,13 +40,11 @@ export const PersonalProfile = () => {
    };
 
    async function fetchUserData(userName: any) {
-      console.log('fetch userData', userName);
       await axios
          .get<any>('http://localhost:8080/videoDB/user', {
             params: { userName },
          })
          .then(async (results: any) => {
-            console.log('fetchUserData', results.data);
             await setFollowingList(results.data.followingList);
             await setWatchList(results.data.watchedVideos);
          })
