@@ -108,7 +108,7 @@ export const Slider: React.FC<ChildProps> = ({ vedios, config, userName, mediaTy
       <BtnSlider moveSlide={prevSlide} direction={"prev"} />
       <div className="container-footer">
         <h1 className='video-title'>
-          {vedios[slideIndex].title}
+          {vedios[slideIndex].title || vedios[slideIndex].name}
         </h1>
         <div className="container-dots">
           {Array.from({ length: vedios.length }).map((item, index) => (
