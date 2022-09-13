@@ -25,7 +25,7 @@ export const PersonalProfile = () => {
       if (auth.user !== null && auth.user !== '') {
          setUserName(auth.user)
       }
-   }, [auth.user !== ''])
+   }, [auth.user !== '']);
 
    useEffect(() => {
       if (auth.user !== "") {
@@ -41,25 +41,25 @@ export const PersonalProfile = () => {
       setConfig(config.data);
    };
 
+   async function fetchUserData(userName: any) {
+      await axios
+         .get<any>('http://localhost:8080/videoDB/user', {
+            params: { userName },
+         })
+         .then(async (results: any) => {
+            await setFollowingList(results.data.followingList);
+            await setWatchList(results.data.watchedVideos);
+         })
+         .catch((error) => {
+            console.log('fetchFollowingList() Failed', error);
+         });
+   }
 
- async function fetchUserData (userName: any) {
-    console.log('fetch userData', userName)
-    await axios.get<any>('http://localhost:8080/videoDB/user', {params: {userName}})
-      .then(async (results: any) => {
-        console.log('fetchUserData', results.data)
-        await setFollowingList(results.data.followingList);
-        await setWatchList(results.data.watchedVideos)
-      })
-      .catch((error) => {
-        console.log('fetchFollowingList() Failed', error);
-      })
-  }
-
-  let currentOption = value;
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-    currentOption = newValue
-  };
+   let currentOption = value;
+   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+      setValue(newValue);
+      currentOption = newValue;
+   };
 
    const SelectBar = () => {
       return (
@@ -75,53 +75,50 @@ export const PersonalProfile = () => {
       );
    };
 
-
    return (
       <div className='personalProfile'>
-         {currentOption === 0 ?
-           <div>
-              <FollowerSearchBar
-                setValue={setValue}
-                setFolloweeData={setFolloweeData}
-              />
-              <SelectBar />
-              <FollowingList
-                setValue={setValue}
-                userName={userName}
-                setFolloweeData={setFolloweeData}
-                followingList={followingList}
-              />
-           </div>
-           : null
-         }
-         {currentOption === 1 ?
-           <div>
-             <FollowerSearchBar
-               setValue={setValue}
-               setFolloweeData={setFolloweeData}
-             />
-             <SelectBar />
-             <ForYou
-               userName={userName}
-               watchList={watchList}
-               config={config}
-               setValue={setValue}
-               setFolloweeData={setFolloweeData}
-             />
-           </div>
-           : null}
-         {currentOption === 2 ?
-           <div>
-             <ForFollower
-               setValue={setValue}
-               userName={userName}
-               followeeData={followeeData}
-               followingList={followingList}
-               config={config}
-             />
-           </div>
-           : null
-         }
+         {currentOption === 0 ? (
+            <div>
+               <FollowerSearchBar
+                  setValue={setValue}
+                  setFolloweeData={setFolloweeData}
+               />
+               <SelectBar />
+               <FollowingList
+                  setValue={setValue}
+                  userName={userName}
+                  setFolloweeData={setFolloweeData}
+                  followingList={followingList}
+               />
+            </div>
+         ) : null}
+         {currentOption === 1 ? (
+            <div>
+               <FollowerSearchBar
+                  setValue={setValue}
+                  setFolloweeData={setFolloweeData}
+               />
+               <SelectBar />
+               <ForYou
+                  userName={userName}
+                  watchList={watchList}
+                  config={config}
+                  setValue={setValue}
+                  setFolloweeData={setFolloweeData}
+               />
+            </div>
+         ) : null}
+         {currentOption === 2 ? (
+            <div>
+               <ForFollower
+                  setValue={setValue}
+                  userName={userName}
+                  followeeData={followeeData}
+                  followingList={followingList}
+                  config={config}
+               />
+            </div>
+         ) : null}
       </div>
    );
 };
