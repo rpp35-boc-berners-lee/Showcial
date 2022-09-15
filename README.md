@@ -23,7 +23,7 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 ![trendingVideos](https://user-images.githubusercontent.com/71888675/190005569-75a5c598-236b-4163-a189-3d40da861ce4.gif)
 
 -  Users can get detail information of each video by clicking the image of the video
-https://drive.google.com/file/d/1XnjW4KOiTQ266oHetTiOIpfa8aICth8t/view?usp=sharing
+![slider]
 -  Users are given the option of logging in with google or signing in with a username and password
 ![trending-videos-carousel](./Demo files/trending.gif)
 -Users can view trending videos from other users by swiping through a carousel of all trending movies
