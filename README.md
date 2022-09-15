@@ -22,8 +22,8 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 ![googleSignin](https://user-images.githubusercontent.com/71888675/190005551-d4b49c3c-5e40-4b7c-a4fd-50ac04d67994.gif)
 ![trendingVideos](https://user-images.githubusercontent.com/71888675/190005569-75a5c598-236b-4163-a189-3d40da861ce4.gif)
 
--  Users can get detail information of each video by clicking the image of the video
-![slider](https://github.com/rpp35-boc-berners-lee/blue-ocean-capstone/blob/develop/Demo%20files/slider.gif?raw=true)
+-  Users can choose media type of recommended videos, by clicking the image of each video, users can get detail of the video. Also users can interact with other users by recommending the video, rating the video, and adding the video to watch list
+![slider](./Demo files/slider.gif)
 -  Users are given the option of logging in with google or signing in with a username and password
 ![trending-videos-carousel](./Demo files/trending.gif)
 -Users can view trending videos from other users by swiping through a carousel of all trending movies
