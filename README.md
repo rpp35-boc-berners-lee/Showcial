@@ -29,6 +29,7 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 -Users can view trending videos from other users by swiping through a carousel of all trending movies
 -  Showcial allows users to share/review movies and shows
 -  User followers can then see the 'activity' of the user and find reviews and reccomendations that matter to them, not just some online critic's two cents.
+
 ![your-watch-list](https://user-images.githubusercontent.com/41318167/190534748-f3f9b456-df8c-4980-bac8-854d804c77b5.gif)
 -  Users can create their own watch list
 -  Filtering allows users to see only movies and shows they own services for such as Netflix, Hulu, Disney+, HBO Max, and Prime Video.
