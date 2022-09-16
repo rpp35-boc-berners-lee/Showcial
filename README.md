@@ -21,18 +21,23 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 
 ![googleSignin](https://user-images.githubusercontent.com/71888675/190005551-d4b49c3c-5e40-4b7c-a4fd-50ac04d67994.gif)
 ![trendingVideos](https://user-images.githubusercontent.com/71888675/190005569-75a5c598-236b-4163-a189-3d40da861ce4.gif)
-
 -  Users can choose media type of recommended videos, by clicking the image of each video, users can get detail of the video. Also users can interact with other users by recommending the video, rating the video, and adding the video to watch list
+
+
 ![slider](https://github.com/rpp35-boc-berners-lee/blue-ocean-capstone/blob/develop/Demo%20files/slider.gif?raw=true)
 -  Users are given the option of logging in with google or signing in with a username and password
+
+
 ![trending-videos-carousel](./Demo files/trending.gif)
--Users can view trending videos from other users by swiping through a carousel of all trending movies
+-  Users can view trending videos from other users by swiping through a carousel of all trending movies
 -  Showcial allows users to share/review movies and shows
 -  User followers can then see the 'activity' of the user and find reviews and reccomendations that matter to them, not just some online critic's two cents.
 
+   
 ![your-watch-list](https://user-images.githubusercontent.com/41318167/190534748-f3f9b456-df8c-4980-bac8-854d804c77b5.gif)
 -  Users can create their own watch list
 -  Filtering allows users to see only movies and shows they own services for such as Netflix, Hulu, Disney+, HBO Max, and Prime Video.
+    
 ![search](https://user-images.githubusercontent.com/41318167/190534809-a0baf40e-7475-46f8-b4bb-dde3df313db5.gif)
 -  Search functionality allows users to find movies and tv shows by name as well as friends to follow.
 -  Users can also explore the site without creating an account, however, to use most of the personalized features, they will need to login.
