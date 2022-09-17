@@ -1,0 +1,78 @@
+@use '../../index.scss' as *;
+
+.followedCard {
+  align-self: center;
+  padding: 1.5rem;
+  margin: 2rem;
+}
+
+.button {
+  gap: .5rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  padding: 7px 14px;
+  font-size: 14px;
+  margin-top: 2rem;
+  cursor: pointer;
+}
+
+.divider {
+  padding: 7px 14px;
+}
+
+.followerSearchBar {
+  align-self: center;
+  padding: 1.5rem;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  width: 75%;
+}
+
+.Avatar {
+  align-self: center;
+  // padding: 1.5rem;
+  // margin: 2rem;
+}
+
+
+// .postTile {
+//   padding: 1.5rem;
+// }
+
+.postImage {
+  margin-bottom: 1rem;
+}
+
+.personalFeed {
+  // height: fit-content;
+  // overflow: hidden; //set to hide any contents greater than the height of total view height
+  overflow-y: auto;
+  align-self: center;
+}
+
+.individualFeed {
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
+.searchItemTitle {
+  padding-left: 1.5rem;
+
+}
+
+.searchItem {
+  // padding: 1.5rem;
+  margin-right: 1rem;
+}
+
+.forYou {
+  // padding: 1.5rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+.backButton {
+  margin-bottom: 1rem;
+}

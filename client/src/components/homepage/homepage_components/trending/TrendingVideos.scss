@@ -1,0 +1,48 @@
+@use '../../../../index.scss' as *;
+
+.outer-container {
+   @include set-size(100%);
+   @include flex-center();
+
+   border-top: 1px solid rgba(211, 211, 211, .5);
+   border-bottom: 1px solid rgba(211, 211, 211, .5);
+   padding: 2vh;
+
+   .slider-arrow {
+      opacity: 0.4;
+   }
+   .slider-arrow-disabled {
+      opacity: 0;
+   }
+   .slider-arrow:hover {
+      opacity: 1;
+   }
+
+   .slider-container {
+      width: 90%;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      #slider {
+         @include set-size(100%);
+         overflow-x: scroll;
+         white-space: nowrap;
+         scroll-behavior: smooth;
+         scrollbar-width: none;
+         .slider-card {
+            @include devices(mobile) {
+               @include set-size(auto, 300px);
+            }
+            @include set-size(auto);
+            display: inline-block;
+            margin: 0 15px;
+         }
+      }
+   }
+}
+
+//disable the scrollbar
+#slider::-webkit-scrollbar {
+   display: none;
+}

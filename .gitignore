@@ -2,4 +2,8 @@
 /coverage
 .env
 client/dist
-/BOC_key.pem
+/config
+.pem
+/package-lock.json
+
+
