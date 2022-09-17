@@ -7,3 +7,4 @@ import { Homepage } from './Homepage';
 test('Product overview renders image correctly with data from server', async () => {
    await render(<Homepage />);
 });
+
