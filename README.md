@@ -27,13 +27,11 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 ![slider](https://github.com/rpp35-boc-berners-lee/blue-ocean-capstone/blob/develop/Demo%20files/slider.gif?raw=true)
 -  Users are given the option of logging in with google or signing in with a username and password
 
-
 ![trending-videos-carousel](./Demo files/trending.gif)
 -  Users can view trending videos from other users by swiping through a carousel of all trending movies
 -  Showcial allows users to share/review movies and shows
 -  User followers can then see the 'activity' of the user and find reviews and reccomendations that matter to them, not just some online critic's two cents.
 
-   
 ![your-watch-list](https://user-images.githubusercontent.com/41318167/190534748-f3f9b456-df8c-4980-bac8-854d804c77b5.gif)
 -  Users can create their own watch list
 -  Filtering allows users to see only movies and shows they own services for such as Netflix, Hulu, Disney+, HBO Max, and Prime Video.
@@ -42,16 +40,16 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 -  Search functionality allows users to find movies and tv shows by name as well as friends to follow.
 -  Users can also explore the site without creating an account, however, to use most of the personalized features, they will need to login.
 
-![personal-profile-for-you](./Demo files/personal-profile-for-you.gif)
+![personal-profile-for-you](https://user-images.githubusercontent.com/84835229/191366854-837ba01a-3785-45a7-a978-82e8aa5ba914.gif)
 -  Users can view their own personal profile to see an expandable/collapsable stream of activities from the people they follow.
 -  A clickable “My Streaming Service” component allows users to add or remove owned services from their profiles.
 
 ![view-follower](./Demo files/view-follower.gif)
-- While in a personal profile, users have the ability to click on any of the users in their activity feed to view that person’s activities or watch list, and to follow or unfollow them.
+- While in a personal profile, users have the ability to click on any of the users in their 
 
-![follower-search](./Demo files/follower-search.gif)
-- Users can navigate to a “Following Page” that displays a list of the users they follow with the ability to unfollow them or click and view that person's profile.
+![follower-search](https://user-images.githubusercontent.com/84835229/191367390-39480172-c860-4203-b8c6-fbb976638891.gif)
 - Search can use the search bar to find and navigate to any other user’s profile.
+- Users can navigate to a “Following Page” that displays a list of the users they follow with the ability to unfollow them or click and view that person's profile.
 
 ## Tech Stack
 
