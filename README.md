@@ -42,6 +42,17 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 -  Search functionality allows users to find movies and tv shows by name as well as friends to follow.
 -  Users can also explore the site without creating an account, however, to use most of the personalized features, they will need to login.
 
+![personal-profile-for-you](./Demo files/personal-profile-for-you.gif)
+-  Users can view their own personal profile to see an expandable/collapsable stream of activities from the people they follow.
+-  A clickable “My Streaming Service” component allows users to add or remove owned services from their profiles.
+
+![view-follower](./Demo files/view-follower.gif)
+- While in a personal profile, users have the ability to click on any of the users in their activity feed to view that person’s activities or watch list, and to follow or unfollow them.
+
+![follower-search](./Demo files/follower-search.gif)
+- Users can navigate to a “Following Page” that displays a list of the users they follow with the ability to unfollow them or click and view that person's profile.
+- Search can use the search bar to find and navigate to any other user’s profile.
+
 ## Tech Stack
 
 This project was built with the following technologies:
