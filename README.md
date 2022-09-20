@@ -27,7 +27,7 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 ![slider](https://github.com/rpp35-boc-berners-lee/blue-ocean-capstone/blob/develop/Demo%20files/slider.gif?raw=true)
 -  Users are given the option of logging in with google or signing in with a username and password
 
-![trending-videos-carousel](./Demo files/trending.gif)
+![compressed-trending](https://user-images.githubusercontent.com/84835229/191374183-c07d2324-761f-465a-af3a-a6f2e5ffc34a.gif)
 -  Users can view trending videos from other users by swiping through a carousel of all trending movies
 -  Showcial allows users to share/review movies and shows
 -  User followers can then see the 'activity' of the user and find reviews and reccomendations that matter to them, not just some online critic's two cents.
@@ -44,7 +44,7 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 -  Users can view their own personal profile to see an expandable/collapsable stream of activities from the people they follow.
 -  A clickable “My Streaming Service” component allows users to add or remove owned services from their profiles.
 
-![view-follower](./Demo files/view-follower.gif)
+![compressed-for-follower](https://user-images.githubusercontent.com/84835229/191374288-2121dc8d-9199-4539-909b-3ed52b04196a.gif)
 - While in a personal profile, users have the ability to click on any of the users in their 
 
 ![follower-search](https://user-images.githubusercontent.com/84835229/191367390-39480172-c860-4203-b8c6-fbb976638891.gif)
