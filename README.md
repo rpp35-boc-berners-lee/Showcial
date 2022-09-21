@@ -48,7 +48,7 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 - While in a personal profile, users have the ability to click on any of the users in their 
 
 ![follower-search](https://user-images.githubusercontent.com/84835229/191367390-39480172-c860-4203-b8c6-fbb976638891.gif)
-- Search can use the search bar to find and navigate to any other user’s profile.
+- Clients can use the search bar to find and navigate to any other user’s profile.
 - Users can navigate to a “Following Page” that displays a list of the users they follow with the ability to unfollow them or click and view that person's profile.
 
 ## Tech Stack
