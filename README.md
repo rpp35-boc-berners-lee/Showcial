@@ -45,7 +45,7 @@ https://user-images.githubusercontent.com/93630511/189451292-ae04fda5-03d9-401c-
 -  A clickable “My Streaming Service” component allows users to add or remove owned services from their profiles.
 
 ![compressed-for-follower](https://user-images.githubusercontent.com/84835229/191374288-2121dc8d-9199-4539-909b-3ed52b04196a.gif)
-- While in a personal profile, users have the ability to click on any of the users in their 
+- While in a personal profile, a user has the ability to click on any of the profiles in the list of people they follow to display a personalized page of that user's watched and recommended videos.
 
 ![follower-search](https://user-images.githubusercontent.com/84835229/191367390-39480172-c860-4203-b8c6-fbb976638891.gif)
 - Clients can use the search bar to find and navigate to any other user’s profile.
